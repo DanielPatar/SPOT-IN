@@ -10,7 +10,7 @@ import { scan } from "@/adapters/scanner";
  * Uploads (FR-M4-04, FR-M9-02, FR-M10-02): type and size limits, virus scan, photos
  * resized server-side and stored as WebP. Files are served only via signed URLs.
  */
-export type Purpose = "space_photo" | "property_photo" | "logo" | "avatar" | "proposal" | "message_attachment";
+export type Purpose = "space_photo" | "property_photo" | "logo" | "avatar" | "proposal" | "message_attachment" | "compliance_document" | "problem_photo" | "event_cover";
 
 const MB = 1024 * 1024;
 const RULES: Record<Purpose, { mimes: string[]; maxBytes: number; image: boolean }> = {
@@ -19,6 +19,9 @@ const RULES: Record<Purpose, { mimes: string[]; maxBytes: number; image: boolean
   logo: { mimes: ["image/jpeg", "image/png", "image/webp"], maxBytes: 5 * MB, image: true },
   avatar: { mimes: ["image/jpeg", "image/png", "image/webp"], maxBytes: 5 * MB, image: true },
   proposal: { mimes: ["application/pdf", "image/jpeg", "image/png"], maxBytes: 10 * MB, image: false },
+  compliance_document: { mimes: ["application/pdf", "image/jpeg", "image/png"], maxBytes: 10 * MB, image: false }, // FR-M17-03
+  problem_photo: { mimes: ["image/jpeg", "image/png", "image/webp"], maxBytes: 10 * MB, image: true },
+  event_cover: { mimes: ["image/jpeg", "image/png", "image/webp"], maxBytes: 10 * MB, image: true },
   message_attachment: {
     mimes: [
       "application/pdf",

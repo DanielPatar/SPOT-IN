@@ -162,6 +162,10 @@ export async function decideReport(actor: Actor, reportId: string, decision: "di
   if (decision === "suspend_subject" && r.subject_type === "space") {
     await setSuspended(actor, { type: "space", id: String(r.subject_id) }, true, note || "report");
   }
+  if (decision === "suspend_subject" && r.subject_type === "event_page") {
+    const { removePage } = await import("./event-pages");
+    await removePage(actor, String(r.subject_id), note || "report");
+  }
   if (decision === "suspend_subject" && r.subject_type === "message") {
     await db()`update messages set deleted_at = coalesce(deleted_at, ${await now()}) where id = ${r.subject_id as string}`;
   }
@@ -177,7 +181,7 @@ export async function decideReport(actor: Actor, reportId: string, decision: "di
 // ---------------------------------------------------------------------------
 export async function adminSearch(q: string) {
   const term = q.trim();
-  if (!term) return { users: [], orgs: [], spaces: [], enquiries: [] };
+  if (!term) return { users: [], orgs: [], spaces: [], enquiries: [], bookings: [], eventPages: [], passes: [] };
   const like = `%${term.toLowerCase()}%`;
   const isId = /^[0-9a-f-]{36}$/i.test(term);
   const sql = db();
@@ -195,6 +199,15 @@ export async function adminSearch(q: string) {
       select q.id, q.status, e.name as event_name, s.name as space_name from enquiries q
       join events e on e.id = q.event_id join spaces s on s.id = q.space_id
       where ${isId ? sql`q.id = ${term}::uuid or` : sql``} lower(e.name) like ${like} limit 20`,
+    bookings: await sql`
+      select b.id, b.reference, b.status, e.name as event_name from bookings b join events e on e.id = b.event_id
+      where ${isId ? sql`b.id = ${term}::uuid or` : sql``} lower(b.reference) like ${like} or lower(e.name) like ${like} limit 20`,
+    eventPages: await sql`
+      select id, title, status, slug from event_pages
+      where ${isId ? sql`id = ${term}::uuid or` : sql``} lower(title) like ${like} limit 20`,
+    passes: await sql`
+      select p.id, p.number, p.status, r.name, r.email from passes p join registrations r on r.id = p.registration_id
+      where ${isId ? sql`p.id = ${term}::uuid or` : sql``} lower(p.number) like ${like} or lower(r.email::text) like ${like} limit 20`,
   };
 }
 

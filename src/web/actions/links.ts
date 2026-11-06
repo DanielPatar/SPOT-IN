@@ -9,7 +9,12 @@ export async function consumeMagicLinkAction(_: ActionState, form: FormData): Pr
     const { userId, data } = await consumeMagicLink(str(form, "token"));
     const token = await createSession(userId, { userAgent: await userAgent(), ip: await clientIp() });
     await setSessionCookie(token);
-    const next = typeof data.redirect === "string" && data.redirect.startsWith("/") ? data.redirect : "/";
+    let next = typeof data.redirect === "string" && data.redirect.startsWith("/") ? data.redirect : "/";
+    if (typeof data.registrationId === "string") {
+      // FR-M1-10: the emailed link confirms the registration and issues the pass.
+      const { confirmRegistration } = await import("@/server/event-pages");
+      next = `/kartu/${await confirmRegistration(data.registrationId, userId)}`;
+    }
     redirect(next);
   });
 }

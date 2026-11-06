@@ -1,5 +1,6 @@
 import { db, num, type Tx } from "@/lib/db";
 import { now } from "@/lib/clock";
+import { t } from "@/lib/i18n";
 import { AppError, PermissionError } from "@/lib/permissions";
 import { schedule, cancelJobs } from "@/lib/jobs";
 import { formatDateTime } from "@/lib/time";
@@ -131,7 +132,7 @@ export async function generateAgreement(bookingId: string): Promise<void> {
   }
 }
 
-async function bookingFor(actor: Actor, bookingId: string, sql: Tx = db()) {
+export async function bookingFor(actor: Actor, bookingId: string, sql: Tx = db()) {
   if (!isUuid(bookingId)) throw new PermissionError();
   const [b] = await sql`select * from bookings where id = ${bookingId}`;
   if (!b) throw new PermissionError();
@@ -265,9 +266,9 @@ async function issueReceipt(sql: Tx, booking: Record<string, unknown>, request: 
   const venuePart = num(request.venue_part);
   const ppnPart = totals.venueTotal ? mulDivHalfUp(venuePart, totals.ppn, totals.venueTotal) : 0;
   const lines = [
-    { label: `${request.kind === "balance" ? "Pelunasan" : request.kind === "full" ? "Pembayaran penuh" : "Uang muka"} sewa ruang dan layanan tambahan`, amount: venuePart - ppnPart },
-    ...(ppnPart ? [{ label: "PPN", amount: ppnPart }] : []),
-    ...(num(request.fee_part) ? [{ label: "Biaya layanan Spot-In", amount: num(request.fee_part) }] : []),
+    { label: t(`receipts.venueLine.${String(request.kind)}`), amount: venuePart - ppnPart },
+    ...(ppnPart ? [{ label: t("receipts.ppn"), amount: ppnPart }] : []),
+    ...(num(request.fee_part) ? [{ label: t("receipts.fee"), amount: num(request.fee_part) }] : []),
   ];
   const issuer = String(booking.operator_id);
   const [c] = await sql`
@@ -304,6 +305,8 @@ export async function maybeConfirm(bookingId: string): Promise<boolean> {
   await expireBackupsForBooking(String(done.space_id), ranges, String(done.enquiry_id));
   await notifyCompetitors(String(done.space_id), ranges, String(done.enquiry_id));
   await notify({ userIds: [...(await orgMemberIds(String(done.organizer_org_id))), ...(await orgMemberIds(String(done.operator_id)))], event: "booking_confirmed", values: { ref: String(done.reference) }, link: `/pemesanan/${bookingId}` });
+  const { onBookingConfirmed } = await import("./lifecycle");
+  await onBookingConfirmed(bookingId);
   return true;
 }
 
@@ -371,7 +374,7 @@ export async function refundAllPaid(sql: Tx, bookingId: string, reason: string):
       await sql`
         insert into receipts (number, kind, issuer_org_id, booking_id, payment_id, refers_to, lines, amount, created_at)
         values (${`PILOT-${String(orig.issuer_org_id).slice(0, 4).toUpperCase()}-${String(c!.last_number).padStart(5, "0")}`}, 'credit_note', ${orig.issuer_org_id as string},
-          ${bookingId}, ${p.id as string}, ${orig.id as string}, ${sql.json([{ label: `Pengembalian (simulasi) atas ${String(orig.number)}`, amount }])}, ${amount}, ${await now()})`;
+          ${bookingId}, ${p.id as string}, ${orig.id as string}, ${sql.json([{ label: t("receipts.refundLine", { number: String(orig.number) }), amount }])}, ${amount}, ${await now()})`;
     }
     total += amount;
   }
@@ -390,6 +393,8 @@ async function lateDeposit(bookingId: string, paymentId: string): Promise<void> 
       }
       await sql`update bookings set status = 'balance_due', lapsed_at = null, confirmed_at = ${at} where id = ${bookingId}`;
     });
+    const { onBookingConfirmed } = await import("./lifecycle");
+    await onBookingConfirmed(bookingId);
     await notify({ userIds: [...(await orgMemberIds(String(b!.organizer_org_id))), ...(await orgMemberIds(String(b!.operator_id)))], event: "booking_confirmed", values: { ref: String(b!.reference) }, link: `/pemesanan/${bookingId}` });
   } catch (e) {
     if (!isOverlapError(e)) throw e;
@@ -411,7 +416,7 @@ export async function balanceIssueJob(bookingId: string, at: Date): Promise<void
   const amount = totals.venueTotal - num(dep?.venue_part);
   const ins = await db()`
     insert into payment_requests (booking_id, kind, amount, venue_part, fee_part, due_at, issued_at, created_at)
-    values (${bookingId}, 'balance', ${amount}, ${amount}, 0, ${b.balance_due_at as Date}, ${at}, ${at})
+    values (${bookingId}, 'balance', ${amount}, ${amount}, 0, ${b.balance_due_at as Date}, ${(b.balance_request_at as Date | null) ?? at}, ${at})
     on conflict (booking_id, kind) do nothing returning id`;
   if (!ins.length) return;
   await db()`update bookings set status = 'balance_due' where id = ${bookingId} and status = 'confirmed'`;
