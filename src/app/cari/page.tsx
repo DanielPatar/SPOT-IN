@@ -197,7 +197,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             .map((r) => ({ id: String(r.id), lat: Number(r.lat), lon: Number(r.lon), title: String(r.name), subtitle: `${String(r.property_name)} · ${t("spaces.fromPrice", { price: rp(r.from_price) })}`, href: `/ruang/${r.id}` }))}
         />
       ) : (
-        <div className="grid">
+        <div className="card-grid">
           {res.rows.map((r) => {
             const img = coverUrl(r.media);
             return (

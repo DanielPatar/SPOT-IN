@@ -188,7 +188,6 @@ export default async function SpacePage({ params, searchParams }: { params: Prom
             <h2 style={{ marginTop: 0 }}>{t("spacePage.availability")}</h2>
             <p className="small muted">{t("spacePage.availabilityHelp")}</p>
             <CalendarGrid month={month} days={avail} />
-            <h3>{shiftMonth(month, 1)}</h3>
             <CalendarGrid month={shiftMonth(month, 1)} days={avail} />
           </div>
         </div>

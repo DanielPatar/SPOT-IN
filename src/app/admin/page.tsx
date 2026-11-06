@@ -17,7 +17,7 @@ export default async function AdminHome() {
     <div>
       <h1>{t("admin.title")}</h1>
       <AdminNav />
-      <div className="grid">
+      <div className="card-grid">
         <div className="card">
           <h2 style={{ marginTop: 0 }}>{t("admin.navItems.verifikasi")}</h2>
           <p className="price">{v.length}</p>

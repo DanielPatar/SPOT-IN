@@ -16,7 +16,7 @@
     "phoneInvalid": "Nomor telepon tidak valid.",
     "rateLimited": "Terlalu banyak percobaan. Coba lagi beberapa saat lagi.",
     "reasonRequired": "Alasan wajib diisi.",
-    "permissionDenied": "Anda tidak punya akses — hubungi Owner organisasi Anda.",
+    "permissionDenied": "Anda tidak punya akses — hubungi Pemilik organisasi Anda.",
     "notVerified": "Verifikasi email Anda terlebih dahulu. Kami telah mengirim tautan verifikasi.",
     "server": "Terjadi kesalahan. Kode referensi: {ref}",
     "generic": "Terjadi kesalahan. Coba lagi."
@@ -50,7 +50,7 @@
     "verifyTitle": "Verifikasi email",
     "verifyButton": "Verifikasi email saya",
     "verified": "Email Anda sudah terverifikasi.",
-    "verifyBanner": "Email Anda belum diverifikasi. Anda belum dapat mengirim enquiry atau penawaran.",
+    "verifyBanner": "Sebelum mengirim permintaan atau penawaran, klik tautan yang kami kirim ke email Anda.",
     "resendVerification": "Kirim ulang tautan verifikasi",
     "verificationResent": "Tautan verifikasi dikirim ulang.",
     "alreadyVerified": "Email Anda sudah terverifikasi.",
@@ -66,10 +66,12 @@
     "oauth": {
       "notInvited": "Email Google ini belum diundang ke pilot.",
       "failed": "Masuk dengan Google gagal. Coba lagi."
-    }
+    },
+    "verifyBannerTitle": "Verifikasi email Anda dulu",
+    "bouncedTitle": "Email ke alamat Anda tidak terkirim"
   },
   "account": {
-    "deletionBlocked": "Akun tidak dapat dihapus karena Anda satu-satunya Owner dari {orgs} yang memiliki pemesanan aktif. Alihkan kepemilikan atau selesaikan pemesanan terlebih dahulu.",
+    "deletionBlocked": "Akun tidak dapat dihapus karena Anda satu-satunya Pemilik dari {orgs} yang memiliki pemesanan aktif. Alihkan kepemilikan atau selesaikan pemesanan terlebih dahulu.",
     "title": "Akun saya",
     "profile": "Profil",
     "phoneHelp": "Opsional dan tidak diverifikasi. Hanya terlihat oleh pihak lain setelah pemesanan dikonfirmasi.",
@@ -131,7 +133,7 @@
     "invitesTitle": "Undangan pilot",
     "roleHint": "Peran",
     "roleHints": {
-      "venue": "Venue",
+      "venue": "Pengelola",
       "organizer": "Penyelenggara",
       "both": "Keduanya"
     },
@@ -146,7 +148,7 @@
       "expired": "Kedaluwarsa"
     },
     "verificationTitle": "Antrean verifikasi",
-    "verificationHelp": "Hubungi venue lewat telepon atau chat. Tidak ada dokumen yang diunggah; catat hanya metode dan hasilnya.",
+    "verificationHelp": "Hubungi pengelola lewat telepon atau chat. Tidak ada dokumen yang diunggah; catat hanya metode dan hasilnya.",
     "queueEmpty": "Antrean kosong.",
     "submittedAt": "Diajukan {at}",
     "method": "Metode verifikasi",
@@ -174,7 +176,7 @@
     "users": "Pengguna",
     "orgs": "Organisasi",
     "spaces": "Ruang",
-    "enquiries": "Enquiry",
+    "enquiries": "Permintaan",
     "bounced": "Email gagal",
     "reason": "Alasan",
     "suspend": "Tangguhkan",
@@ -196,7 +198,7 @@
     "bufferViolated": "Jeda waktu antar pemesanan tidak terpenuhi.",
     "holdConflict": "Tanggal ini sudah ditahan atau tidak tersedia.",
     "holdDaysInvalid": "Durasi tahanan harus 1–{max} hari.",
-    "holdExists": "Enquiry ini sudah memiliki tahanan aktif.",
+    "holdExists": "Permintaan ini sudah memiliki tahanan aktif.",
     "rangeTooLong": "Rentang tanggal terlalu panjang (maksimal 1 tahun).",
     "title": "Kalender {space}",
     "prev": "← Bulan sebelumnya",
@@ -225,17 +227,17 @@
     }
   },
   "enquiries": {
-    "alreadyOpen": "Anda sudah memiliki enquiry terbuka untuk {space} pada acara ini.",
+    "alreadyOpen": "Anda sudah memiliki permintaan terbuka untuk {space} pada acara ini.",
     "answerRequired": "Jawab pertanyaan untuk {space}: {question}",
-    "closed": "Enquiry ini sudah ditutup.",
+    "closed": "Permintaan ini sudah ditutup.",
     "declineNoteRequired": "Jelaskan alasan penolakan.",
     "declineReasonRequired": "Pilih alasan penolakan.",
-    "limitOpenPerEvent": "Maksimal {max} enquiry terbuka per acara.",
-    "limitPerDay": "Maksimal {max} enquiry baru per organisasi per hari.",
+    "limitOpenPerEvent": "Maksimal {max} permintaan terbuka per acara.",
+    "limitPerDay": "Maksimal {max} permintaan baru per organisasi per hari.",
     "limitPerSend": "Maksimal {max} ruang per pengiriman.",
     "noSpaces": "Pilih setidaknya satu ruang.",
-    "ownSpace": "Anda tidak dapat mengirim enquiry ke ruang milik venue Anda sendiri.",
-    "spaceUnavailable": "Salah satu ruang tidak lagi tersedia untuk enquiry."
+    "ownSpace": "Anda tidak dapat mengirim permintaan ke ruang milik tempat Anda sendiri.",
+    "spaceUnavailable": "Salah satu ruang tidak lagi tersedia untuk permintaan."
   },
   "events": {
     "attendanceInvalid": "Perkiraan jumlah pengunjung harus angka lebih dari 0.",
@@ -248,11 +250,11 @@
     "title": "Acara saya",
     "new": "Acara baru",
     "empty": "Belum ada acara.",
-    "counts": "{all} enquiry · {open} terbuka",
+    "counts": "{all} permintaan · {open} terbuka",
     "next": {
-      "answerVenue": "Jawab pertanyaan venue",
-      "sendEnquiry": "Kirim enquiry",
-      "waitQuotes": "Menunggu balasan venue",
+      "answerVenue": "Jawab pertanyaan pengelola",
+      "sendEnquiry": "Kirim permintaan",
+      "waitQuotes": "Menunggu balasan pengelola",
       "findMore": "Cari ruang lain"
     },
     "basics": "Detail acara",
@@ -273,16 +275,16 @@
     "facilities": "Fasilitas yang dibutuhkan",
     "description": "Deskripsi",
     "files": "File proposal (PDF/JPG/PNG)",
-    "filesHelp": "Maks. 5 file, 10 MB per file. File dibagikan ke venue yang Anda hubungi.",
+    "filesHelp": "Maks. 5 file, 10 MB per file. File dibagikan ke pengelola yang Anda hubungi.",
     "create": "Simpan acara",
-    "createAndContinue": "Simpan dan lanjut kirim enquiry",
+    "createAndContinue": "Simpan dan lanjut kirim permintaan",
     "edit": "Ubah acara",
-    "editNotice": "Venue yang sudah Anda hubungi akan diberi tahu tentang perubahan ini.",
-    "sent": "{n} enquiry terkirim.",
+    "editNotice": "Pengelola yang sudah Anda hubungi akan diberi tahu tentang perubahan ini.",
+    "sent": "{n} permintaan terkirim.",
     "findSpaces": "Cari ruang untuk acara ini",
-    "enquiries": "Enquiry",
-    "noEnquiries": "Belum ada enquiry untuk acara ini.",
-    "venueReplyBy": "Venue membalas sebelum {at}",
+    "enquiries": "Permintaan",
+    "noEnquiries": "Belum ada permintaan untuk acara ini.",
+    "venueReplyBy": "Pengelola membalas sebelum {at}",
     "dates": "Tanggal"
   },
   "files": {
@@ -296,7 +298,7 @@
     "addressRequired": "Alamat dan kota wajib diisi.",
     "maxBelowMin": "Durasi maksimum harus sama dengan atau lebih dari minimum.",
     "noRateCard": "Ruang ini belum memiliki tarif.",
-    "operatorNotVerified": "Venue belum diverifikasi Spot-In. Ruang belum dapat dipublikasikan dan penawaran belum dapat dikirim.",
+    "operatorNotVerified": "Pengelola belum diverifikasi Spot-In. Ruang belum dapat dipublikasikan dan penawaran belum dapat dikirim.",
     "photoRequired": "Tambahkan setidaknya satu foto ruang.",
     "pinInvalid": "Titik peta tidak valid.",
     "pinOutsideIndonesia": "Titik peta harus berada di Indonesia.",
@@ -304,7 +306,7 @@
     "propertyFirst": "Lengkapi data properti terlebih dahulu.",
     "rateCardRequired": "Isi tarif ruang (termasuk harga mulai dari) sebelum diajukan.",
     "tooManyPhotos": "Maksimal {max} foto.",
-    "tooManyQuestions": "Maksimal {max} pertanyaan enquiry.",
+    "tooManyQuestions": "Maksimal {max} pertanyaan permintaan.",
     "usePublish": "Ruang ini pernah disetujui. Gunakan tombol Publikasikan.",
     "videoUrlInvalid": "Tautan video harus diawali https://",
     "wrongStatus": "Aksi ini tidak tersedia untuk status ruang saat ini."
@@ -316,12 +318,12 @@
   },
   "orgs": {
     "alreadyMember": "Anda sudah tergabung dalam organisasi jenis ini.",
-    "inviteExpired": "Undangan ini sudah kedaluwarsa. Minta Owner mengirim ulang.",
+    "inviteExpired": "Undangan ini sudah kedaluwarsa. Minta Pemilik mengirim ulang.",
     "inviteInvalid": "Undangan tidak valid atau sudah dicabut.",
     "inviteWrongEmail": "Undangan ini untuk alamat email lain. Masuk dengan email yang diundang.",
     "inviteeAlreadyInOrg": "Pengguna ini sudah tergabung dalam organisasi jenis yang sama.",
     "inviteeNotOnPilotList": "Email ini belum ada di daftar undangan pilot. Admin Spot-In sudah diberi tahu; kirim ulang undangan setelah Admin menambahkannya.",
-    "lastOwner": "Organisasi harus selalu memiliki setidaknya satu Owner.",
+    "lastOwner": "Organisasi harus selalu memiliki setidaknya satu Pemilik.",
     "reassigneeRequired": "Pilih anggota yang akan mengambil alih pekerjaan yang masih terbuka."
   },
   "email": {
@@ -358,7 +360,7 @@
     },
     "admin_verification_submitted": {
       "title": "Verifikasi menunggu: {org}",
-      "body": "{org} mengajukan verifikasi. Hubungi venue melalui telepon atau chat, lalu catat hasilnya."
+      "body": "{org} mengajukan verifikasi. Hubungi pengelola melalui telepon atau chat, lalu catat hasilnya."
     },
     "admin_space_submitted": {
       "title": "Ruang menunggu tinjauan: {space}",
@@ -370,27 +372,27 @@
     },
     "admin_alert_masking": {
       "title": "Peringatan: kontak berulang disembunyikan",
-      "body": "Tiga pesan dengan detail kontak disembunyikan dalam satu percakapan (enquiry {enquiry})."
+      "body": "Tiga pesan dengan detail kontak disembunyikan dalam satu percakapan (permintaan {enquiry})."
     },
     "admin_alert_suspension": {
       "title": "Penangguhan dicatat",
       "body": "Sebuah {type} ditangguhkan."
     },
     "admin_alert_auto_declined": {
-      "title": "Enquiry ditolak otomatis",
-      "body": "{n} enquiry ditolak otomatis karena ruang atau venue tidak lagi tersedia."
+      "title": "Permintaan ditolak otomatis",
+      "body": "{n} permintaan ditolak otomatis karena ruang atau pengelola tidak lagi tersedia."
     },
     "admin_daily_reminder": {
       "title": "Antrean Admin menunggu lebih dari 2 hari kerja",
       "body": "Verifikasi: {orgs} · Tinjauan ruang: {spaces} · Laporan: {reports}"
     },
     "verification_approved": {
-      "title": "Venue Anda terverifikasi",
-      "body": "Spot-In telah memverifikasi venue Anda. Ruang yang disetujui kini dapat ditemukan pengguna pilot."
+      "title": "Tempat Anda terverifikasi",
+      "body": "Spot-In telah memverifikasi tempat Anda. Ruang yang disetujui kini dapat ditemukan pengguna pilot."
     },
     "verification_rejected": {
       "title": "Verifikasi ditolak",
-      "body": "Verifikasi venue Anda ditolak. Alasan: {reason}"
+      "body": "Verifikasi tempat Anda ditolak. Alasan: {reason}"
     },
     "space_approved": {
       "title": "Ruang disetujui",
@@ -401,40 +403,40 @@
       "body": "Ruang Anda dikembalikan ke draf. Alasan: {reason}"
     },
     "enquiry_new": {
-      "title": "Enquiry baru: {event}",
-      "body": "Enquiry baru untuk {space}. Balas sebelum {deadline}."
+      "title": "Permintaan baru: {event}",
+      "body": "Permintaan baru untuk {space}. Balas sebelum {deadline}."
     },
     "enquiry_deadline_approaching": {
       "title": "Batas waktu balasan mendekat: {event}",
-      "body": "Enquiry ini belum dibalas. Batas waktu: {deadline} (sekitar {hours} jam lagi)."
+      "body": "Permintaan ini belum dibalas. Batas waktu: {deadline} (sekitar {hours} jam lagi)."
     },
     "enquiry_expired": {
-      "title": "Enquiry kedaluwarsa",
-      "body": "{space} tidak membalas enquiry Anda sebelum batas waktu."
+      "title": "Permintaan kedaluwarsa",
+      "body": "{space} tidak membalas permintaan Anda sebelum batas waktu."
     },
     "enquiry_expired_venue": {
-      "title": "Enquiry kedaluwarsa: {event}",
-      "body": "Enquiry ini kedaluwarsa karena tidak dibalas sebelum batas waktu. Tingkat respons venue Anda diperbarui."
+      "title": "Permintaan kedaluwarsa: {event}",
+      "body": "Permintaan ini kedaluwarsa karena tidak dibalas sebelum batas waktu. Tingkat respons tempat Anda diperbarui."
     },
     "enquiry_declined": {
-      "title": "Enquiry ditolak",
-      "body": "{space} menolak enquiry Anda. Lihat alasannya di percakapan."
+      "title": "Permintaan ditolak",
+      "body": "{space} menolak permintaan Anda. Lihat alasannya di percakapan."
     },
     "enquiry_withdrawn": {
-      "title": "Enquiry ditarik: {event}",
-      "body": "Penyelenggara menarik enquiry ini."
+      "title": "Permintaan ditarik: {event}",
+      "body": "Penyelenggara menarik permintaan ini."
     },
     "enquiry_auto_declined": {
-      "title": "Enquiry ditutup",
-      "body": "Ruang yang Anda hubungi tidak lagi tersedia, sehingga enquiry ditutup otomatis."
+      "title": "Permintaan ditutup",
+      "body": "Ruang yang Anda hubungi tidak lagi tersedia, sehingga permintaan ditutup otomatis."
     },
     "event_edited": {
       "title": "Acara diubah: {event}",
-      "body": "Penyelenggara mengubah detail acara. Tinjau kembali enquiry ini."
+      "body": "Penyelenggara mengubah detail acara. Tinjau kembali permintaan ini."
     },
     "info_requested": {
-      "title": "Venue meminta informasi",
-      "body": "{space} meminta informasi tambahan untuk enquiry Anda."
+      "title": "Pengelola meminta informasi",
+      "body": "{space} meminta informasi tambahan untuk permintaan Anda."
     },
     "message_received": {
       "title": "Pesan baru dari {from}",
@@ -442,7 +444,7 @@
     },
     "hold_placed": {
       "title": "Tanggal ditahan untuk {event}",
-      "body": "Venue menahan tanggal sementara untuk Anda hingga {date}."
+      "body": "Pengelola menahan tanggal sementara untuk Anda hingga {date}."
     },
     "hold_expiring": {
       "title": "Tahanan tanggal segera berakhir",
@@ -454,19 +456,22 @@
     },
     "hold_released": {
       "title": "Tahanan tanggal dilepas",
-      "body": "Venue melepas tahanan sementara untuk {event}."
+      "body": "Pengelola melepas tahanan sementara untuk {event}."
     }
   },
   "meta": {
-    "description": "Spot-In — temukan dan pesan ruang acara di mal dan venue (pilot)."
+    "description": "Spot-In — temukan dan pesan ruang acara di mal dan gedung acara (pilot)."
   },
   "brand": {
     "name1": "Spot",
-    "name2": "-In"
+    "name2": "-In",
+    "name": "Spot-In",
+    "home": "Spot-In, ke beranda"
   },
   "pilot": {
     "bannerLabel": "Mode pilot",
-    "banner": "– pemesanan latihan, tidak mengikat, tanpa pembayaran nyata"
+    "banner": "– pemesanan latihan, tidak mengikat, tanpa pembayaran nyata.",
+    "eventLabel": "Pilot demo – bukan acara sungguhan"
   },
   "footer": {
     "text": "Spot-In · pilot tertutup Group4",
@@ -476,7 +481,11 @@
     "save": "Simpan",
     "saved": "Tersimpan.",
     "saving": "Menyimpan…",
-    "remove": "Hapus"
+    "remove": "Hapus",
+    "optional": "(opsional)",
+    "loading": "Memuat data…",
+    "errorTitle": "Belum bisa disimpan",
+    "close": "Tutup"
   },
   "nav": {
     "label": "Navigasi utama",
@@ -485,17 +494,21 @@
     "notifications": "Notifikasi",
     "notificationsCount": "Notifikasi, {n} belum dibaca",
     "search": "Cari ruang",
-    "shortlists": "Shortlist",
+    "shortlists": "Daftar pilihan",
     "events": "Acara",
     "team": "Tim",
     "start": "Mulai",
     "admin": "Admin",
-    "venueHome": "Dasbor venue",
-    "venueInbox": "Enquiry",
+    "venueHome": "Ringkasan",
+    "venueInbox": "Permintaan",
     "venueSpaces": "Ruang",
     "venueSettings": "Pengaturan",
     "switchToOrganizer": "Beralih ke penyelenggara",
-    "switchToVenue": "Beralih ke venue"
+    "switchToVenue": "Beralih ke pengelola",
+    "skip": "Lewati ke konten utama",
+    "ctxVenue": "Pengelola",
+    "ctxOrganizer": "Penyelenggara",
+    "account": "Akun: {name}"
   },
   "fields": {
     "email": "Email",
@@ -508,11 +521,11 @@
     "legalNameOptional": "Nama perusahaan/badan hukum (opsional)"
   },
   "home": {
-    "title": "Ruang acara di mal dan venue, dalam satu tempat",
-    "lead": "Spot-In menghubungkan penyelenggara acara dengan pengelola mal dan pemilik venue.",
+    "title": "Ruang acara di mal dan gedung, dalam satu tempat",
+    "lead": "Spot-In menghubungkan penyelenggara acara dengan pengelola mal dan pemilik ruang acara.",
     "point1": "Cari ruang berdasarkan tanggal, kapasitas, anggaran dan lokasi.",
-    "point2": "Kirim satu enquiry ke beberapa venue dan bandingkan jawabannya.",
-    "point3": "Venue membalas, menahan tanggal dan (segera) mengirim penawaran terstruktur.",
+    "point2": "Kirim satu permintaan ke beberapa tempat sekaligus, lalu bandingkan jawabannya.",
+    "point3": "Pengelola membalas, bisa menahan tanggal untuk Anda, lalu mengirim penawaran.",
     "continue": "Lanjutkan",
     "pilotNote": "Spot-In sedang dalam pilot tertutup untuk proyek kuliah. Hanya email yang diundang dapat mendaftar."
   },
@@ -520,7 +533,7 @@
     "title": "Pemberitahuan pilot",
     "who": "Pilot ini dijalankan oleh Group4 sebagai proyek kuliah.",
     "purpose": "Tujuannya menguji alur pemesanan ruang acara secara end-to-end dengan beberapa pengguna undangan.",
-    "data": "Data yang dikumpulkan: nama, email, telepon kontak opsional, data organisasi, listing, acara, enquiry dan pesan yang Anda buat.",
+    "data": "Data yang dikumpulkan: nama, email, telepon kontak opsional, data organisasi, listing, acara, permintaan dan pesan yang Anda buat.",
     "notCollected": "Kami tidak mengumpulkan KTP/NIK, NPWP, NIB, akta, selfie, nomor rekening atau kartu.",
     "hosting": "Data disimpan pada penyedia hosting {provider} di {country}. Dengan mendaftar, Anda menyetujui penyimpanan di lokasi tersebut.",
     "practice": "Semua pemesanan adalah latihan: tidak mengikat dan tanpa pembayaran nyata.",
@@ -530,18 +543,18 @@
   },
   "start": {
     "title": "Apa yang ingin Anda lakukan?",
-    "intro": "Pilih satu atau keduanya. Anda bisa beralih antara peran venue dan penyelenggara kapan saja.",
-    "find": "Cari ruang (saya penyelenggara acara)",
-    "findHelp": "Untuk EO, brand, atau komunitas yang mencari ruang.",
+    "intro": "Pilih satu atau keduanya. Anda bisa beralih antara peran pengelola dan penyelenggara kapan saja.",
+    "find": "Cari ruang (saya menyelenggarakan acara)",
+    "findHelp": "Untuk penyelenggara, brand, atau komunitas yang mencari ruang.",
     "organizerKind": "Jenis penyelenggara",
     "individual": "Perorangan",
-    "company": "Perusahaan / EO",
+    "company": "Perusahaan / penyelenggara",
     "organizerName": "Nama penyelenggara",
-    "list": "Daftarkan ruang (saya pengelola venue)",
+    "list": "Daftarkan ruang (saya mengelola mal, gedung atau ruang acara)",
     "listHelp": "Untuk pengelola mal, gedung atau pemilik ruang.",
-    "venueName": "Nama venue (nama tampilan)",
+    "venueName": "Nama tempat yang dilihat penyelenggara",
     "continue": "Lanjutkan",
-    "venueNameRequired": "Isi nama venue untuk mendaftarkan ruang."
+    "venueNameRequired": "Isi nama tempat untuk mendaftarkan ruang."
   },
   "invite": {
     "title": "Undangan tim",
@@ -561,15 +574,15 @@
     "title": "Bantuan",
     "booking": {
       "q": "Bagaimana pemesanan di Spot-In bekerja?",
-      "a": "Penyelenggara mengirim enquiry ke satu atau beberapa ruang. Venue membalas, dapat menahan tanggal sementara, lalu mengirim penawaran. Penawaran yang diterima menjadi pemesanan setelah perjanjian disetujui dan deposit dibayar (tahap berikutnya pilot)."
+      "a": "Penyelenggara mengirim permintaan ke satu atau beberapa ruang. Pengelola membalas, dapat menahan tanggal sementara, lalu mengirim penawaran. Penawaran yang diterima menjadi pemesanan setelah perjanjian disetujui dan uang muka dibayar (tahap berikutnya pilot)."
     },
     "pilot": {
       "q": "Apa arti mode pilot?",
       "a": "Semua pemesanan adalah latihan: tidak mengikat dan tanpa pembayaran nyata. Dokumen yang dihasilkan diberi tanda PILOT."
     },
     "enquiry": {
-      "q": "Berapa lama venue harus membalas?",
-      "a": "Venue harus membalas dalam 2 hari kerja (Senin–Jumat, tidak termasuk libur nasional dan cuti bersama) pada zona waktu properti. Jika tidak, enquiry kedaluwarsa."
+      "q": "Berapa lama pengelola harus membalas?",
+      "a": "Pengelola harus membalas dalam 2 hari kerja (Senin–Jumat, tidak termasuk libur nasional dan cuti bersama) pada zona waktu properti. Jika tidak, permintaan kedaluwarsa."
     },
     "privacy": {
       "q": "Data apa yang disimpan?",
@@ -596,14 +609,14 @@
     "noSpaces": "Belum ada ruang. Tambahkan ruang pertama Anda.",
     "calendar": "Kalender",
     "unreplied": "Menunggu balasan",
-    "nothingWaiting": "Tidak ada enquiry yang menunggu.",
+    "nothingWaiting": "Tidak ada permintaan yang menunggu.",
     "replyBy": "Balas sebelum {deadline}",
-    "openInbox": "Buka semua enquiry",
+    "openInbox": "Buka semua permintaan",
     "editProperty": "Ubah properti",
-    "submitVerification": "Ajukan verifikasi venue",
+    "submitVerification": "Ajukan verifikasi pengelola",
     "rejected": "Verifikasi ditolak: {reason}. Perbaiki lalu ajukan lagi.",
     "step": {
-      "profile": "Profil venue",
+      "profile": "Profil pengelola",
       "property": "Properti",
       "pin": "Pin peta",
       "space": "Ruang pertama",
@@ -737,7 +750,7 @@
     "buffer": "Jeda antar pemesanan (jam)",
     "cancellationPolicy": "Kebijakan pembatalan",
     "video": "Tautan video (opsional)",
-    "questions": "Pertanyaan enquiry",
+    "questions": "Pertanyaan permintaan",
     "questionsHelp": "Hingga {max} pertanyaan yang wajib dijawab penyelenggara.",
     "questionN": "Pertanyaan {n}",
     "fromPrice": "Mulai {price}",
@@ -801,40 +814,40 @@
     "sun": "Min"
   },
   "settings": {
-    "title": "Pengaturan venue",
+    "title": "Pengaturan pengelola",
     "profile": "Profil organisasi",
     "displayName": "Nama tampilan",
     "contactEmail": "Email kontak",
     "logo": "Logo",
     "threshold": "Batas persetujuan penawaran",
-    "thresholdHelp": "Penawaran dengan total pada atau di atas jumlah ini perlu disetujui Owner sebelum dikirim. Kosongkan untuk menonaktifkan.",
+    "thresholdHelp": "Penawaran dengan total pada atau di atas jumlah ini perlu disetujui Pemilik sebelum dikirim. Kosongkan untuk menonaktifkan.",
     "thresholdAmount": "Jumlah (Rupiah)",
     "tax": "Pajak",
-    "isPkp": "Venue adalah PKP (memungut PPN)",
+    "isPkp": "Pengelola adalah PKP (memungut PPN)",
     "serviceCharge": "Service charge (%)",
     "taxHelp": "Harga dimasukkan belum termasuk pajak. Tarif PPN dan DPP diatur oleh Admin Spot-In.",
-    "addOns": "Tambahan (add-on)",
-    "addOnName": "Nama add-on",
+    "addOns": "Layanan tambahan",
+    "addOnName": "Nama layanan tambahan",
     "addOnExample": "Listrik, keamanan, kebersihan…",
     "addOnUnit": "Satuan",
     "price": "Harga",
     "taxable": "Kena pajak",
     "mandatory": "Wajib",
-    "addAddOn": "Tambah add-on",
+    "addAddOn": "Tambah layanan tambahan",
     "savedReplies": "Balasan tersimpan",
     "replyTitle": "Judul",
     "replyBody": "Isi balasan",
     "addReply": "Tambah balasan"
   },
   "team": {
-    "title": "Tim venue",
+    "title": "Tim pengelola",
     "organizerTitle": "Organisasi dan tim",
     "members": "Anggota",
     "role": "Peran",
     "changeRole": "Ubah",
     "reassignTo": "Alihkan pekerjaan ke",
     "remove": "Keluarkan",
-    "makeOwner": "Jadikan Owner",
+    "makeOwner": "Jadikan Pemilik",
     "you": "Anda",
     "audit": "Log aktivitas organisasi",
     "invite": "Undang anggota",
@@ -858,17 +871,17 @@
     }
   },
   "roles": {
-    "owner": "Owner",
-    "staff": "Staff",
-    "viewer": "Viewer",
-    "member": "Member"
+    "owner": "Pemilik",
+    "staff": "Staf",
+    "viewer": "Pengamat",
+    "member": "Anggota"
   },
   "orgKinds": {
-    "venue_operator": "Venue",
+    "venue_operator": "Pengelola",
     "organizer": "Penyelenggara"
   },
   "inbox": {
-    "title": "Enquiry masuk",
+    "title": "Permintaan masuk",
     "view": "Tampilan",
     "all": "Semua",
     "unreplied": "Belum dibalas",
@@ -876,7 +889,7 @@
     "space": "Ruang",
     "allSpaces": "Semua ruang",
     "filter": "Terapkan",
-    "empty": "Tidak ada enquiry.",
+    "empty": "Tidak ada permintaan.",
     "event": "Acara",
     "dates": "Tanggal",
     "status": "Status",
@@ -893,7 +906,7 @@
     "declined": "Ditolak",
     "expired": "Kedaluwarsa",
     "withdrawn": "Ditarik",
-    "lost": "Tidak dipilih"
+    "lost": "Tidak dilanjutkan"
   },
   "enquiry": {
     "organizer": "Penyelenggara",
@@ -902,9 +915,9 @@
     "attendance": "Perkiraan pengunjung",
     "type": "Jenis acara",
     "budget": "Anggaran",
-    "replyBy": "Venue membalas sebelum",
+    "replyBy": "Pengelola membalas sebelum",
     "declineReason": "Alasan penolakan",
-    "answers": "Jawaban pertanyaan venue",
+    "answers": "Jawaban pertanyaan pengelola",
     "files": "File proposal",
     "dayLine": "{date}, {start}–{end} {tz}"
   },
@@ -917,7 +930,7 @@
   "autoDecline": {
     "space_unpublished": "ruang tidak lagi dipublikasikan",
     "space_suspended": "ruang ditangguhkan",
-    "operator_suspended": "venue ditangguhkan"
+    "operator_suspended": "pengelola ditangguhkan"
   },
   "warnings": {
     "outside_operating_days": "Sebagian tanggal acara di luar hari operasional properti.",
@@ -936,19 +949,19 @@
     "send": "Kirim",
     "quote": "Penawaran",
     "quoteBuild2": "Pembuat penawaran hadir pada tahap berikutnya pilot (Build 2).",
-    "decline": "Tolak enquiry",
+    "decline": "Tolak permintaan",
     "reason": "Alasan",
     "chooseReason": "Pilih alasan",
     "note": "Penjelasan (wajib untuk Lainnya)",
     "declineButton": "Tolak",
     "internal": "Catatan internal",
-    "internalHelp": "Hanya terlihat oleh tim venue Anda.",
+    "internalHelp": "Hanya terlihat oleh tim tempat Anda.",
     "assignee": "Ditangani oleh",
     "unassigned": "Belum ditugaskan",
     "notes": "Catatan",
     "done": {
       "requestInfo": "Permintaan informasi dikirim.",
-      "decline": "Enquiry ditolak.",
+      "decline": "Permintaan ditolak.",
       "hold": "Tanggal ditahan.",
       "releaseHold": "Tahanan dilepas.",
       "notes": "Catatan tersimpan."
@@ -996,7 +1009,7 @@
     "radius": "Radius (km)",
     "spaceTypes": "Jenis ruang",
     "activities": "Aktivitas diizinkan",
-    "verifiedOnly": "Hanya venue terverifikasi",
+    "verifiedOnly": "Hanya tempat yang terverifikasi",
     "showLimited": "Tampilkan ketersediaan terbatas",
     "sort": "Urutkan",
     "submit": "Cari",
@@ -1019,7 +1032,7 @@
     }
   },
   "spacePage": {
-    "sendEnquiry": "Kirim enquiry",
+    "sendEnquiry": "Kirim permintaan",
     "specs": "Spesifikasi",
     "m2": "{n} m²",
     "meters": "{n} m",
@@ -1029,14 +1042,14 @@
     "video": "Tonton video",
     "pricing": "Harga",
     "availability": "Ketersediaan",
-    "availabilityHelp": "Tanggal yang ditahan tampil sebagai Terbatas – kirim enquiry untuk menanyakan.",
+    "availabilityHelp": "Tanggal yang ditahan tampil sebagai Terbatas – kirim permintaan untuk menanyakan.",
     "docDue": "{n} hari sebelum acara",
     "policyTier": "Batal ≥ {days} hari sebelum acara: {pct}% dikembalikan",
     "updated": "Diperbarui {date}"
   },
   "estimate": {
     "title": "Perkiraan biaya",
-    "addOns": "Add-on",
+    "addOns": "Layanan tambahan",
     "mandatory": "wajib",
     "quantity": "Jumlah",
     "calculate": "Hitung perkiraan",
@@ -1045,7 +1058,7 @@
     "ppn": "PPN",
     "fee": "Biaya Spot-In",
     "total": "Perkiraan total",
-    "nonBinding": "Perkiraan ini tidak mengikat. Harga final ada di penawaran venue.",
+    "nonBinding": "Perkiraan ini tidak mengikat. Harga final ada di penawaran pengelola.",
     "result": "Perkiraan total {total}",
     "qtyHint": {
       "per_kva_day": "kVA",
@@ -1054,22 +1067,22 @@
     }
   },
   "shortlist": {
-    "title": "Shortlist",
+    "title": "Daftar pilihan",
     "items": "{n} ruang",
-    "newName": "Nama shortlist baru",
+    "newName": "Nama daftar pilihan baru",
     "namePlaceholder": "mis. Expo Desember",
-    "create": "Buat shortlist",
+    "create": "Buat daftar pilihan",
     "createAndAdd": "Buat dan simpan",
-    "save": "Simpan ke shortlist",
-    "choose": "Shortlist",
+    "save": "Simpan ke daftar pilihan",
+    "choose": "Daftar pilihan",
     "note": "Catatan",
     "add": "Simpan",
-    "added": "Ruang disimpan ke shortlist.",
-    "delete": "Hapus shortlist",
-    "spaces": "Ruang dalam shortlist",
-    "emptyList": "Shortlist ini masih kosong.",
+    "added": "Ruang disimpan ke daftar pilihan.",
+    "delete": "Hapus daftar pilihan",
+    "spaces": "Ruang dalam daftar pilihan",
+    "emptyList": "Daftar pilihan ini masih kosong.",
     "select": "Pilih {name}",
-    "enquireSelected": "Kirim enquiry ke ruang terpilih",
+    "enquireSelected": "Kirim permintaan ke ruang terpilih",
     "share": "Bagikan (hanya lihat)",
     "shareHelp": "Siapa pun yang punya tautan dapat melihat ruang, catatan dan harga indikatif — tanpa pesan atau penawaran.",
     "link": "Tautan berbagi",
@@ -1080,7 +1093,7 @@
     "notes": "Catatan",
     "unavailable": "Tautan tidak tersedia",
     "sharedBy": "Dibagikan oleh {org}",
-    "indicative": "Harga bersifat indikatif dan dapat berubah pada penawaran venue."
+    "indicative": "Harga bersifat indikatif dan dapat berubah pada penawaran pengelola."
   },
   "eventTypes": {
     "exhibition": "Pameran",
@@ -1116,24 +1129,24 @@
     "vehicles": "Kendaraan"
   },
   "send": {
-    "pickEvent": "Kirim enquiry untuk acara mana?",
+    "pickEvent": "Kirim permintaan untuk acara mana?",
     "useEvent": "Pilih",
     "newEvent": "Buat acara baru",
-    "title": "Kirim enquiry: {event}",
-    "intro": "Setiap ruang menerima enquiry terpisah dengan batas waktu balasan sendiri.",
-    "noSpaces": "Pilih ruang dari pencarian atau shortlist terlebih dahulu.",
-    "limits": "Maks. 5 ruang per pengiriman, 10 enquiry terbuka per acara, 20 enquiry baru per hari.",
-    "button": "Kirim enquiry"
+    "title": "Kirim permintaan: {event}",
+    "intro": "Setiap ruang menerima permintaan terpisah dengan batas waktu balasan sendiri.",
+    "noSpaces": "Pilih ruang dari pencarian atau daftar pilihan terlebih dahulu.",
+    "limits": "Maks. 5 ruang per pengiriman, 10 permintaan terbuka per acara, 20 permintaan baru per hari.",
+    "button": "Kirim permintaan"
   },
   "organizerEnquiry": {
     "backToEvent": "← Kembali ke acara",
-    "held": "Venue menahan tanggal untuk Anda sampai {at}.",
+    "held": "Pengelola menahan tanggal untuk Anda sampai {at}.",
     "quotes": "Penawaran",
-    "quotesBuild2": "Penawaran dari venue akan tampil di sini (Build 2).",
-    "withdraw": "Tarik enquiry",
+    "quotesBuild2": "Penawaran dari pengelola akan tampil di sini (Build 2).",
+    "withdraw": "Tarik permintaan",
     "done": {
-      "withdraw": "Enquiry ditarik.",
-      "lost": "Enquiry ditandai tidak dipilih."
+      "withdraw": "Permintaan ditarik.",
+      "lost": "Permintaan ditandai tidak dipilih."
     }
   },
   "report": {
@@ -1150,11 +1163,11 @@
     }
   },
   "settingsKeys": {
-    "commission_bps": "Komisi venue (basis poin)",
+    "commission_bps": "Komisi pengelola (basis poin)",
     "organizer_fee_bps": "Biaya Spot-In penyelenggara (basis poin)",
     "organizer_fee_min": "Biaya Spot-In minimum (Rp)",
     "organizer_fee_max": "Biaya Spot-In maksimum (Rp)",
-    "response_deadline_business_days": "Batas balasan enquiry (hari kerja)",
+    "response_deadline_business_days": "Batas balasan permintaan (hari kerja)",
     "tentative_hold_default_days": "Durasi tahanan default (hari)",
     "tentative_hold_max_days": "Durasi tahanan maksimum (hari)",
     "min_deposit_bps": "Deposit minimum (basis poin)",
@@ -1172,5 +1185,21 @@
     "pilot_hosting_provider": "Penyedia hosting",
     "pilot_hosting_country": "Negara penyimpanan data",
     "pilot_contact_email": "Email kontak pilot"
+  },
+  "docs": {
+    "previewOf": "Pratinjau dokumen: {title}",
+    "pilotStamp": "PILOT"
+  },
+  "booking": {
+    "progressLabel": "Tahap pemesanan",
+    "steps": {
+      "accepted": "Penawaran diterima",
+      "agreement": "Perjanjian disetujui",
+      "deposit": "Uang muka dibayar",
+      "confirmed": "Terkonfirmasi",
+      "balance": "Pelunasan",
+      "event": "Acara",
+      "settled": "Penyelesaian"
+    }
   }
 }

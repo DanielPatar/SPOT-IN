@@ -4,7 +4,7 @@ import react from "eslint-plugin-react";
 
 // FR-M25-05: every user-facing string lives in messages/id.json. A literal string in
 // JSX text fails the build. Punctuation and symbols are allowed.
-const allowedStrings = ["·", "—", "–", "/", "|", "×", "•", ":", "(", ")", "*", "→", "←", "+", "-", "%", "#", "…", "✓", "Rp", "m²", "kVA"];
+const allowedStrings = ["·", "—", "–", "/", "|", "×", "•", ":", "(", ")", "*", "→", "←", "‹", "›", "+", "-", "%", "#", "…", "✓", "Rp", "m²", "kVA"];
 
 const config = [
   ...nextVitals,

@@ -20,7 +20,7 @@ export default async function SharedShortlistPage({ params }: { params: Promise<
     <div>
       <h1>{data.name}</h1>
       <p className="muted">{t("shortlist.sharedBy", { org: data.organizerName })}</p>
-      <div className="grid">
+      <div className="card-grid">
         {data.items.map((i) => {
           const img = coverUrl(i.media);
           return (
