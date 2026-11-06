@@ -1,0 +1,153 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource-variable/plus-jakarta-sans";
+
+/*
+  Spot-In brand tokens (from the product brief).
+  Contrast notes (WCAG 2.1 relative-luminance formula, computed for this repo):
+  - ink   #1d1b16 on bg #f7f5f0     15.79:1
+  - muted #6b665a on bg #f7f5f0      5.25:1  (4.81:1 on sunken #efebe2)
+  - brand #0f5c4d on white           7.90:1  (6.61:1 on brand-soft)
+  - accent #d9822b on white          2.93:1  -> never used for text; warm text uses #8a4b0f (6.79:1)
+  - danger #b42318 on white          6.57:1
+  - field border #8f8778 on white    3.56:1  (non-text contrast, SC 1.4.11)
+*/
+:root {
+  --brand: #0f5c4d;
+  --brand-hover: #0b4a3e;
+  --brand-soft: #dcefe9;
+  --accent-warm: #d9822b;
+  --accent-ink: #8a4b0f;
+  --accent-soft: #fbeedd;
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --surface-sunken: #efebe2;
+  --ink: #1d1b16;
+  --muted: #6b665a;
+  --line: #e2dccf;
+  --line-strong: #cfc7b5;
+  --field: #8f8778; /* form-control borders: 3.56:1 on white (WCAG 1.4.11 needs 3:1) */
+  --danger: #b42318;
+  --danger-soft: #fbe9e7;
+
+  /* shadcn/ui semantic tokens mapped onto the brand */
+  --radius: 0.5rem;
+  --background: var(--bg);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--brand);
+  --primary-foreground: #ffffff;
+  --secondary: var(--brand-soft);
+  --secondary-foreground: var(--brand);
+  --muted-bg: var(--surface-sunken);
+  --muted-foreground: var(--muted);
+  --accent: var(--surface-sunken);
+  --accent-foreground: var(--ink);
+  --destructive: var(--danger);
+  --border: var(--line);
+  --input: var(--field);
+  --ring: var(--brand);
+}
+
+@theme inline {
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted-bg);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-soft: var(--brand-soft);
+  --color-warm: var(--accent-warm);
+  --color-warm-ink: var(--accent-ink);
+  --color-warm-soft: var(--accent-soft);
+  --color-ink: var(--ink);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-surface: var(--surface);
+  --color-sunken: var(--surface-sunken);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "ss01";
+  }
+  /* Visible keyboard focus everywhere (WCAG 2.4.7). */
+  a:focus-visible,
+  [role="button"]:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* The PILOT watermark on generated-document previews (FR-M38-01). */
+.pilot-watermark {
+  position: relative;
+  overflow: hidden;
+}
+.pilot-watermark::after {
+  content: "PILOT";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(64px, 14vw, 140px);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgba(15, 92, 77, 0.07);
+  transform: rotate(-28deg);
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
