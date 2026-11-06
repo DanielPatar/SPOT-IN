@@ -1376,7 +1376,9 @@
     "eventChanged": "Detail acara berubah setelah penawaran ini dikirim. Tunggu pengelola meninjau dan mengirim ulang.",
     "datesHeld": "Tanggal ini sedang ditahan untuk penyelenggara lain. Anda akan diberi tahu jika tanggalnya kembali tersedia.",
     "datesBookedOrganizer": "Tanggal ini sudah dipesan penyelenggara lain.",
-    "datesJustTaken": "Tanggal ini baru saja diambil penyelenggara lain. Kirim pesan ke pengelola atau cari ruang lain."
+    "datesJustTaken": "Tanggal ini baru saja diambil penyelenggara lain. Kirim pesan ke pengelola atau cari ruang lain.",
+    "rental": "Sewa ruang ({dates})",
+    "rentalSeason": "Sewa ruang, {season} ({dates})"
   },
   "bookings": {
     "pilotTermsRequired": "Setujui syarat pemesanan pilot untuk melanjutkan.",
@@ -1528,8 +1530,8 @@
     "backupBody": "Anda tetap bisa mengirim penawaran cadangan. Penyelenggara dapat menerimanya jika tahanan itu dilepas.",
     "revisionTitle": "Penyelenggara meminta revisi versi {version}",
     "revisionLinesHint": "Komentar per baris ditampilkan pada baris yang bersangkutan di bawah.",
-    "thresholdTitle": "Penawaran di atas {amount} perlu disetujui Pemilik",
-    "thresholdBody": "Jika total di atas batas ini, penawaran dikirim ke Pemilik untuk disetujui sebelum sampai ke penyelenggara.",
+    "thresholdTitle": "Penawaran mulai {amount} perlu disetujui Pemilik",
+    "thresholdBody": "Jika total mencapai batas ini, penawaran dikirim ke Pemilik untuk disetujui sebelum sampai ke penyelenggara.",
     "pendingTitle": "Penawaran menunggu persetujuan Pemilik",
     "approveHint": "Setelah disetujui, penawaran langsung dikirim ke penyelenggara.",
     "approveAndSend": "Setujui dan kirim",

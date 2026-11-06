@@ -13,9 +13,9 @@ import { BookingStatus, bookingStep } from "@/components/BookingStatus";
 import { agreementAction, extendBalanceAction, markLostAction } from "@/web/actions/booking";
 
 /** Booking workspace (FR-M13, FR-M14, FR-M15-01, FR-M1-05, FR-M9-10). */
-export default async function BookingWorkspacePage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ accepted?: string }> }) {
+export default async function BookingWorkspacePage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ accepted?: string; done?: string }> }) {
   const { id } = await params;
-  const { accepted } = await searchParams;
+  const { accepted, done } = await searchParams;
   const s = await requireSession(`/pemesanan/${id}`);
   let w;
   try {
@@ -51,6 +51,8 @@ export default async function BookingWorkspacePage({ params, searchParams }: { p
         <BookingProgress current={bookingStep(status, agreementDone)} />
       </div>
       <div className="mb-4 grid gap-3">
+        {done === "agreement" ? <Notice tone="positive" className="alert-ok" title={t("agreementPanel.accepted")} /> : null}
+        {done === "extended" ? <Notice tone="positive" className="alert-ok" title={t("workspace.extended")} /> : null}
         {accepted && status === "pending_agreement_and_deposit" ? (
           <Notice tone="positive" title={t("workspace.acceptedTitle")}>{t("workspace.acceptedBody", { at: formatDateTime(b.deposit_due_at as Date, tz) })}</Notice>
         ) : null}

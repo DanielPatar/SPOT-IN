@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { t } from "@/lib/i18n";
 import { db, num, type Tx } from "@/lib/db";
 import { now } from "@/lib/clock";
 import { AppError, PermissionError } from "@/lib/permissions";
@@ -70,15 +71,22 @@ async function pricingSnapshot(operatorId: string, sql: Tx = db()): Promise<Pric
 async function prefillLines(spaceId: string, days: { date: string; start: string; end: string }[]): Promise<QuoteLine[]> {
   const p = await loadPricing(spaceId);
   if (!p) return [];
-  const groups = new Map<string, { label: string; price: number; qty: number }>();
+  const groups = new Map<string, { season: string | null; dates: string[]; price: number; qty: number }>();
   for (const d of days) {
     const { price, season } = priceForDate(d.date, p.card, p.seasons);
     const key = `${season ?? ""}:${price}`;
-    const g = groups.get(key) ?? { label: season ? `Sewa ruang (${season})` : "Sewa ruang", price, qty: 0 };
+    const g = groups.get(key) ?? { season: season ?? null, dates: [], price, qty: 0 };
     g.qty += unitsForDay(d, p.card);
+    g.dates.push(d.date);
     groups.set(key, g);
   }
-  const lines: QuoteLine[] = [...groups.values()].map((g) => ({ id: randomUUID(), kind: "rental", label: g.label, quantity: g.qty, unitPrice: g.price, discount: 0, taxable: true }));
+  // Each rental line names its dates, so lines stay distinguishable (weekday vs weekend prices).
+  const fmt = new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", timeZone: "UTC" });
+  const label = (g: { season: string | null; dates: string[] }) => {
+    const dates = g.dates.map((x) => fmt.format(new Date(`${x}T00:00:00Z`))).join(", ");
+    return g.season ? t("quotes.rentalSeason", { season: g.season, dates }) : t("quotes.rental", { dates });
+  };
+  const lines: QuoteLine[] = [...groups.values()].map((g) => ({ id: randomUUID(), kind: "rental", label: label(g), quantity: g.qty, unitPrice: g.price, discount: 0, taxable: true }));
   for (const a of p.addOns.filter((x) => x.mandatory)) {
     lines.push({ id: randomUUID(), kind: "add_on", label: a.name, quantity: a.unit === "per_day" ? days.length : 1, unitPrice: a.price, discount: 0, taxable: a.taxable });
   }
@@ -122,7 +130,7 @@ export async function draftQuote(actor: Actor, enquiryId: string): Promise<strin
   const at = await now();
   const s = await getSettings();
   const snapshot = await pricingSnapshot(String(ctx.operator_id));
-  const lines = last ? (last.lines as QuoteLine[]).map((l) => ({ ...l, id: randomUUID() })) : await prefillLines(String(ctx.space_id), ctx.days as never);
+  const lines = last ? (last.lines as QuoteLine[]).map((l) => ({ ...l })) : await prefillLines(String(ctx.space_id), ctx.days as never);
   const sched: PaymentSchedule = last ? (last.payment_schedule as PaymentSchedule) : { mode: "split", depositBps: 5000, depositDays: 3, balanceDaysBefore: 14 };
   const policy = last ? String(last.cancellation_policy) : String(ctx.cancellation_policy);
   const [qt] = await db()`
@@ -351,15 +359,18 @@ export type LineDiff = { label: string; before?: number; after?: number; change:
 /** Diff between two versions for the organizer (FR-M12-07). Lines are matched by label. */
 export function diffQuotes(prev: QuoteRow | undefined, curr: QuoteRow): LineDiff[] {
   const amt = (l: QuoteLine) => Math.max(0, Math.round((l.unitPrice * Math.round(l.quantity * 100)) / 100) - (l.discount || 0));
-  const before = new Map((prev?.lines ?? []).map((l) => [l.label, amt(l)]));
+  // Lines keep their id across versions; match by id, then by label for lines typed again by hand.
+  const before = new Map((prev?.lines ?? []).map((l) => [l.id, { label: l.label, amount: amt(l) }]));
   const out: LineDiff[] = [];
   for (const l of curr.lines) {
     const a = amt(l);
-    const b = before.get(l.label);
+    let key: string | undefined = before.has(l.id) ? l.id : undefined;
+    if (!key) for (const [k, v] of before) if (v.label === l.label) key = k;
+    const b = key ? before.get(key)!.amount : undefined;
     out.push({ label: l.label, before: b, after: a, change: b === undefined ? (prev ? "added" : "same") : b === a ? "same" : "changed" });
-    before.delete(l.label);
+    if (key) before.delete(key);
   }
-  for (const [label, b] of before) out.push({ label, before: b, change: "removed" });
+  for (const v of before.values()) out.push({ label: v.label, before: v.amount, change: "removed" });
   return out;
 }
 

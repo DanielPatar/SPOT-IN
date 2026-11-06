@@ -17,8 +17,11 @@ import { quoteDraftAction, quoteApprovalAction } from "@/web/actions/booking";
 const tone = (s: string) => (s === "sent" || s === "accepted" ? "positive" : s === "pending_approval" || s === "draft" ? "waiting" : s === "declined" || s === "expired" ? "danger" : "neutral") as "positive";
 
 /** Quote builder for the venue (FR-M12-01..05, FR-M12-13, FR-M2-06). */
-export default async function QuoteBuilderPage({ params }: { params: Promise<{ id: string }> }) {
+const DONE = ["sent", "sentForApproval", "approvedSent", "returned"];
+
+export default async function QuoteBuilderPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ done?: string }> }) {
   const { id } = await params;
+  const { done } = await searchParams;
   const { session, venue } = await requireVenuePage(`/venue/enquiry/${id}/penawaran`);
   const a = { userId: session.userId };
   let e;
@@ -41,9 +44,8 @@ export default async function QuoteBuilderPage({ params }: { params: Promise<{ i
   const held = c.some((x) => x.kind === "tentative_hold" || x.kind === "booking_hold");
   const booked = c.some((x) => x.kind === "booked" || x.kind === "block");
   const tz = String(e.timezone);
-  // Revision comments are keyed by the sent version's line ids; the new draft copies lines with new ids, so match by label.
-  const byLabel = new Map((latestSent?.lines ?? []).map((l) => [l.label, revision?.lines?.[l.id]]));
-  const draftComments = Object.fromEntries((draft?.lines ?? []).map((l) => [l.id, byLabel.get(l.label)]).filter(([, v]) => v)) as Record<string, string>;
+  // Line ids carry over from the sent version into the new draft, so comments map directly.
+  const draftComments = revision?.lines ?? {};
   const canSend = can("venue_operator", venue.role, "quote.send");
   const isOwner = venue.role === "owner";
   const threshold = ctx!.approval_threshold == null ? null : num(ctx!.approval_threshold);
@@ -52,6 +54,7 @@ export default async function QuoteBuilderPage({ params }: { params: Promise<{ i
     <div>
       <PageTitle back={{ href: `/venue/enquiry/${id}`, label: t("quoteBuilder.back") }} title={t("quoteBuilder.title", { event: String(e.event_name) })} description={t("quoteBuilder.intro", { space: String(e.space_name) })} />
       <div className="mb-4 grid gap-3">
+        {done && DONE.includes(done) ? <Notice tone="positive" className="alert-ok" title={t(`quoteBuilder.${done}`)} /> : null}
         {ctx!.verification_status !== "verified" ? <Notice tone="danger" title={t("quoteBuilder.unverifiedTitle")}>{t("listings.operatorNotVerified")}</Notice> : null}
         {booked ? <Notice tone="danger" title={t("quoteBuilder.bookedTitle")}>{t("quoteBuilder.bookedBody")}</Notice> : null}
         {!booked && held ? <Notice tone="waiting" title={t("quoteBuilder.backupTitle")}>{t("quoteBuilder.backupBody")}</Notice> : null}

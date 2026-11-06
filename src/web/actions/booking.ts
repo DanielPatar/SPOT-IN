@@ -49,8 +49,8 @@ export async function quoteDraftAction(_: ActionState, form: FormData): Promise<
     await quotes.updateDraft(a, quoteId, parseDraft(form));
     if (op === "send") {
       const r = await quotes.submitQuote(a, quoteId);
-      revalidatePath(`/venue/enquiry/${str(form, "enquiryId")}/penawaran`);
-      return { ok: t(r === "sent" ? "quoteBuilder.sent" : "quoteBuilder.sentForApproval") };
+      // The draft form disappears once sent, so the confirmation lives on the page itself.
+      redirect(`/venue/enquiry/${str(form, "enquiryId")}/penawaran?done=${r === "sent" ? "sent" : "sentForApproval"}`);
     }
     revalidatePath(`/venue/enquiry/${str(form, "enquiryId")}/penawaran`);
     return { ok: t("quoteBuilder.draftSaved") };
@@ -63,8 +63,7 @@ export async function quoteApprovalAction(_: ActionState, form: FormData): Promi
     const quoteId = str(form, "quoteId");
     if (str(form, "op") === "approve") await quotes.approveQuote(a, quoteId);
     else await quotes.returnQuote(a, quoteId, str(form, "comment"));
-    revalidatePath(`/venue/enquiry/${str(form, "enquiryId")}/penawaran`);
-    return { ok: t(str(form, "op") === "approve" ? "quoteBuilder.approvedSent" : "quoteBuilder.returned") };
+    redirect(`/venue/enquiry/${str(form, "enquiryId")}/penawaran?done=${str(form, "op") === "approve" ? "approvedSent" : "returned"}`);
   });
 }
 
@@ -92,8 +91,7 @@ export async function agreementAction(_: ActionState, form: FormData): Promise<A
   return run(async () => {
     const a = await actor();
     await bookings.acceptAgreement(a, str(form, "bookingId"), { checked: bool(form, "read"), typedName: str(form, "typedName") });
-    revalidatePath(`/pemesanan/${str(form, "bookingId")}`);
-    return { ok: t("agreementPanel.accepted") };
+    redirect(`/pemesanan/${str(form, "bookingId")}?done=agreement`);
   });
 }
 
@@ -118,8 +116,7 @@ export async function extendBalanceAction(_: ActionState, form: FormData): Promi
   return run(async () => {
     const a = await actor();
     await bookings.extendBalance(a, str(form, "bookingId"), int(form, "days") ?? 0);
-    revalidatePath(`/pemesanan/${str(form, "bookingId")}`);
-    return { ok: t("workspace.extended") };
+    redirect(`/pemesanan/${str(form, "bookingId")}?done=extended`);
   });
 }
 

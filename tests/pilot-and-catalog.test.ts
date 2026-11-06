@@ -57,6 +57,7 @@ describe("FR-M25-01/05 message catalog", () => {
       "payments.kinds": ["deposit", "balance", "full"],
       quoteStatus: ["draft", "pending_approval", "approved", "sent", "superseded", "accepted", "declined", "expired", "withdrawn"],
       bookingStatus: ["pending_agreement_and_deposit", "confirmed", "balance_due", "fully_paid", "in_progress", "post_event_window", "on_hold", "settled", "lapsed", "cancelled_by_organizer", "cancelled_by_venue"],
+      quoteBuilder: ["sent", "sentForApproval", "approvedSent", "returned"],
       compare: ["total", "perDay", "deposit", "deadlines", "cancellation", "response", "inclusions"],
       "pay.methods": ["test_va", "test_qris", "test_ewallet", "test_card"],
       "pay.simulate": ["paid", "failed", "expired"],

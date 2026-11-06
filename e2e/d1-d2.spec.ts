@@ -11,10 +11,6 @@ test.describe.configure({ mode: "serial" });
 const BUDI = "budi.e2e@spot-in.test";
 const STAFF = "staff.e2e@spot-in.test";
 
-test.afterAll(async () => {
-  await sql.end();
-});
-
 test("D1 — venue onboarding: invite, sign-up and consent, property with pin, two spaces, verification, searchable", async ({ page, browser }) => {
   // Admin invites Budi and his colleague (FR-M38-02)
   await adminLogin(page);
