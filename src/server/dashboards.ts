@@ -116,7 +116,7 @@ export async function venueCountsCsv(actor: Actor, from: string, to: string): Pr
 }
 
 /** FR-M22-06: organizer events with next action and registrations vs capacity. */
-export async function organizerEvents(actor: Actor) {
+export async function organizerEventDashboard(actor: Actor) {
   const m = await requirePermission(actor.userId, "organizer", "enquiry.view");
   const rows = await db()`
     select e.id, e.name, e.days, e.created_at,
@@ -129,7 +129,7 @@ export async function organizerEvents(actor: Actor) {
       (select coalesce(sum(capacity), 0)::int from event_sessions s where s.page_id = ep.id) as capacity
     from events e left join event_pages ep on ep.event_id = e.id
     where e.organizer_org_id = ${m.orgId} order by e.created_at desc`;
-  return rows.map((r) => ({ ...r, nextAction: nextAction(r) }));
+  return rows.map((r) => Object.assign({}, r as Record<string, unknown>, { nextAction: nextAction(r) }) as Record<string, unknown> & { nextAction: string });
 }
 
 function nextAction(r: Record<string, unknown>): string {

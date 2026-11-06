@@ -25,6 +25,12 @@ export default async function EventPage({ params, searchParams }: { params: Prom
       <div className="spread">
         <h1>{String(e.name)}</h1>
         <div className="row">
+          <Link className="btn btn-secondary" href={`/acara/${id}/bandingkan`}>
+            {t("compare.title")}
+          </Link>
+          <Link className="btn btn-secondary" href={`/acara/${id}/halaman`}>
+            {t("events.eventPage")}
+          </Link>
           <Link className="btn btn-secondary" href={`/acara/${id}/ubah`}>
             {t("events.edit")}
           </Link>

@@ -21,7 +21,7 @@ import {
   saveEventPage, publishEventPage, register, confirmRegistration, cancelOwnRegistration, attendees, organizerCancelRegistration, attendeesCsv,
   passView, checkIn, undoCheckIn, setRegistrationOpen, report, publicPage, validateQuestions, type PageInput,
 } from "@/server/event-pages";
-import { venuePipeline, venueThisWeek, venueCounts, organizerEvents } from "@/server/dashboards";
+import { venuePipeline, venueThisWeek, venueCounts, organizerEventDashboard } from "@/server/dashboards";
 import { contactUs } from "@/server/contact";
 import type { QuoteLine } from "@/lib/quote-math";
 import type { Actor } from "@/server/accounts";
@@ -413,7 +413,7 @@ describe("M22 dashboards, M26 help, M24 ledger, M1 deletion", () => {
     const week = await venueThisWeek(c.v.owner);
     expect(week.events.map((e) => String(e.id))).toEqual([bookingId]);
     expect(week.balances.length).toBe(1);
-    const evs = await organizerEvents(c.o.owner);
+    const evs = await organizerEventDashboard(c.o.owner);
     expect(evs[0]!.nextAction).toBe("payBalance");
   });
 

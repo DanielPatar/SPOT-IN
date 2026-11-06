@@ -2,7 +2,7 @@ import Link from "next/link";
 import { t } from "@/lib/i18n";
 
 export function AdminNav() {
-  const items = ["", "undangan", "verifikasi", "ruang", "laporan", "buku-besar", "cari", "pengaturan", "audit"];
+  const items = ["", "undangan", "verifikasi", "ruang", "laporan", "masalah", "buku-besar", "cari", "pengaturan", "audit"];
   return (
     <nav className="row" style={{ marginBottom: 16 }} aria-label={t("admin.nav")}>
       {items.map((i) => (
