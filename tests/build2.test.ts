@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { PDFDocument } from "pdf-lib";
+import { createHash } from "node:crypto";
 import { db } from "@/lib/db";
 import { now } from "@/lib/clock";
 import { sha256 } from "@/lib/tokens";
@@ -364,6 +365,6 @@ describe("Build 1 criteria that needed bookings", () => {
 });
 
 function sha256Hex(b: Buffer): string {
-  return require("node:crypto").createHash("sha256").update(b).digest("hex");
+  return createHash("sha256").update(b).digest("hex");
 }
 void sha256;

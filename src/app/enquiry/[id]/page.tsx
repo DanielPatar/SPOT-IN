@@ -5,6 +5,9 @@ import { formatDateTime } from "@/lib/time";
 import { requireOrganizerPage } from "@/web/view";
 import { enquiryForActor, OPEN_STATUSES } from "@/server/enquiries";
 import { holdForEnquiry } from "@/server/calendar";
+import { quotesForEnquiry } from "@/server/quotes";
+import { db } from "@/lib/db";
+import { QuotePanel } from "@/components/QuotePanel";
 import { PermissionError, can } from "@/lib/permissions";
 import { EnquirySummary } from "@/components/EnquirySummary";
 import { Thread } from "@/components/Thread";
@@ -26,6 +29,8 @@ export default async function OrganizerEnquiryPage({ params }: { params: Promise
   const e = data.enquiry;
   const open = (OPEN_STATUSES as readonly string[]).includes(String(e.status));
   const hold = await holdForEnquiry(id);
+  const { quotes } = await quotesForEnquiry({ userId: session.userId }, id);
+  const [bk] = await db()`select id from bookings where enquiry_id = ${id} and status <> 'lapsed' order by created_at desc limit 1`;
   return (
     <div className="cols">
       <div>
@@ -45,10 +50,12 @@ export default async function OrganizerEnquiryPage({ params }: { params: Promise
       </div>
       <div>
         {hold ? <p className="alert alert-ok">{t("organizerEnquiry.held", { at: formatDateTime(hold.expiresAt, String(e.timezone)) })}</p> : null}
-        <div className="card">
-          <h2 style={{ marginTop: 0 }}>{t("organizerEnquiry.quotes")}</h2>
-          <p className="small muted">{t("organizerEnquiry.quotesBuild2")}</p>
-        </div>
+        <QuotePanel quotes={quotes} tz={String(e.timezone)} canAccept={can("organizer", organizer.role, "quote.accept")} bookingId={bk ? String(bk.id) : null} />
+        {quotes.length ? (
+          <p className="small">
+            <Link href={`/acara/${e.event_id}/bandingkan`}>{t("compare.link")}</Link>
+          </p>
+        ) : null}
         {open ? (
           <div className="card">
             <Form action={organizerEnquiryAction}>

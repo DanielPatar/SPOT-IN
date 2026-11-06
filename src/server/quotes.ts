@@ -223,9 +223,8 @@ export async function returnQuote(actor: Actor, quoteId: string, comment: string
   if (quote.created_by) await notify({ userIds: [String(quote.created_by)], event: "quote_returned", values: { comment }, link: `/venue/enquiry/${quote.enquiry_id}/penawaran` });
 }
 
-async function sendQuote(quoteId: string, actorId: string): Promise<void> {
+async function sendQuote(quoteId: string, _actorId: string): Promise<void> {
   const at = await now();
-  const holidays = await loadHolidays();
   const result = await db().begin(async (sql) => {
     const [qt] = await sql`select * from quotes where id = ${quoteId} for update`;
     const { ctx, isBackup } = await sendChecks(qt as unknown as QuoteRow, sql);
