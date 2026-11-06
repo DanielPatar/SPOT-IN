@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: spotin
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: spotin_test
+        ports: ["5433:5432"]
+        options: >-
+          --health-cmd "pg_isready -U spotin" --health-interval 5s --health-timeout 5s --health-retries 20
+    env:
+      TEST_DATABASE_URL: postgres://spotin@127.0.0.1:5433/spotin_test
+      E2E_DATABASE_URL: postgres://spotin@127.0.0.1:5433/spotin_e2e
+      APP_ENV: test
+      PILOT_MODE: "on"
+      APP_SECRET: ci-secret-ci-secret-ci-secret-ci-secret
+      DATABASE_URL: postgres://spotin@127.0.0.1:5433/spotin_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Create e2e database
+        run: psql -h 127.0.0.1 -p 5433 -U spotin -d postgres -c "create database spotin_e2e"
+      - name: Lint (includes the no-hard-coded-strings rule, FR-M25-05)
+        run: npm run lint
+      - run: npm run typecheck
+      - name: Unit and integration tests
+        run: npm test
+      - name: Build
+        run: npm run build
+        env:
+          APP_ENV: demo
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+      - name: End-to-end D1 and D2
+        run: npm run e2e
+        env:
+          CI: "true"
+          DISABLE_JOB_TICKER: "1"
+      - name: Pre-demo data scan (FR-M38-04)
+        run: npm run pii-scan
+        env:
+          DATABASE_URL: postgres://spotin@127.0.0.1:5433/spotin_e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Dependency audit
+        run: npm audit --audit-level=high --omit=dev
+      - name: Secret scan (gitleaks CLI; the gitleaks Action needs a paid license for org repos)
+        run: docker run --rm -v "$PWD:/repo" zricethezav/gitleaks:v8.24.3 git /repo --redact --exit-code 1
