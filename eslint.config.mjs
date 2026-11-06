@@ -10,7 +10,7 @@ const config = [
   ...nextVitals,
   ...nextTs,
   {
-    ignores: [".next/**", "node_modules/**", "storage/**", ".local/**", "playwright-report/**", "test-results/**", "next-env.d.ts"],
+    ignores: ["docs/mockups/**", ".claude/**", ".next/**", "node_modules/**", "storage/**", ".local/**", "playwright-report/**", "test-results/**", "next-env.d.ts"],
   },
   {
     files: ["src/**/*.tsx"],
