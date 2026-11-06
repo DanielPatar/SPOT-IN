@@ -21,6 +21,9 @@ export const TRANSACTIONAL_EVENTS = new Set([
   "booking_lapsed",
   "booking_cancelled",
   "pass_issued",
+  "payment_received",
+  "agreement_venue_turn",
+  "quote_accepted",
   "event_changed",
   "event_cancelled",
 ]);

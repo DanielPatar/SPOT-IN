@@ -457,6 +457,110 @@
     "hold_released": {
       "title": "Tahanan tanggal dilepas",
       "body": "Pengelola melepas tahanan sementara untuk {event}."
+    },
+    "quote_approval_needed": {
+      "title": "Penawaran menunggu persetujuan Anda",
+      "body": "Penawaran untuk {event} sebesar {total} perlu persetujuan Pemilik sebelum dikirim."
+    },
+    "quote_returned": {
+      "title": "Penawaran dikembalikan ke draf",
+      "body": "Pemilik mengembalikan penawaran Anda dengan catatan: {comment}"
+    },
+    "quote_sent": {
+      "title": "Penawaran baru dari {space}",
+      "body": "Total {total}. Berlaku sampai {until}."
+    },
+    "quote_revised": {
+      "title": "Penawaran direvisi: {space}",
+      "body": "Versi baru dengan total {total}. Berlaku sampai {until}."
+    },
+    "quote_backup": {
+      "title": "Penawaran cadangan dari {space}",
+      "body": "Tanggal Anda sedang ditahan untuk penyelenggara lain. Anda bisa menerima penawaran ini jika tanggalnya dilepas."
+    },
+    "quote_revision_requested": {
+      "title": "Penyelenggara meminta revisi: {event}",
+      "body": "Buka penawaran untuk melihat komentar per baris."
+    },
+    "quote_declined": {
+      "title": "Penawaran ditolak: {event}",
+      "body": "Alasan: {reason}"
+    },
+    "quote_expired": {
+      "title": "Penawaran kedaluwarsa",
+      "body": "Masa berlaku penawaran dari {space} sudah habis."
+    },
+    "quote_backup_acceptable": {
+      "title": "Tanggal Anda tersedia lagi",
+      "body": "Penawaran cadangan dari {space} sekarang bisa diterima. Penerima pertama mendapatkan tanggalnya."
+    },
+    "quote_dates_booked": {
+      "title": "Tanggal sudah dipesan",
+      "body": "Penawaran dari {space} berakhir karena tanggalnya sudah dipesan penyelenggara lain."
+    },
+    "quote_accept_conflict": {
+      "title": "Penerimaan penawaran gagal: tanggal sudah diambil",
+      "body": "Penawaran untuk {event} tidak bisa diterima karena tanggalnya baru saja diambil. Revisi atau tarik penawaran ini."
+    },
+    "quote_accepted": {
+      "title": "Penawaran diterima: {event}",
+      "body": "Penyelenggara menerima penawaran untuk {space}. Perjanjian contoh sedang dibuat."
+    },
+    "agreement_ready": {
+      "title": "Perjanjian contoh siap disetujui ({ref})",
+      "body": "Baca dan setujui perjanjian contoh (pilot). Perjanjian ini tidak mengikat."
+    },
+    "agreement_venue_turn": {
+      "title": "Giliran Anda menyetujui perjanjian ({ref})",
+      "body": "{by} sudah menyetujui perjanjian contoh. Setujui juga agar pemesanan bisa dikonfirmasi."
+    },
+    "agreement_accepted": {
+      "title": "Perjanjian disetujui kedua pihak ({ref})",
+      "body": "{by} sudah menyetujui perjanjian contoh."
+    },
+    "admin_alert_agreement_failed": {
+      "title": "Pembuatan perjanjian gagal 3 kali",
+      "body": "Perjanjian untuk pemesanan {booking} gagal dibuat. Periksa log."
+    },
+    "payment_failed": {
+      "title": "Pembayaran uji gagal ({ref})",
+      "body": "Coba metode lain. Status pemesanan tidak berubah."
+    },
+    "payment_received": {
+      "title": "Pembayaran uji diterima ({ref})",
+      "body": "{amount} tercatat di buku besar sandbox. Kuitansi pilot tersedia di ruang kerja pemesanan."
+    },
+    "booking_confirmed": {
+      "title": "Pemesanan terkonfirmasi ({ref})",
+      "body": "Perjanjian disetujui dan uang muka uji dibayar. Kontak kedua pihak kini terlihat di ruang kerja pemesanan."
+    },
+    "enquiry_dates_booked": {
+      "title": "Tanggal sudah dipesan",
+      "body": "Tanggal yang Anda minta di {space} sudah dipesan penyelenggara lain."
+    },
+    "booking_lapsed": {
+      "title": "Pemesanan batal otomatis ({ref})",
+      "body": "Perjanjian atau uang muka tidak selesai sebelum tenggat. Tanggal dilepas dan pembayaran uji dikembalikan (simulasi)."
+    },
+    "payment_late_refunded": {
+      "title": "Pembayaran terlambat dikembalikan ({ref})",
+      "body": "Tanggal sudah diambil penyelenggara lain, jadi pembayaran uji dikembalikan (simulasi)."
+    },
+    "payment_due": {
+      "title": "Tagihan uji jatuh tempo ({ref})",
+      "body": "{amount} jatuh tempo {due}. Ini pembayaran uji, tidak ada uang nyata."
+    },
+    "balance_missed_venue": {
+      "title": "Pelunasan belum dibayar ({ref})",
+      "body": "Anda bisa memperpanjang tenggat sekali hingga 3 hari, atau membatalkan sesuai kebijakan pembatalan."
+    },
+    "balance_missed_organizer": {
+      "title": "Pelunasan terlambat ({ref})",
+      "body": "Tenggat pelunasan sudah lewat. Pengelola dapat memperpanjang atau membatalkan pemesanan."
+    },
+    "balance_extended": {
+      "title": "Tenggat pelunasan diperpanjang ({ref})",
+      "body": "Tenggat baru: {due}."
     }
   },
   "meta": {
@@ -1188,7 +1292,52 @@
   },
   "docs": {
     "previewOf": "Pratinjau dokumen: {title}",
-    "pilotStamp": "PILOT"
+    "pilotStamp": "PILOT",
+    "col": {
+      "item": "Uraian",
+      "qty": "Jumlah",
+      "unitPrice": "Harga satuan",
+      "discount": "Diskon",
+      "amount": "Jumlah (Rp)",
+      "payment": "Pembayaran",
+      "dueAt": "Jatuh tempo",
+      "side": "Pihak",
+      "name": "Nama",
+      "time": "Waktu",
+      "ip": "Alamat IP"
+    },
+    "quoteTitle": "Penawaran (pilot)",
+    "quoteNumber": "Penawaran {id} · versi {version}",
+    "event": "Acara",
+    "space": "Ruang",
+    "dates": "Tanggal",
+    "validUntil": "Berlaku sampai",
+    "prices": "Rincian harga",
+    "terms": "Ketentuan",
+    "schedule": "Jadwal pembayaran",
+    "cancellation": "Kebijakan pembatalan",
+    "quoteVersion": "Versi penawaran",
+    "pilotFooter": "Dokumen pilot Spot-In – latihan, tidak mengikat, tanpa pembayaran nyata.",
+    "agreementTitle": "Perjanjian contoh (pilot)",
+    "bookingRef": "Pemesanan {ref}",
+    "agreementNotBinding": "Perjanjian ini adalah contoh untuk pilot dan bukan kontrak yang mengikat secara hukum.",
+    "agreementFooter": "Perjanjian contoh (pilot) – bukan kontrak yang mengikat. Tanpa tanda tangan elektronik atau e-meterai.",
+    "parties": "Para pihak",
+    "venueParty": "Pengelola",
+    "organizerParty": "Penyelenggara",
+    "subject": "Objek pemesanan",
+    "acceptances": "Persetujuan",
+    "sides": {
+      "organizer": "Penyelenggara",
+      "venue": "Pengelola"
+    },
+    "noAcceptancesYet": "Belum ada pihak yang menyetujui.",
+    "receiptTitle": "Kuitansi pilot – bukan faktur pajak",
+    "creditNoteTitle": "Nota kredit pilot – bukan faktur pajak",
+    "receiptFooter": "Kuitansi pilot – bukan faktur pajak. Pembayaran uji, tidak ada uang nyata.",
+    "issuedAt": "Diterbitkan",
+    "total": "Total",
+    "compareTitle": "Perbandingan penawaran (pilot)"
   },
   "booking": {
     "progressLabel": "Tahap pemesanan",
@@ -1201,5 +1350,71 @@
       "event": "Acara",
       "settled": "Penyelesaian"
     }
+  },
+  "quotes": {
+    "linesRequired": "Tambahkan setidaknya satu baris penawaran.",
+    "lineLabelRequired": "Setiap baris perlu nama.",
+    "quantityInvalid": "Jumlah pada baris penawaran harus lebih dari 0.",
+    "depositInvalid": "Uang muka minimal {min}% dan kurang dari 100%.",
+    "depositDaysInvalid": "Uang muka harus jatuh tempo 1–7 hari setelah penawaran diterima.",
+    "balanceTooClose": "Pelunasan paling lambat 3 hari sebelum acara dimulai.",
+    "validityInvalid": "Masa berlaku penawaran 1–60 hari.",
+    "notDraft": "Penawaran ini sudah dikirim atau menunggu persetujuan, jadi tidak bisa diubah lagi. Buat versi baru.",
+    "notPending": "Penawaran ini tidak sedang menunggu persetujuan.",
+    "notOpen": "Penawaran ini sudah tidak bisa ditanggapi.",
+    "datesBlocked": "Tanggal ini diblokir di kalender Anda. Buka blokir terlebih dahulu jika ingin menawarkannya.",
+    "datesBooked": "Tanggal ini sudah dipesan ({ref}). Penawaran tidak bisa dikirim untuk tanggal yang sudah dipesan.",
+    "bufferViolated": "Jeda antar pemesanan tidak terpenuhi. Pemesanan sebelumnya selesai {end}.",
+    "revisionEmpty": "Tulis apa yang perlu diubah, secara umum atau per baris.",
+    "superseded": "Ada versi penawaran yang lebih baru. Hanya versi terbaru yang bisa diterima.",
+    "expired": "Masa berlaku penawaran ini sudah habis. Minta pengelola mengirim ulang jika Anda masih tertarik.",
+    "eventChanged": "Detail acara berubah setelah penawaran ini dikirim. Tunggu pengelola meninjau dan mengirim ulang.",
+    "datesHeld": "Tanggal ini sedang ditahan untuk penyelenggara lain. Anda akan diberi tahu jika tanggalnya kembali tersedia.",
+    "datesBookedOrganizer": "Tanggal ini sudah dipesan penyelenggara lain.",
+    "datesJustTaken": "Tanggal ini baru saja diambil penyelenggara lain. Kirim pesan ke pengelola atau cari ruang lain."
+  },
+  "bookings": {
+    "pilotTermsRequired": "Setujui syarat pemesanan pilot untuk melanjutkan.",
+    "notPending": "Langkah ini sudah selesai atau pemesanan tidak lagi menunggu perjanjian.",
+    "closed": "Pemesanan ini sudah ditutup.",
+    "alreadyExtended": "Tenggat pelunasan hanya bisa diperpanjang sekali.",
+    "extendDaysInvalid": "Perpanjangan 1–3 hari."
+  },
+  "agreement": {
+    "tickRequired": "Centang pernyataan bahwa Anda telah membaca perjanjian.",
+    "nameMismatch": "Ketik nama lengkap Anda persis seperti di profil: {name}.",
+    "generating": "Perjanjian masih dibuat. Coba lagi sebentar lagi.",
+    "organizerFirst": "Penyelenggara menyetujui perjanjian lebih dulu. Anda akan diberi tahu jika sudah giliran Anda.",
+    "alreadyAccepted": "Anda sudah menyetujui perjanjian ini."
+  },
+  "payments": {
+    "kinds": {
+      "deposit": "Uang muka",
+      "balance": "Pelunasan",
+      "full": "Pembayaran penuh"
+    },
+    "notOpen": "Tagihan ini sudah dibayar atau tidak berlaku lagi."
+  },
+  "quote": {
+    "rentalAndAddOns": "Sewa dan layanan tambahan",
+    "serviceCharge": "Service charge",
+    "ppn": "PPN",
+    "venueTotal": "Total pengelola",
+    "spotinFee": "Biaya layanan Spot-In",
+    "organizerTotal": "Total yang Anda bayar",
+    "inclusions": "Sudah termasuk",
+    "exclusions": "Belum termasuk",
+    "specialTerms": "Ketentuan khusus",
+    "scheduleFull": "Pembayaran penuh saat penawaran diterima.",
+    "scheduleSplit": "Uang muka {pct}% (ditambah biaya layanan Spot-In) dalam {days} hari setelah diterima; pelunasan paling lambat {before} hari sebelum acara."
+  },
+  "compare": {
+    "space": "Ruang",
+    "total": "Total",
+    "perDay": "Per hari",
+    "deposit": "Uang muka",
+    "cancellation": "Pembatalan",
+    "response": "Waktu balas",
+    "inclusions": "Yang sudah termasuk"
   }
 }

@@ -53,6 +53,8 @@ describe("FR-M25-01/05 message catalog", () => {
       "venueHome.step": ["profile", "property", "pin", "space", "submitted", "verified"],
       autoDecline: ["space_unpublished", "space_suspended", "operator_suspended"],
       orgKinds: ["venue_operator", "organizer"],
+      "docs.sides": ["organizer", "venue"],
+      "payments.kinds": ["deposit", "balance", "full"],
       "booking.steps": ["accepted", "agreement", "deposit", "confirmed", "balance", "event", "settled"],
     };
     const missing: string[] = [];
