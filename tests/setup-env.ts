@@ -1,0 +1,12 @@
+process.env.APP_ENV = "test";
+process.env.PILOT_MODE = "on";
+process.env.APP_SECRET = "test-secret-test-secret-test-secret-test";
+process.env.DATABASE_URL = process.env.TEST_DATABASE_URL ?? "postgres://spotin@127.0.0.1:5433/spotin_test";
+process.env.EMAIL_DRIVER = "outbox";
+process.env.STORAGE_DRIVER = "local";
+process.env.STORAGE_LOCAL_DIR = "./.local/test-storage";
+process.env.SCANNER_DRIVER = "eicar";
+process.env.GEOCODER_DRIVER = "fake";
+process.env.ADMIN_EMAILS = "admin@spot-in.test";
+process.env.APP_URL = "http://localhost:3000";
+delete process.env.XENDIT_SECRET_KEY;
