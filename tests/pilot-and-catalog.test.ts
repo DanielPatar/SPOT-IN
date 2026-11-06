@@ -53,6 +53,7 @@ describe("FR-M25-01/05 message catalog", () => {
       "venueHome.step": ["profile", "property", "pin", "space", "submitted", "verified"],
       autoDecline: ["space_unpublished", "space_suspended", "operator_suspended"],
       orgKinds: ["venue_operator", "organizer"],
+      "booking.steps": ["accepted", "agreement", "deposit", "confirmed", "balance", "event", "settled"],
     };
     const missing: string[] = [];
     for (const [prefix, values] of Object.entries(fam)) for (const v of values) if (!hasMessage(`${prefix}.${v}`)) missing.push(`${prefix}.${v}`);

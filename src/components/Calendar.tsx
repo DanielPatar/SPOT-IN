@@ -1,5 +1,5 @@
 import { t } from "@/lib/i18n";
-import { addDays, weekdayOf } from "@/lib/time";
+import { addDays, weekdayOf, formatMonth } from "@/lib/time";
 
 /** Month grid of day states (FR-M6-01 venue view, FR-M6-02 organizer view). */
 export function CalendarGrid({ month, days }: { month: string; days: { date: string; state: string }[] }) {
@@ -9,7 +9,8 @@ export function CalendarGrid({ month, days }: { month: string; days: { date: str
   const cells: ({ date: string; state: string } | null)[] = [...Array(lead).fill(null), ...inMonth];
   const heads = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
   return (
-    <div>
+    <div className="mb-4">
+      <h3 className="mt-0 mb-2">{formatMonth(month)}</h3>
       <div className="cal" aria-hidden="true">
         {heads.map((h) => (
           <div className="cal-head" key={h}>

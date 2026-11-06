@@ -78,6 +78,14 @@ export function daysBetween(a: string, b: string): number {
 }
 
 const MONTHS_ID = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+const MONTHS_LONG_ID = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+/** "Desember 2026" for a YYYY-MM month. */
+export function formatMonth(month: string): string {
+  const [y, m] = month.split("-").map(Number) as [number, number];
+  return `${MONTHS_LONG_ID[m - 1]} ${y}`;
+}
+
 const WEEKDAYS_ID = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
 /** "12 Des 2026" (FR-M25-02) for a YYYY-MM-DD date. */

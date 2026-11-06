@@ -14,7 +14,7 @@ export default async function VenueSpacesPage() {
           {t("spaces.new")}
         </Link>
       </div>
-      <div className="grid">
+      <div className="card-grid">
         {spaces.map((s) => {
           const img = coverUrl(s.media);
           return (

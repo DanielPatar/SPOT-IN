@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { t } from "@/lib/i18n";
 import { now } from "@/lib/clock";
-import { localDate, formatDateTime, tzLabel } from "@/lib/time";
+import { localDate, formatDateTime, tzLabel, formatMonth } from "@/lib/time";
 import { requireVenuePage } from "@/web/view";
 import { venueCalendar } from "@/server/calendar";
 import { PermissionError } from "@/lib/permissions";
@@ -30,7 +30,7 @@ export default async function VenueCalendarPage({ params, searchParams }: { para
         <h1>{t("calendar.title", { space: String(cal.space.name) })}</h1>
         <div className="row">
           <Link href={`?m=${shiftMonth(month, -1)}`}>{t("calendar.prev")}</Link>
-          <strong>{month}</strong>
+          <strong>{formatMonth(month)}</strong>
           <Link href={`?m=${shiftMonth(month, 1)}`}>{t("calendar.next")}</Link>
         </div>
       </div>

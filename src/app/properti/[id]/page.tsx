@@ -28,7 +28,7 @@ export default async function PropertyPublicPage({ params }: { params: Promise<{
         {t(`propertyTypes.${String(p.type)}`)} · {String(p.address_text)} {p.verified ? <span className="badge badge-ok">{t("badges.verified")}</span> : null}
       </p>
       <div className="cols">
-        <div className="grid">
+        <div className="card-grid">
           {spaces.map((s) => {
             const img = coverUrl(s.media);
             return (

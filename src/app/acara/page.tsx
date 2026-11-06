@@ -17,7 +17,7 @@ export default async function EventsPage() {
         </Link>
       </div>
       {events.length === 0 ? <p className="muted">{t("events.empty")}</p> : null}
-      <div className="grid">
+      <div className="card-grid">
         {events.map((e) => {
           const days = e.days as { date: string }[];
           const next = Number(e.info_requested) > 0 ? "answerVenue" : Number(e.enquiries) === 0 ? "sendEnquiry" : Number(e.open_enquiries) > 0 ? "waitQuotes" : "findMore";

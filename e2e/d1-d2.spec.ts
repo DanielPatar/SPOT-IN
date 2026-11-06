@@ -58,9 +58,9 @@ test("D1 — venue onboarding: invite, sign-up and consent, property with pin, t
 
   // List spaces (FR-M1-06)
   await page.goto("/mulai");
-  await page.getByLabel("Daftarkan ruang (saya pengelola venue)").check();
-  await page.getByLabel("Cari ruang (saya penyelenggara acara)").uncheck();
-  await page.getByLabel("Nama venue (nama tampilan)").fill("Mal Budi Sentosa");
+  await page.getByLabel(/Daftarkan ruang/).check();
+  await page.getByLabel(/Cari ruang \(saya/).uncheck();
+  await page.getByLabel("Nama tempat yang dilihat penyelenggara").fill("Mal Budi Sentosa");
   await page.getByLabel("Kota", { exact: true }).fill("Jakarta Selatan");
   await page.getByRole("button", { name: "Lanjutkan" }).click();
   await page.waitForURL(/\/venue$/);
@@ -192,7 +192,7 @@ test("D2 — search with dates and filters, map, shortlist shared logged out, on
   await page.getByLabel("Tanggal").first().fill("2026-12-14");
   await page.getByRole("button", { name: "Hitung perkiraan" }).click();
   await expect(page.getByText("Perkiraan ini tidak mengikat")).toBeVisible();
-  await page.getByLabel("Nama shortlist baru").fill("Expo Desember");
+  await page.getByLabel("Nama daftar pilihan baru").fill("Expo Desember");
   await page.getByRole("button", { name: "Buat dan simpan" }).click();
   await okAlert(page);
   for (const [q, name] of [["sentosa", "Atrium Sentosa"], ["kemang", "Aula Kemang"]] as const) {
@@ -215,7 +215,7 @@ test("D2 — search with dates and filters, map, shortlist shared logged out, on
   await anon.close();
 
   // One enquiry to the three shortlisted spaces with a proposal deck (FR-M8-04, FR-M9-03)
-  await page.getByRole("button", { name: "Kirim enquiry ke ruang terpilih" }).click();
+  await page.getByRole("button", { name: "Kirim permintaan ke ruang terpilih" }).click();
   await page.waitForURL(/\/acara\/kirim/);
   await page.getByRole("link", { name: "Buat acara baru" }).click();
   await page.getByLabel("Nama acara").fill("Tech Expo Desember");
@@ -227,13 +227,13 @@ test("D2 — search with dates and filters, map, shortlist shared logged out, on
   await page.getByRole("button", { name: "Tambah hari" }).click();
   await page.getByRole("button", { name: "Tambah hari" }).click();
   await page.locator('input[name="files"]').setInputFiles({ name: "proposal.pdf", mimeType: "application/pdf", buffer: Buffer.from("%PDF-1.4\n% Tech Expo proposal\n") });
-  await page.getByRole("button", { name: "Simpan dan lanjut kirim enquiry" }).click();
+  await page.getByRole("button", { name: "Simpan dan lanjut kirim permintaan" }).click();
   await page.waitForURL(/\/acara\/[0-9a-f-]{36}\/kirim/);
   for (const ta of await page.locator("textarea").all()) await ta.fill("Gadget dan aksesori");
   await expectAccessible(page);
-  await page.getByRole("button", { name: "Kirim enquiry" }).click();
+  await page.getByRole("button", { name: "Kirim permintaan" }).click();
   await page.waitForURL(/sent=3/);
-  await expect(page.getByText("3 enquiry terkirim.")).toBeVisible();
+  await expect(page.getByText("3 permintaan terkirim.")).toBeVisible();
   await expect(page.locator("table tr")).toHaveCount(3);
 
   // Three independent threads with their own deadlines; each venue was notified
