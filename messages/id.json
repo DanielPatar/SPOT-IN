@@ -1,0 +1,147 @@
+{
+  "errors": {
+    "ageRequired": "Anda harus berusia 18 tahun atau lebih untuk mengikuti pilot ini.",
+    "amountInvalid": "Jumlah tidak valid. Masukkan angka Rupiah tanpa desimal.",
+    "consentRequired": "Anda perlu menyetujui pemberitahuan pilot, syarat dan kebijakan privasi.",
+    "emailInvalid": "Alamat email tidak valid.",
+    "emailTaken": "Email ini sudah terdaftar. Silakan masuk.",
+    "intentRequired": "Pilih setidaknya satu tujuan.",
+    "invalidRole": "Peran tidak valid.",
+    "invalidValue": "Nilai tidak valid. Periksa kembali isian Anda.",
+    "nameRequired": "Nama wajib diisi.",
+    "noSuchContext": "Anda bukan anggota organisasi tersebut.",
+    "notFound": "Halaman tidak ditemukan.",
+    "orgSuspended": "Organisasi Anda sedang ditangguhkan. Hubungi Admin Spot-In.",
+    "passwordTooShort": "Kata sandi minimal {min} karakter.",
+    "phoneInvalid": "Nomor telepon tidak valid.",
+    "rateLimited": "Terlalu banyak percobaan. Coba lagi beberapa saat lagi.",
+    "reasonRequired": "Alasan wajib diisi.",
+    "permissionDenied": "Anda tidak punya akses — hubungi Owner organisasi Anda.",
+    "notVerified": "Verifikasi email Anda terlebih dahulu. Kami telah mengirim tautan verifikasi.",
+    "server": "Terjadi kesalahan. Kode referensi: {ref}",
+    "generic": "Terjadi kesalahan. Coba lagi."
+  },
+  "auth": {
+    "invalidCredentials": "Email atau kata sandi salah.",
+    "notInvited": "Spot-In masih dalam pilot tertutup. Email ini belum ada di daftar undangan — hubungi kami untuk bergabung.",
+    "suspended": "Akun ini sedang ditangguhkan.",
+    "tokenInvalid": "Tautan tidak valid atau sudah kedaluwarsa.",
+    "totpAlreadyEnabled": "Autentikasi dua langkah sudah aktif.",
+    "totpInvalid": "Kode autentikator salah."
+  },
+  "account": {
+    "deletionBlocked": "Akun tidak dapat dihapus karena Anda satu-satunya Owner dari {orgs} yang memiliki pemesanan aktif. Alihkan kepemilikan atau selesaikan pemesanan terlebih dahulu."
+  },
+  "admin": {
+    "cannotSuspendSelf": "Anda tidak dapat menangguhkan akun sendiri.",
+    "inviteUserExists": "Email ini sudah memiliki akun.",
+    "methodRequired": "Pilih metode verifikasi.",
+    "unknownSetting": "Pengaturan tidak dikenal."
+  },
+  "calendar": {
+    "blockOverlaps": "Tanggal ini bertabrakan dengan tahanan atau pemesanan. Lepaskan tahanan terlebih dahulu.",
+    "bufferViolated": "Jeda waktu antar pemesanan tidak terpenuhi.",
+    "holdConflict": "Tanggal ini sudah ditahan atau tidak tersedia.",
+    "holdDaysInvalid": "Durasi tahanan harus 1–{max} hari.",
+    "holdExists": "Enquiry ini sudah memiliki tahanan aktif.",
+    "rangeTooLong": "Rentang tanggal terlalu panjang (maksimal 1 tahun)."
+  },
+  "enquiries": {
+    "alreadyOpen": "Anda sudah memiliki enquiry terbuka untuk {space} pada acara ini.",
+    "answerRequired": "Jawab pertanyaan untuk {space}: {question}",
+    "closed": "Enquiry ini sudah ditutup.",
+    "declineNoteRequired": "Jelaskan alasan penolakan.",
+    "declineReasonRequired": "Pilih alasan penolakan.",
+    "limitOpenPerEvent": "Maksimal {max} enquiry terbuka per acara.",
+    "limitPerDay": "Maksimal {max} enquiry baru per organisasi per hari.",
+    "limitPerSend": "Maksimal {max} ruang per pengiriman.",
+    "noSpaces": "Pilih setidaknya satu ruang.",
+    "ownSpace": "Anda tidak dapat mengirim enquiry ke ruang milik venue Anda sendiri.",
+    "spaceUnavailable": "Salah satu ruang tidak lagi tersedia untuk enquiry."
+  },
+  "events": {
+    "attendanceInvalid": "Perkiraan jumlah pengunjung harus angka lebih dari 0.",
+    "budgetInvalid": "Anggaran maksimum harus lebih besar dari minimum.",
+    "datesRequired": "Tambahkan setidaknya satu tanggal acara.",
+    "dayInvalid": "Tanggal atau jam acara tidak valid.",
+    "duplicateDay": "Tanggal acara tidak boleh dobel.",
+    "tooManyDays": "Maksimal 31 hari acara.",
+    "tooManyFiles": "Maksimal {max} file proposal per acara."
+  },
+  "files": {
+    "empty": "File kosong.",
+    "infected": "File {name} ditolak karena terdeteksi virus.",
+    "scanFailed": "File {name} tidak dapat dipindai. Coba lagi.",
+    "tooLarge": "File {name} melebihi {mb} MB.",
+    "typeNotAllowed": "Jenis file {name} tidak diizinkan."
+  },
+  "listings": {
+    "addressRequired": "Alamat dan kota wajib diisi.",
+    "maxBelowMin": "Durasi maksimum harus sama dengan atau lebih dari minimum.",
+    "noRateCard": "Ruang ini belum memiliki tarif.",
+    "operatorNotVerified": "Venue belum diverifikasi Spot-In. Ruang belum dapat dipublikasikan dan penawaran belum dapat dikirim.",
+    "photoRequired": "Tambahkan setidaknya satu foto ruang.",
+    "pinInvalid": "Titik peta tidak valid.",
+    "pinOutsideIndonesia": "Titik peta harus berada di Indonesia.",
+    "pinRequired": "Tentukan titik lokasi properti di peta terlebih dahulu.",
+    "propertyFirst": "Lengkapi data properti terlebih dahulu.",
+    "rateCardRequired": "Isi tarif ruang (termasuk harga mulai dari) sebelum diajukan.",
+    "tooManyPhotos": "Maksimal {max} foto.",
+    "tooManyQuestions": "Maksimal {max} pertanyaan enquiry.",
+    "usePublish": "Ruang ini pernah disetujui. Gunakan tombol Publikasikan.",
+    "videoUrlInvalid": "Tautan video harus diawali https://",
+    "wrongStatus": "Aksi ini tidak tersedia untuk status ruang saat ini."
+  },
+  "messages": {
+    "editWindowPassed": "Pesan hanya dapat diubah dalam 10 menit setelah dikirim.",
+    "empty": "Pesan tidak boleh kosong.",
+    "tooLong": "Pesan terlalu panjang."
+  },
+  "orgs": {
+    "alreadyMember": "Anda sudah tergabung dalam organisasi jenis ini.",
+    "inviteExpired": "Undangan ini sudah kedaluwarsa. Minta Owner mengirim ulang.",
+    "inviteInvalid": "Undangan tidak valid atau sudah dicabut.",
+    "inviteWrongEmail": "Undangan ini untuk alamat email lain. Masuk dengan email yang diundang.",
+    "inviteeAlreadyInOrg": "Pengguna ini sudah tergabung dalam organisasi jenis yang sama.",
+    "inviteeNotOnPilotList": "Email ini belum ada di daftar undangan pilot. Admin Spot-In sudah diberi tahu; kirim ulang undangan setelah Admin menambahkannya.",
+    "lastOwner": "Organisasi harus selalu memiliki setidaknya satu Owner.",
+    "reassigneeRequired": "Pilih anggota yang akan mengambil alih pekerjaan yang masih terbuka."
+  },
+  "email": {
+    "footer": "— Spot-In (pilot). Mode pilot: pemesanan latihan, tidak mengikat, tanpa pembayaran nyata. Jika email ini tidak masuk ke kotak masuk, periksa folder spam."
+  },
+  "notify": {
+    "verify_email": { "title": "Verifikasi email Spot-In Anda", "body": "Klik tautan berikut untuk memverifikasi email Anda. Tautan berlaku 48 jam." },
+    "magic_link": { "title": "Tautan masuk Spot-In", "body": "Klik tautan berikut untuk masuk ke Spot-In. Tautan berlaku 20 menit dan hanya dapat dipakai sekali." },
+    "attendee_verify": { "title": "Konfirmasi pendaftaran Anda", "body": "Klik tautan berikut untuk mengonfirmasi email dan pendaftaran Anda." },
+    "password_reset": { "title": "Atur ulang kata sandi Spot-In", "body": "Klik tautan berikut untuk membuat kata sandi baru. Tautan berlaku 60 menit." },
+    "pilot_invite": { "title": "Undangan pilot Spot-In", "body": "Anda diundang mengikuti pilot tertutup Spot-In oleh Group4. Daftar melalui tautan berikut." },
+    "org_invite": { "title": "Undangan bergabung dengan {org}", "body": "Anda diundang bergabung dengan {org} di Spot-In. Undangan berlaku 7 hari." },
+    "admin_invite_needed": { "title": "Permintaan undangan pilot", "body": "{org} ingin mengundang {email}, tetapi email tersebut belum ada di daftar undangan pilot." },
+    "admin_verification_submitted": { "title": "Verifikasi menunggu: {org}", "body": "{org} mengajukan verifikasi. Hubungi venue melalui telepon atau chat, lalu catat hasilnya." },
+    "admin_space_submitted": { "title": "Ruang menunggu tinjauan: {space}", "body": "Ruang {space} diajukan untuk ditinjau." },
+    "admin_report_new": { "title": "Laporan baru", "body": "Ada laporan baru ({type}) di antrean Admin." },
+    "admin_alert_masking": { "title": "Peringatan: kontak berulang disembunyikan", "body": "Tiga pesan dengan detail kontak disembunyikan dalam satu percakapan (enquiry {enquiry})." },
+    "admin_alert_suspension": { "title": "Penangguhan dicatat", "body": "Sebuah {type} ditangguhkan." },
+    "admin_alert_auto_declined": { "title": "Enquiry ditolak otomatis", "body": "{n} enquiry ditolak otomatis karena ruang atau venue tidak lagi tersedia." },
+    "admin_daily_reminder": { "title": "Antrean Admin menunggu lebih dari 2 hari kerja", "body": "Verifikasi: {orgs} · Tinjauan ruang: {spaces} · Laporan: {reports}" },
+    "verification_approved": { "title": "Venue Anda terverifikasi", "body": "Spot-In telah memverifikasi venue Anda. Ruang yang disetujui kini dapat ditemukan pengguna pilot." },
+    "verification_rejected": { "title": "Verifikasi ditolak", "body": "Verifikasi venue Anda ditolak. Alasan: {reason}" },
+    "space_approved": { "title": "Ruang disetujui", "body": "Ruang Anda telah disetujui dan dipublikasikan." },
+    "space_rejected": { "title": "Ruang perlu diperbaiki", "body": "Ruang Anda dikembalikan ke draf. Alasan: {reason}" },
+    "enquiry_new": { "title": "Enquiry baru: {event}", "body": "Enquiry baru untuk {space}. Balas sebelum {deadline}." },
+    "enquiry_deadline_approaching": { "title": "Batas waktu balasan mendekat: {event}", "body": "Enquiry ini belum dibalas. Batas waktu: {deadline} (sekitar {hours} jam lagi)." },
+    "enquiry_expired": { "title": "Enquiry kedaluwarsa", "body": "{space} tidak membalas enquiry Anda sebelum batas waktu." },
+    "enquiry_expired_venue": { "title": "Enquiry kedaluwarsa: {event}", "body": "Enquiry ini kedaluwarsa karena tidak dibalas sebelum batas waktu. Tingkat respons venue Anda diperbarui." },
+    "enquiry_declined": { "title": "Enquiry ditolak", "body": "{space} menolak enquiry Anda. Lihat alasannya di percakapan." },
+    "enquiry_withdrawn": { "title": "Enquiry ditarik: {event}", "body": "Penyelenggara menarik enquiry ini." },
+    "enquiry_auto_declined": { "title": "Enquiry ditutup", "body": "Ruang yang Anda hubungi tidak lagi tersedia, sehingga enquiry ditutup otomatis." },
+    "event_edited": { "title": "Acara diubah: {event}", "body": "Penyelenggara mengubah detail acara. Tinjau kembali enquiry ini." },
+    "info_requested": { "title": "Venue meminta informasi", "body": "{space} meminta informasi tambahan untuk enquiry Anda." },
+    "message_received": { "title": "Pesan baru dari {from}", "body": "Pesan baru tentang {event}." },
+    "hold_placed": { "title": "Tanggal ditahan untuk {event}", "body": "Venue menahan tanggal sementara untuk Anda hingga {date}." },
+    "hold_expiring": { "title": "Tahanan tanggal segera berakhir", "body": "Tahanan sementara untuk {event} berakhir dalam 24 jam." },
+    "hold_expired": { "title": "Tahanan tanggal berakhir", "body": "Tahanan sementara untuk {event} telah berakhir." },
+    "hold_released": { "title": "Tahanan tanggal dilepas", "body": "Venue melepas tahanan sementara untuk {event}." }
+  }
+}

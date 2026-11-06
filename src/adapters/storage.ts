@@ -48,7 +48,6 @@ class S3Storage implements StorageAdapter {
   }
   private async request(method: string, key: string, body?: Buffer, contentType?: string) {
     const { createHash, createHmac } = await import("node:crypto");
-    const cfg = config();
     const env = process.env;
     const endpoint = new URL(env.S3_ENDPOINT ?? "");
     const region = env.S3_REGION ?? "auto";
@@ -66,7 +65,6 @@ class S3Storage implements StorageAdapter {
     const signingKey = k(k(k(k(`AWS4${env.S3_SECRET_KEY}`, date), region), "s3"), "aws4_request");
     const signature = createHmac("sha256", signingKey).update(toSign).digest("hex");
     headers.authorization = `AWS4-HMAC-SHA256 Credential=${env.S3_ACCESS_KEY}/${scope}, SignedHeaders=${signed.join(";")}, Signature=${signature}`;
-    void cfg;
     return fetch(url, { method, headers, body: body ? new Uint8Array(body) : undefined });
   }
 }

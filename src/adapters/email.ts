@@ -10,7 +10,7 @@ import { now } from "@/lib/clock";
  */
 export type OutgoingEmail = { to: string; subject: string; text: string; html?: string; category: string };
 
-let transport: nodemailer.Transporter | undefined;
+let transport: ReturnType<typeof nodemailer.createTransport> | undefined;
 
 export async function sendEmail(mail: OutgoingEmail): Promise<void> {
   const at = await now();
