@@ -13,7 +13,7 @@ import { renderPdf, type DocBlock } from "@/lib/pdf";
 import type { PricingSnapshot, QuoteTotals } from "@/lib/quote-math";
 import { requirePermission, requireAdmin, isUuid } from "./access";
 import { adminIds, notify, orgMemberIds } from "./notify";
-import { bookingFor, refundAllPaid } from "./bookings";
+import { bookingFor, creditNoteFor, refundAllPaid } from "./bookings";
 import { post } from "./ledger";
 import { storeGenerated } from "./documents";
 import { storeUpload } from "./files";
@@ -201,9 +201,10 @@ export async function resolveProblem(actor: Actor, problemId: string, input: { o
   const adjustment = input.outcome === "adjusted" ? Math.round(Number(input.adjustment ?? 0)) : 0;
   if (input.outcome === "adjusted" && (!Number.isSafeInteger(adjustment) || adjustment <= 0)) throw new AppError("errors.amountInvalid");
   const at = await now();
-  await db()`
+  const [done] = await db()`
     update booking_problems set status = 'resolved', outcome = ${input.outcome}, adjustment = ${adjustment || null}, resolution_note = ${input.note.trim()},
-      resolved_by = ${actor.userId}, resolved_at = ${at} where id = ${problemId}`;
+      resolved_by = ${actor.userId}, resolved_at = ${at} where id = ${problemId} and status = 'open' returning id`;
+  if (!done) throw new AppError("problems.notOpen");
   await audit({ scope: "admin", actorId: actor.userId, action: "problem.resolved", entity: "booking", entityId: String(p.booking_id), after: input, at });
   const bookingId = String(p.booking_id);
   const [b] = await db()`select * from bookings where id = ${bookingId}`;
@@ -386,24 +387,17 @@ async function refundAmount(sql: Tx, bookingId: string, amount: number, reason: 
     if (part <= 0) continue;
     await sql`update payments set refunded_amount = refunded_amount + ${part}, status = case when refunded_amount + ${part} >= amount then 'refunded' else status end where id = ${p.id as string}`;
     await post(bookingId, [{ debit: "refunds", credit: "held", amount: part, refType: "refund", refId: String(p.id), memo: reason }], sql);
-    const [orig] = await sql`select * from receipts where payment_id = ${p.id as string} and kind = 'receipt'`;
-    if (orig) {
-      const [c] = await sql`
-        insert into receipt_counters (issuer_key, last_number) values (${`receipt:${orig.issuer_org_id}`}, 1)
-        on conflict (issuer_key) do update set last_number = receipt_counters.last_number + 1 returning last_number`;
-      await sql`
-        insert into receipts (number, kind, issuer_org_id, booking_id, payment_id, refers_to, lines, amount, created_at)
-        values (${`PILOT-${String(orig.issuer_org_id).slice(0, 4).toUpperCase()}-${String(c!.last_number).padStart(5, "0")}`}, 'credit_note', ${orig.issuer_org_id as string},
-          ${bookingId}, ${p.id as string}, ${orig.id as string}, ${sql.json([{ label: t("receipts.refundLine", { number: String(orig.number) }), amount: part }])}, ${part}, ${await now()})`;
-    }
+    await creditNoteFor(sql, bookingId, String(p.id), part);
     left -= part;
   }
 }
 
-async function closeBooking(sql: Tx, b: Booking, status: "cancelled_by_organizer" | "cancelled_by_venue", actorId: string, reason: string, cancellation: object, at: Date) {
-  await sql`
+async function closeBooking(sql: Tx, b: Booking, status: "cancelled_by_organizer" | "cancelled_by_venue", actorId: string, reason: string, cancellation: object, at: Date, allowed: string[]) {
+  // Guarded update: a double submit or a race finds the booking already closed and changes nothing.
+  const [row] = await sql`
     update bookings set status = ${status}, cancelled_at = ${at}, cancelled_by = ${actorId}, cancel_reason = ${reason}, cancellation = ${sql.json(cancellation as never)}, updated_at = ${at}
-    where id = ${b.id as string}`;
+    where id = ${b.id as string} and status in ${sql(allowed)} returning id`;
+  if (!row) throw new AppError("cancel.notAllowed");
   await sql`update calendar_entries set released_at = ${at}, release_reason = 'cancelled' where booking_id = ${b.id as string} and released_at is null`;
   await sql`update payment_requests set status = 'cancelled' where booking_id = ${b.id as string} and status = 'open'`;
   await sql`update payments set status = 'expired' where booking_id = ${b.id as string} and status = 'pending'`;
@@ -436,7 +430,7 @@ async function executeOrganizerCancellation(booking: Booking, actorId: string, i
   if (!input.noShow && f.refundTotal !== input.expectedRefund) throw new AppError("cancel.figuresChanged");
   const feeKept = f.feePaid - f.feeRefunded;
   await db().begin(async (sql) => {
-    await closeBooking(sql, booking, "cancelled_by_organizer", actorId, input.reason.trim(), { ...f, by: "organizer", noShow: !!input.noShow }, at);
+    await closeBooking(sql, booking, "cancelled_by_organizer", actorId, input.reason.trim(), { ...f, by: "organizer", noShow: !!input.noShow }, at, [...LIVE, ...(input.noShow ? ["in_progress"] : [])]);
     if (input.noShow) await sql`update bookings set no_show = true where id = ${bookingId}`;
     if (f.refundTotal) await refundAmount(sql, bookingId, f.refundTotal, input.noShow ? "no_show" : "organizer_cancellation");
     await post(bookingId, [
@@ -460,7 +454,7 @@ export async function cancelByVenue(actor: Actor, bookingId: string, reason: str
   const at = await now();
   await db().begin(async (sql) => {
     const { venuePaid, feePaid } = await paidParts(bookingId, sql);
-    await closeBooking(sql, booking, "cancelled_by_venue", actor.userId, reason.trim(), { by: "venue", venuePaid, feePaid, refundTotal: venuePaid + feePaid, venueKeeps: 0 }, at);
+    await closeBooking(sql, booking, "cancelled_by_venue", actor.userId, reason.trim(), { by: "venue", venuePaid, feePaid, refundTotal: venuePaid + feePaid, venueKeeps: 0 }, at, [...LIVE, "pending_agreement_and_deposit"]);
     await sql`update agreements set status = 'voided' where booking_id = ${bookingId} and status <> 'accepted_by_both'`;
     await refundAllPaid(sql, bookingId, "venue_cancellation");
     await audit({ scope: "user", actorId: actor.userId, action: "booking.cancelled_by_venue", entity: "booking", entityId: bookingId, after: { reason }, at }, sql);

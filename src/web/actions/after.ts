@@ -7,7 +7,7 @@ import * as pages from "@/server/event-pages";
 import { contactUs, type ContactSubject } from "@/server/contact";
 import { formFiles } from "@/server/files";
 import { run, str, int, bool, type ActionState } from "../action";
-import { actor, clientIp, getSession } from "../session";
+import { actor, clientIp, getSession, requireAdminPage } from "../session";
 
 // ---------------------------------------------------------------------------
 // Booking: documents, at risk, cancellation, no-show, problems (M17, M18, M16)
@@ -74,7 +74,8 @@ export async function reportProblemAction(_: ActionState, form: FormData): Promi
 
 export async function resolveProblemAction(_: ActionState, form: FormData): Promise<ActionState> {
   return run(async () => {
-    const a = await actor();
+    const s = await requireAdminPage(); // admin session with 2FA passed (FR-M24-12)
+    const a = { userId: s.userId, ip: await clientIp() };
     const outcome = str(form, "outcome") === "adjusted" ? "adjusted" : "release_as_is";
     await life.resolveProblem(a, str(form, "problemId"), { outcome, adjustment: int(form, "adjustment") ?? 0, note: str(form, "note") });
     redirect("/admin/masalah?done=1");

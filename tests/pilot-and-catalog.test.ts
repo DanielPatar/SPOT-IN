@@ -80,7 +80,7 @@ describe("FR-M25-01/05 message catalog", () => {
       "quoteView.done": ["accept", "revision", "decline"],
       "quoteView.change": ["added", "removed", "changed", "same"],
       "workspace.requestStatus": ["open", "paid", "expired", "cancelled"],
-      "ledger.problems": ["ledger_inflow_vs_payments", "ledger_refunds_vs_payments", "receipts_vs_payments", "paid_above_quote", "ledger_unbalanced"],
+      "ledger.problems": ["ledger_inflow_vs_payments", "ledger_refunds_vs_payments", "receipts_vs_payments", "paid_above_quote", "ledger_unbalanced", "held_not_zero"],
       "booking.steps": ["accepted", "agreement", "deposit", "confirmed", "balance", "event", "settled"],
     };
     const missing: string[] = [];

@@ -53,9 +53,11 @@ export async function reconcile(bookingId: string, sql: Tx = db()): Promise<{ ok
   if (figures.ledgerInflow !== figures.paid) problems.push("ledger_inflow_vs_payments");
   if (figures.ledgerRefunds !== figures.refunded) problems.push("ledger_refunds_vs_payments");
   if (figures.receipts - figures.creditNotes !== figures.paid - figures.refunded) problems.push("receipts_vs_payments");
-  if (figures.paid > figures.quoteTotal) problems.push("paid_above_quote");
+  if (figures.paid - figures.refunded > figures.quoteTotal) problems.push("paid_above_quote");
+  // Every entry debits and credits the same amount, so totals always net to zero; check the account rules instead.
   const b = await balances(bookingId, sql);
-  const total = Object.values(b).reduce((s, v) => s + v, 0);
-  if (total !== 0) problems.push("ledger_unbalanced");
+  if (b.held < 0 || b.organizer_paid > 0 || b.refunds < 0 || b.venue_payable < 0) problems.push("ledger_unbalanced");
+  const [st] = await sql`select status from bookings where id = ${bookingId}`;
+  if (st && ["settled", "lapsed", "cancelled_by_organizer", "cancelled_by_venue"].includes(String(st.status)) && b.held !== 0) problems.push("held_not_zero");
   return { ok: problems.length === 0, problems, figures };
 }

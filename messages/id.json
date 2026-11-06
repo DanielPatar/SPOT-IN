@@ -1551,7 +1551,8 @@
       "ledger_refunds_vs_payments": "Pengembalian di buku besar tidak sama dengan pembayaran.",
       "receipts_vs_payments": "Kuitansi dan nota kredit tidak sama dengan pembayaran bersih.",
       "paid_above_quote": "Dibayar lebih dari total penawaran.",
-      "ledger_unbalanced": "Entri buku besar tidak seimbang."
+      "ledger_unbalanced": "Saldo akun buku besar tidak masuk akal (misalnya dana tertahan negatif).",
+      "held_not_zero": "Pemesanan sudah ditutup, tetapi masih ada dana tertahan."
     }
   },
   "pay": {

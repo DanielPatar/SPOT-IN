@@ -39,6 +39,8 @@ export async function acceptQuote(actor: Actor, quoteId: string, input: { accept
   const { quote, ctx } = await quoteForOrganizer(actor, quoteId, "quote.accept");
   if (!input.acceptPilotTerms) throw new AppError("bookings.pilotTermsRequired");
   const blocker = await acceptBlocker(quote);
+  // A regular (non-backup) quote whose dates were free when it was sent was just taken by someone else.
+  if (blocker && ["quotes.datesHeld", "quotes.datesBookedOrganizer"].includes(blocker) && !quote.is_backup) throw new AppError("quotes.datesJustTaken");
   if (blocker) throw new AppError(blocker);
   const at = await now();
   const tz = String(ctx.timezone);
@@ -153,14 +155,17 @@ export async function acceptAgreement(actor: Actor, bookingId: string, input: { 
   const typed = input.typedName.trim().replace(/\s+/g, " ");
   if (!typed || typed.toLowerCase() !== String(u!.name).trim().replace(/\s+/g, " ").toLowerCase()) throw new AppError("agreement.nameMismatch", { name: String(u!.name) });
   const at = await now();
-  const [a] = await db()`select status, acceptances from agreements where booking_id = ${bookingId} for update`;
-  if (!a || a.status === "generating") throw new AppError("agreement.generating");
-  const expected = side === "organizer" ? "generated" : "accepted_by_organizer";
-  if (a.status !== expected) throw new AppError(side === "venue" ? "agreement.organizerFirst" : "agreement.alreadyAccepted");
-  const acceptances = [...((a.acceptances ?? []) as unknown[]), { side, userId: actor.userId, typedName: typed, at: at.toISOString(), ip: actor.ip ?? null }];
-  await db()`
-    update agreements set acceptances = ${db().json(acceptances as never)}, status = ${side === "organizer" ? "accepted_by_organizer" : "accepted_by_both"}
-    where booking_id = ${bookingId}`;
+  // The row lock only holds inside a transaction: two simultaneous acceptances can't both pass the status check.
+  await db().begin(async (sql) => {
+    const [a] = await sql`select status, acceptances from agreements where booking_id = ${bookingId} for update`;
+    if (!a || a.status === "generating") throw new AppError("agreement.generating");
+    const expected = side === "organizer" ? "generated" : "accepted_by_organizer";
+    if (a.status !== expected) throw new AppError(side === "venue" ? "agreement.organizerFirst" : "agreement.alreadyAccepted");
+    const acceptances = [...((a.acceptances ?? []) as unknown[]), { side, userId: actor.userId, typedName: typed, at: at.toISOString(), ip: actor.ip ?? null }];
+    await sql`
+      update agreements set acceptances = ${sql.json(acceptances as never)}, status = ${side === "organizer" ? "accepted_by_organizer" : "accepted_by_both"}
+      where booking_id = ${bookingId}`;
+  });
   await audit({ scope: "user", actorId: actor.userId, action: `agreement.accepted_by_${side}`, entity: "booking", entityId: bookingId, after: { typedName: typed }, ip: actor.ip, at });
   await generateAgreement(bookingId); // the last page now lists the acceptance (FR-M13-07)
   const otherOrg = side === "organizer" ? String(booking.operator_id) : String(booking.organizer_org_id);
@@ -185,6 +190,8 @@ export async function startPayment(actor: Actor, requestId: string, method: Meth
   const at = await now();
   const [pending] = await db()`select id from payments where request_id = ${requestId} and status = 'pending' and expires_at > ${at} and method = ${method}`;
   if (pending) return String(pending.id);
+  // Only one open charge per request: switching method expires the previous instructions.
+  await db()`update payments set status = 'expired' where request_id = ${requestId} and status = 'pending'`;
   const expiresAt = new Date(Math.min(at.getTime() + 24 * 3600_000, new Date(r.due_at as Date).getTime()));
   const charge = await payments().createCharge({ reference: `${String(booking.reference)}-${String(r.kind)}`, amount: num(r.amount), method, expiresAt, description: String(r.kind) });
   const [p] = await db()`
@@ -214,7 +221,11 @@ export async function handleCallback(payload: CallbackPayload, signature: string
     values ('simulator', ${payload.eventId}, ${db().json(payload as never)}, ${ok}, ${at})
     on conflict (provider, event_id) do nothing returning id`;
   if (!ok) return "rejected";
-  if (!ins.length) return "duplicate";
+  if (!ins.length) {
+    // Processed once already → duplicate. Stored but not processed (we failed mid-way) → process it now.
+    const [prev] = await db()`select processed_at, signature_ok from payment_webhooks where provider = 'simulator' and event_id = ${payload.eventId}`;
+    if (prev?.processed_at || !prev?.signature_ok) return "duplicate";
+  }
   const [p] = await db()`select * from payments where provider_ref = ${payload.providerRef}`;
   if (!p) return "rejected";
   if (payload.status === "paid") await paymentSucceeded(String(p.id));
@@ -234,8 +245,19 @@ async function paymentSucceeded(paymentId: string): Promise<void> {
   const result = await db().begin(async (sql) => {
     const [p] = await sql`update payments set status = 'paid', paid_at = ${at} where id = ${paymentId} and status in ('pending', 'expired') returning *`;
     if (!p) return null;
-    const [r] = await sql`update payment_requests set status = 'paid', paid_at = ${at} where id = ${p.request_id as string} returning *`;
+    if (num(p.amount) !== num((await sql`select amount from payment_requests where id = ${p.request_id as string}`)[0]!.amount)) throw new Error("payment amount does not match its request");
+    const [r] = await sql`update payment_requests set status = 'paid', paid_at = ${at} where id = ${p.request_id as string} and status <> 'paid' returning *`;
     const [b] = await sql`select * from bookings where id = ${p.booking_id as string}`;
+    if (!r) {
+      // The request was already paid by another charge: record this one and refund it at once.
+      const [req] = await sql`select * from payment_requests where id = ${p.request_id as string}`;
+      await post(String(b!.id), [{ debit: "held", credit: "organizer_paid", amount: num(p.amount), refType: "payment", refId: paymentId, memo: "duplicate" }], sql);
+      await issueReceipt(sql, b!, req!, p);
+      await sql`update payments set status = 'refunded', refunded_amount = amount where id = ${paymentId}`;
+      await post(String(b!.id), [{ debit: "refunds", credit: "held", amount: num(p.amount), refType: "refund", refId: paymentId, memo: "duplicate_payment" }], sql);
+      await creditNoteFor(sql, String(b!.id), paymentId, num(p.amount));
+      return null;
+    }
     await post(String(b!.id), [{ debit: "held", credit: "organizer_paid", amount: num(p.amount), refType: "payment", refId: paymentId, memo: String(r!.kind) }], sql);
     const receiptId = await issueReceipt(sql, b!, r!, p);
     return { booking: b!, request: r!, receiptId };
@@ -366,19 +388,23 @@ export async function refundAllPaid(sql: Tx, bookingId: string, reason: string):
     if (amount <= 0) continue;
     await sql`update payments set status = 'refunded', refunded_amount = amount where id = ${p.id as string}`;
     await post(bookingId, [{ debit: "refunds", credit: "held", amount, refType: "refund", refId: String(p.id), memo: reason }], sql);
-    const [orig] = await sql`select * from receipts where payment_id = ${p.id as string} and kind = 'receipt'`;
-    if (orig) {
-      const [c] = await sql`
-        insert into receipt_counters (issuer_key, last_number) values (${`receipt:${orig.issuer_org_id}`}, 1)
-        on conflict (issuer_key) do update set last_number = receipt_counters.last_number + 1 returning last_number`;
-      await sql`
-        insert into receipts (number, kind, issuer_org_id, booking_id, payment_id, refers_to, lines, amount, created_at)
-        values (${`PILOT-${String(orig.issuer_org_id).slice(0, 4).toUpperCase()}-${String(c!.last_number).padStart(5, "0")}`}, 'credit_note', ${orig.issuer_org_id as string},
-          ${bookingId}, ${p.id as string}, ${orig.id as string}, ${sql.json([{ label: t("receipts.refundLine", { number: String(orig.number) }), amount }])}, ${amount}, ${await now()})`;
-    }
+    await creditNoteFor(sql, bookingId, String(p.id), amount);
     total += amount;
   }
   return total;
+}
+
+/** Credit note for a (partial) simulated refund of one payment, referring to its receipt (FR-M15-02). */
+export async function creditNoteFor(sql: Tx, bookingId: string, paymentId: string, amount: number): Promise<void> {
+  const [orig] = await sql`select * from receipts where payment_id = ${paymentId} and kind = 'receipt'`;
+  if (!orig) return;
+  const [c] = await sql`
+    insert into receipt_counters (issuer_key, last_number) values (${`receipt:${orig.issuer_org_id}`}, 1)
+    on conflict (issuer_key) do update set last_number = receipt_counters.last_number + 1 returning last_number`;
+  await sql`
+    insert into receipts (number, kind, issuer_org_id, booking_id, payment_id, refers_to, lines, amount, created_at)
+    values (${`PILOT-${String(orig.issuer_org_id).slice(0, 4).toUpperCase()}-${String(c!.last_number).padStart(5, "0")}`}, 'credit_note', ${orig.issuer_org_id as string},
+      ${bookingId}, ${paymentId}, ${orig.id as string}, ${sql.json([{ label: t("receipts.refundLine", { number: String(orig.number) }), amount }])}, ${amount}, ${await now()})`;
 }
 
 /** §12.1: a deposit arriving after the deadline confirms the booking if the dates are still free; otherwise it is refunded. */
