@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { businessDayDeadline, hoursBefore, nextBusinessDayAt } from "@/lib/business-days";
-import { zonedInstant, formatDate, formatDateTime, timezoneFromLongitude } from "@/lib/time";
+import { zonedInstant, formatDate, formatDateTime, timezoneFromLongitude, localDate } from "@/lib/time";
 import { formatRupiah, mulDivHalfUp, parseRupiah, pct } from "@/lib/money";
 import { maskContacts, MASK } from "@/lib/masking";
 import { can } from "@/lib/permissions";
@@ -124,5 +124,33 @@ describe("pilot guard (FR-M38-07, FR-M14-13)", () => {
     expect(() => assertPilotSafe({ PILOT_MODE: "on", XENDIT_SECRET_KEY: "xnd_production_abc" })).toThrow(PilotGuardError);
     expect(() => assertPilotSafe({ PILOT_MODE: "on", XENDIT_SECRET_KEY: "xnd_development_abc" })).not.toThrow();
     expect(() => assertPilotSafe({ PILOT_MODE: "on" })).not.toThrow();
+  });
+});
+
+describe("quote math (§11.2 worked example, AC-M12-1)", async () => {
+  const { quoteTotals, paymentPlan } = await import("@/lib/quote-math");
+  const pricing = { isPkp: true, serviceChargeBps: 0, ppnRateBps: 1200, dppNumerator: 11, dppDenominator: 12, feeBps: 300, feeMin: 50_000, feeMax: 2_500_000, commissionBps: 1000 };
+  const lines = [
+    { id: "r", kind: "rental" as const, label: "Sewa", quantity: 3, unitPrice: 25_000_000, discount: 0, taxable: true },
+    { id: "e", kind: "add_on" as const, label: "Listrik", quantity: 120, unitPrice: 50_000, discount: 0, taxable: true },
+  ];
+  it("totals", () => {
+    expect(quoteTotals(lines, pricing)).toEqual({ rentalAndAddOns: 81_000_000, serviceCharge: 0, ppn: 8_910_000, venueTotal: 89_910_000, organizerFee: 2_430_000, organizerTotal: 92_340_000 });
+  });
+  it("deposit and balance with the balance requested 21 days before the event", () => {
+    const plan = paymentPlan({ totals: quoteTotals(lines, pricing), schedule: { mode: "split", depositBps: 5000, depositDays: 3, balanceDaysBefore: 14 }, acceptedAt: zonedInstant("2026-11-13", "10:00", "Asia/Jakarta"), firstEventDate: "2026-12-12", tz: "Asia/Jakarta" });
+    expect(plan.map((p) => [p.kind, p.amount])).toEqual([["deposit", 47_385_000], ["balance", 44_955_000]]);
+    expect(formatDateTime(plan[0]!.dueAt, "Asia/Jakarta")).toBe("16 Nov 2026, 23:59 WIB");
+    expect(formatDateTime(plan[1]!.dueAt, "Asia/Jakarta")).toBe("28 Nov 2026, 23:59 WIB");
+    expect(formatDate(localDate(plan[1]!.issueAt, "Asia/Jakarta"))).toBe("21 Nov 2026"); // AC-M15/M16-2
+  });
+  it("AC-M15/M16-3: acceptance 5 days before the balance due date issues the balance immediately", () => {
+    const at = zonedInstant("2026-11-23", "10:00", "Asia/Jakarta");
+    const plan = paymentPlan({ totals: quoteTotals(lines, pricing), schedule: { mode: "split", depositBps: 5000, depositDays: 3, balanceDaysBefore: 14 }, acceptedAt: at, firstEventDate: "2026-12-12", tz: "Asia/Jakarta" });
+    expect(plan[1]!.issueAt.getTime()).toBe(at.getTime());
+  });
+  it("acceptance inside the balance window means one full payment", () => {
+    const plan = paymentPlan({ totals: quoteTotals(lines, pricing), schedule: { mode: "split", depositBps: 5000, depositDays: 3, balanceDaysBefore: 14 }, acceptedAt: zonedInstant("2026-12-01", "10:00", "Asia/Jakarta"), firstEventDate: "2026-12-12", tz: "Asia/Jakarta" });
+    expect(plan.map((p) => [p.kind, p.amount])).toEqual([["full", 92_340_000]]);
   });
 });

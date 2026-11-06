@@ -46,13 +46,25 @@ describe("FR-M25-01/05 message catalog", () => {
       warnings: ["outside_operating_days", "length_outside_limits", "above_capacity", "facilities_missing"],
       settingsKeys: Object.keys(DEFAULT_SETTINGS),
       "team.actions": ["org_created", "member_invited", "member_invite_revoked", "member_joined", "member_role_changed", "member_removed", "org_ownership_transferred", "org_threshold_changed"],
-      "admin.navItems": ["home", "undangan", "verifikasi", "ruang", "laporan", "cari", "pengaturan", "audit"],
+      "admin.navItems": ["home", "undangan", "verifikasi", "ruang", "laporan", "bukubesar", "cari", "pengaturan", "audit"],
       "admin.inviteStatus": ["pending", "accepted", "revoked", "expired"],
       "spaces.statusDone": ["submit", "publish", "unpublish", "duplicate"],
       "venueEnquiry.done": ["requestInfo", "decline", "hold", "releaseHold", "notes"],
       "venueHome.step": ["profile", "property", "pin", "space", "submitted", "verified"],
       autoDecline: ["space_unpublished", "space_suspended", "operator_suspended"],
       orgKinds: ["venue_operator", "organizer"],
+      "docs.sides": ["organizer", "venue"],
+      "payments.kinds": ["deposit", "balance", "full"],
+      quoteStatus: ["draft", "pending_approval", "approved", "sent", "superseded", "accepted", "declined", "expired", "withdrawn"],
+      bookingStatus: ["pending_agreement_and_deposit", "confirmed", "balance_due", "fully_paid", "in_progress", "post_event_window", "on_hold", "settled", "lapsed", "cancelled_by_organizer", "cancelled_by_venue"],
+      quoteBuilder: ["sent", "sentForApproval", "approvedSent", "returned"],
+      compare: ["total", "perDay", "deposit", "deadlines", "cancellation", "response", "inclusions"],
+      "pay.methods": ["test_va", "test_qris", "test_ewallet", "test_card"],
+      "pay.simulate": ["paid", "failed", "expired"],
+      "quoteView.done": ["accept", "revision", "decline"],
+      "quoteView.change": ["added", "removed", "changed", "same"],
+      "workspace.requestStatus": ["open", "paid", "expired", "cancelled"],
+      "ledger.problems": ["ledger_inflow_vs_payments", "ledger_refunds_vs_payments", "receipts_vs_payments", "paid_above_quote", "ledger_unbalanced"],
       "booking.steps": ["accepted", "agreement", "deposit", "confirmed", "balance", "event", "settled"],
     };
     const missing: string[] = [];
@@ -60,7 +72,7 @@ describe("FR-M25-01/05 message catalog", () => {
     for (const p of ["flexible", "moderate", "strict"]) if (!hasMessage(`policies.${p}.name`)) missing.push(p);
     const used = referencedKeys().dynamic;
     for (const prefix of used) {
-      if (["notify", "help", "events.next", "search.sorts", "report.reasons", "admin.subjects", "admin.methods", "admin.roleHints", "admin.holidayKinds", "estimate.qtyHint", "auth.oauth", "organizerEnquiry.done", "policies"].includes(prefix)) continue;
+      if (["notify", "help", "events.next", "search.sorts", "report.reasons", "admin.subjects", "admin.methods", "admin.roleHints", "admin.holidayKinds", "estimate.qtyHint", "auth.oauth", "organizerEnquiry.done", "policies", "workspace.events"].includes(prefix)) continue;
       expect(Object.keys(fam), `unchecked dynamic family ${prefix}`).toContain(prefix);
     }
     expect(missing).toEqual([]);

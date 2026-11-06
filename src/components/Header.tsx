@@ -14,10 +14,10 @@ export async function Header() {
   const ctx = s?.context ?? (m?.organizer ? "organizer" : m?.venue ? "venue" : null);
   const nav: { href: string; label: string }[] = [];
   if (s && ctx === "venue" && m?.venue) {
-    nav.push({ href: "/venue", label: t("nav.venueHome") }, { href: "/venue/enquiry", label: t("nav.venueInbox") }, { href: "/venue/ruang", label: t("nav.venueSpaces") }, { href: "/venue/tim", label: t("nav.team") }, { href: "/venue/pengaturan", label: t("nav.venueSettings") });
+    nav.push({ href: "/venue", label: t("nav.venueHome") }, { href: "/venue/enquiry", label: t("nav.venueInbox") }, { href: "/venue/ruang", label: t("nav.venueSpaces") }, { href: "/pemesanan", label: t("nav.bookings") }, { href: "/venue/tim", label: t("nav.team") }, { href: "/venue/pengaturan", label: t("nav.venueSettings") });
   }
   if (s && ctx === "organizer" && m?.organizer) {
-    nav.push({ href: "/cari", label: t("nav.search") }, { href: "/shortlist", label: t("nav.shortlists") }, { href: "/acara", label: t("nav.events") }, { href: "/organizer/tim", label: t("nav.team") });
+    nav.push({ href: "/cari", label: t("nav.search") }, { href: "/shortlist", label: t("nav.shortlists") }, { href: "/acara", label: t("nav.events") }, { href: "/pemesanan", label: t("nav.bookings") }, { href: "/organizer/tim", label: t("nav.team") });
   }
   if (s && !m?.venue && !m?.organizer && !s.isQuickAttendee) nav.push({ href: "/mulai", label: t("nav.start") });
   if (s?.isAdmin) nav.push({ href: "/admin", label: t("nav.admin") });

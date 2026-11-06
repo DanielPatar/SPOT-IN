@@ -106,6 +106,8 @@ export async function updateEvent(actor: Actor, eventId: string, input: EventInp
       expected_attendance = ${v.expected_attendance}, days = ${db().json(v.days)}, budget_min = ${v.budget_min}, budget_max = ${v.budget_max},
       required_facilities = ${v.required_facilities}, updated_at = ${at}
     where id = ${eventId}`;
+  const { flagQuotesForEventChange } = await import("./quotes");
+  await flagQuotesForEventChange(eventId);
   const open = await db()`
     select q.id, p.operator_id from enquiries q join spaces s on s.id = q.space_id join properties p on p.id = s.property_id
     where q.event_id = ${eventId} and q.status in ${db()(OPEN_STATUSES as unknown as string[])}`;

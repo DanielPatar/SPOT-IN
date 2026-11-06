@@ -37,6 +37,7 @@
     "next-intl": "^4.14.9",
     "nodemailer": "^10.3.1",
     "otplib": "^13.6.0",
+    "pdf-lib": "^1.17.1",
     "postgres": "^4.1.0",
     "qrcode": "^1.5.4",
     "radix-ui": "^1.8.1",

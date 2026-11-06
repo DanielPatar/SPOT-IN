@@ -236,6 +236,15 @@ export async function releaseTentativeHold(actor: Actor, enquiryId: string): Pro
   if (!rows.length) throw new PermissionError();
   await cancelJobs(`hold:${enquiryId}:`);
   await notifyHolder(enquiryId, "hold_released");
+  await announceReleased(enquiryId);
+}
+
+/** Backup-quote holders are told as soon as a hold on their dates is released (FR-M12-13). */
+async function announceReleased(enquiryId: string): Promise<void> {
+  const rows = await db()`select space_id, lower(during) as s, upper(during) as e from calendar_entries where enquiry_id = ${enquiryId} and kind = 'tentative_hold'`;
+  if (!rows.length) return;
+  const { onHoldsReleased } = await import("./quotes");
+  await onHoldsReleased(String(rows[0]!.space_id), rows.map((r) => ({ start: r.s as Date, end: r.e as Date })));
 }
 
 async function notifyHolder(enquiryId: string, event: string) {
@@ -247,7 +256,10 @@ async function notifyHolder(enquiryId: string, event: string) {
 /** Job: hold.expire */
 export async function expireHoldJob(enquiryId: string): Promise<void> {
   const released = await releaseExpiredHolds();
-  if (released.includes(enquiryId)) await notifyHolder(enquiryId, "hold_expired");
+  if (released.includes(enquiryId)) {
+    await notifyHolder(enquiryId, "hold_expired");
+    await announceReleased(enquiryId);
+  }
 }
 
 /** Job: hold.expiring (24 h before) */

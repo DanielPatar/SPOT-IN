@@ -12,6 +12,8 @@ import { EnquirySummary } from "@/components/EnquirySummary";
 import { Thread } from "@/components/Thread";
 import { Form, Submit } from "@/components/Form";
 import { venueEnquiryAction } from "@/web/actions/venue";
+import { startQuoteAction } from "@/web/actions/booking";
+import Link from "next/link";
 import { postMessageAction, editMessageAction, deleteMessageAction, reportMessageAction } from "@/web/actions/messages";
 
 export default async function VenueEnquiryPage({ params }: { params: Promise<{ id: string }> }) {
@@ -84,7 +86,15 @@ export default async function VenueEnquiryPage({ params }: { params: Promise<{ i
             </div>
             <div className="card">
               <h2 style={{ marginTop: 0 }}>{t("venueEnquiry.quote")}</h2>
-              <p className="small muted">{t("venueEnquiry.quoteBuild2")}</p>
+              <p className="small muted">{t("venueEnquiry.quoteHelp")}</p>
+              {can("venue_operator", venue.role, "quote.send") ? (
+                <form action={startQuoteAction}>
+                  <input type="hidden" name="enquiryId" value={id} />
+                  <button type="submit" className="btn btn-primary">{t("venueEnquiry.buildQuote")}</button>
+                </form>
+              ) : (
+                <Link href={`/venue/enquiry/${id}/penawaran`}>{t("venueEnquiry.viewQuotes")}</Link>
+              )}
             </div>
             <div className="card">
               <h2 style={{ marginTop: 0 }}>{t("venueEnquiry.decline")}</h2>
