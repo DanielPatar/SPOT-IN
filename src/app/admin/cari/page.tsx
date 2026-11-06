@@ -70,6 +70,24 @@ export default async function AdminSearchPage({ searchParams }: { searchParams: 
                 {String(e.event_name)} → {String(e.space_name)} · {t(`enquiryStatus.${String(e.status)}`)} · <code>{String(e.id)}</code>
               </div>
             ))}
+            <h2>{t("admin.bookings")}</h2>
+            {r.bookings.map((b) => (
+              <div key={String(b.id)} className="small">
+                <strong>{String(b.reference)}</strong> · {String(b.event_name)} · {t(`bookingStatus.${String(b.status)}`)} · <code>{String(b.id)}</code>
+              </div>
+            ))}
+            <h2>{t("admin.eventPages")}</h2>
+            {r.eventPages.map((p) => (
+              <div key={String(p.id)} className="small">
+                <a href={`/e/${p.slug}`}>{String(p.title)}</a> · {t(`pageStatus.${String(p.status)}`)} · <code>{String(p.id)}</code>
+              </div>
+            ))}
+            <h2>{t("admin.passes")}</h2>
+            {r.passes.map((p) => (
+              <div key={String(p.id)} className="small">
+                {String(p.number)} · {String(p.name)} · {String(p.email)} · {t(`passStatus.${String(p.status)}`)}
+              </div>
+            ))}
           </div>
         </div>
       ) : null}

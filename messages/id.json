@@ -116,7 +116,8 @@
       "cari": "Cari",
       "pengaturan": "Pengaturan",
       "audit": "Log audit",
-      "bukubesar": "Buku besar"
+      "bukubesar": "Buku besar",
+      "masalah": "Laporan masalah"
     },
     "demoClock": "Jam demo",
     "clockNow": "Waktu aplikasi: {at}",
@@ -192,7 +193,10 @@
     },
     "holidayName": "Nama hari libur",
     "addHoliday": "Simpan hari libur",
-    "auditTitle": "Log audit admin"
+    "auditTitle": "Log audit admin",
+    "bookings": "Pemesanan",
+    "eventPages": "Halaman acara",
+    "passes": "Kartu masuk"
   },
   "calendar": {
     "blockOverlaps": "Tanggal ini bertabrakan dengan tahanan atau pemesanan. Lepaskan tahanan terlebih dahulu.",
@@ -286,7 +290,9 @@
     "enquiries": "Permintaan",
     "noEnquiries": "Belum ada permintaan untuk acara ini.",
     "venueReplyBy": "Pengelola membalas sebelum {at}",
-    "dates": "Tanggal"
+    "dates": "Tanggal",
+    "emptyTitle": "Belum ada acara",
+    "eventPage": "Halaman acara"
   },
   "files": {
     "empty": "File kosong.",
@@ -562,6 +568,74 @@
     "balance_extended": {
       "title": "Tenggat pelunasan diperpanjang ({ref})",
       "body": "Tenggat baru: {due}."
+    },
+    "document_submitted": {
+      "title": "Dokumen baru untuk ditinjau: {name}",
+      "body": "Penyelenggara mengunggah {name} untuk pemesanan {ref}."
+    },
+    "document_changes": {
+      "title": "Dokumen perlu diperbaiki: {name}",
+      "body": "Pengelola meminta perubahan pada {name} ({ref}): {comment}"
+    },
+    "document_approved": {
+      "title": "Dokumen disetujui: {name}",
+      "body": "Pengelola menyetujui {name} untuk pemesanan {ref}."
+    },
+    "booking_at_risk": {
+      "title": "Pemesanan {ref} ditandai berisiko",
+      "body": "Pengelola menandai pemesanan ini berisiko: {reason}"
+    },
+    "readiness_warning": {
+      "title": "{days} hari lagi: pemesanan {ref} belum siap",
+      "body": "{issues} Buka pemesanan untuk melengkapinya."
+    },
+    "readiness": {
+      "docs": "Dokumen wajib yang belum disetujui: {names}.",
+      "balance": "Pelunasan belum dibayar."
+    },
+    "post_event_window": {
+      "title": "Acara selesai: masa laporan sampai {until}",
+      "body": "Jika ada masalah selama acara {ref}, laporkan sebelum {until}. Tanpa laporan, dana dilepas (simulasi) pada {release}."
+    },
+    "problem_reported": {
+      "title": "Masalah dilaporkan untuk pemesanan {ref}",
+      "body": "Pelepasan dana ditahan sampai Admin menyelesaikan laporan ini."
+    },
+    "problem_resolved": {
+      "title": "Laporan masalah {ref} sudah diselesaikan",
+      "body": "Catatan Admin: {note}"
+    },
+    "booking_released": {
+      "title": "Dana pemesanan {ref} dilepas (simulasi)",
+      "body": "Hak pengelola {amount} tercatat di buku besar uji. Laporan penyelesaian bisa diunduh di halaman pemesanan."
+    },
+    "booking_cancelled": {
+      "title": "Pemesanan {ref} dibatalkan",
+      "body": "Alasan: {reason}. Rincian pengembalian (simulasi) ada di halaman pemesanan."
+    },
+    "event_changed": {
+      "title": "Ada perubahan pada {title}",
+      "body": "{changes} Kartu masuk Anda tetap berlaku."
+    },
+    "event_cancelled": {
+      "title": "{title} dibatalkan",
+      "body": "Acara ini dibatalkan dan kartu masuk Anda tidak berlaku lagi. Maaf atas ketidaknyamanannya."
+    },
+    "event_removed": {
+      "title": "{title} tidak tersedia lagi",
+      "body": "Halaman acara ini dihapus oleh Admin Spot-In dan kartu masuk Anda tidak berlaku lagi."
+    },
+    "registration_cancelled": {
+      "title": "Pendaftaran Anda di {title} dibatalkan",
+      "body": "Pesan dari penyelenggara: {message}"
+    },
+    "pass_issued": {
+      "title": "Kartu masuk Anda: {title}",
+      "body": "Pendaftaran terkonfirmasi untuk {when}. Tunjukkan kartu masuk ini di pintu masuk."
+    },
+    "contact_message": {
+      "title": "Pesan Hubungi kami dari {name}",
+      "body": "{name} ({email}) menulis tentang {subject}: {text}"
     }
   },
   "meta": {
@@ -590,7 +664,10 @@
     "optional": "(opsional)",
     "loading": "Memuat data…",
     "errorTitle": "Belum bisa disimpan",
-    "close": "Tutup"
+    "close": "Tutup",
+    "spaceAtProperty": "{space}, {property}",
+    "addressLine": "{address}, {area} {city}",
+    "spaceAtPropertyAddress": "{space}, {property} · {address}"
   },
   "nav": {
     "label": "Navigasi utama",
@@ -614,7 +691,8 @@
     "ctxVenue": "Pengelola",
     "ctxOrganizer": "Penyelenggara",
     "account": "Akun: {name}",
-    "bookings": "Pemesanan"
+    "bookings": "Pemesanan",
+    "myPasses": "Kartu saya"
   },
   "fields": {
     "email": "Email",
@@ -680,7 +758,7 @@
     "title": "Bantuan",
     "booking": {
       "q": "Bagaimana pemesanan di Spot-In bekerja?",
-      "a": "Penyelenggara mengirim permintaan ke satu atau beberapa ruang. Pengelola membalas, dapat menahan tanggal sementara, lalu mengirim penawaran. Penawaran yang diterima menjadi pemesanan setelah perjanjian disetujui dan uang muka dibayar (tahap berikutnya pilot)."
+      "a": "Penyelenggara mengirim permintaan ke satu atau beberapa ruang. Pengelola membalas, dapat menahan tanggal sementara, lalu mengirim penawaran. Penawaran yang diterima menjadi pemesanan terkonfirmasi setelah perjanjian contoh disetujui kedua pihak dan uang muka dibayar. Setelah itu penyelenggara bisa membuat halaman acara untuk tamu undangan."
     },
     "pilot": {
       "q": "Apa arti mode pilot?",
@@ -693,6 +771,15 @@
     "privacy": {
       "q": "Data apa yang disimpan?",
       "a": "Hanya data minimum untuk pilot. Kami tidak menyimpan KTP/NIK, NPWP, NIB, nomor rekening atau kartu. Anda dapat mengunduh atau menghapus data Anda dari halaman Akun."
+    },
+    "intro": "Jawaban singkat untuk pertanyaan yang paling sering muncul selama pilot.",
+    "cancel": {
+      "q": "Bagaimana cara membatalkan pemesanan?",
+      "a": "Pemilik organisasi penyelenggara bisa membatalkan dari halaman pemesanan. Sebelum mengonfirmasi, halaman itu menunjukkan berapa yang dikembalikan menurut kebijakan pembatalan dan berapa yang tetap menjadi hak pengelola. Jika pengelola yang membatalkan, semua yang sudah dibayar dikembalikan. Semua pengembalian adalah simulasi."
+    },
+    "passes": {
+      "q": "Bagaimana kartu masuk bekerja?",
+      "a": "Setelah mendaftar di halaman acara, buka tautan di email untuk mengonfirmasi. Kartu masuk dengan kode QR dikirim ke email Anda dan tersimpan di Kartu saya. Panitia memindai kode QR di pintu masuk. Anda bisa membatalkan pendaftaran sampai sesi dimulai."
     }
   },
   "dev": {
@@ -1710,8 +1797,558 @@
       },
       "booking": {
         "confirmed": "Pemesanan terkonfirmasi",
-        "lapsed": "Pemesanan tidak dilanjutkan"
+        "lapsed": "Pemesanan tidak dilanjutkan",
+        "released": "Dana dilepas (simulasi)",
+        "at_risk": "Ditandai berisiko",
+        "at_risk_cleared": "Tanda berisiko dihapus",
+        "cancelled_by_organizer": "Dibatalkan oleh penyelenggara",
+        "cancelled_by_venue": "Dibatalkan oleh pengelola",
+        "no_show": "Penyelenggara tidak hadir"
+      },
+      "document": {
+        "submitted": "Dokumen diunggah",
+        "approved": "Dokumen disetujui",
+        "changes_requested": "Pengelola meminta perubahan dokumen",
+        "waived": "Dokumen dibebaskan"
+      },
+      "problem": {
+        "reported": "Masalah dilaporkan",
+        "resolved": "Admin menyelesaikan laporan masalah"
       }
+    },
+    "eventPage": "Halaman acara",
+    "registrations": "{taken} pendaftar dari {capacity} tempat",
+    "managePage": "Kelola halaman",
+    "attendees": "Pendaftar",
+    "viewPage": "Buka halaman acara",
+    "createPage": "Buat halaman acara",
+    "noPage": "Belum ada halaman acara.",
+    "cancelledByOrganizer": "Pemesanan dibatalkan oleh penyelenggara",
+    "cancelledByVenue": "Pemesanan dibatalkan oleh pengelola",
+    "noShowTitle": "Penyelenggara tidak hadir, pemesanan dibatalkan",
+    "cancelledBody": "Alasan: {reason}. Dikembalikan ke penyelenggara (simulasi): {refund}. Tetap menjadi hak pengelola: {keeps}."
+  },
+  "receipts": {
+    "venueLine": {
+      "deposit": "Uang muka sewa ruang dan layanan tambahan",
+      "balance": "Pelunasan sewa ruang dan layanan tambahan",
+      "full": "Pembayaran penuh sewa ruang dan layanan tambahan"
+    },
+    "ppn": "PPN",
+    "fee": "Biaya layanan Spot-In",
+    "refundLine": "Pengembalian (simulasi) atas {number}"
+  },
+  "documents": {
+    "closed": "Dokumen ini sudah disetujui atau dibebaskan.",
+    "commentRequired": "Tulis apa yang perlu diubah.",
+    "notSubmitted": "Belum ada berkas yang diunggah untuk ditinjau."
+  },
+  "problems": {
+    "windowClosed": "Laporan masalah hanya bisa dikirim selama masa setelah acara.",
+    "descriptionRequired": "Jelaskan masalahnya.",
+    "notOpen": "Laporan ini sudah diselesaikan."
+  },
+  "cancel": {
+    "notAllowed": "Pemesanan ini tidak bisa dibatalkan pada tahap sekarang.",
+    "figuresChanged": "Jumlah pengembalian berubah sejak halaman dibuka. Periksa angka terbaru lalu coba lagi.",
+    "noShowEventDayOnly": "Ketidakhadiran hanya bisa dicatat pada hari acara.",
+    "noShowReason": "Penyelenggara tidak hadir pada hari acara.",
+    "refund": "Dikembalikan ke penyelenggara (simulasi)",
+    "venueKeeps": "Tetap menjadi hak pengelola"
+  },
+  "statement": {
+    "title": "Laporan penyelesaian (pilot)",
+    "status": "Status",
+    "summary": "Ringkasan",
+    "entries": "Catatan buku besar",
+    "ppnIncluded": "Termasuk PPN",
+    "adjustment": "Penyesuaian dari laporan masalah",
+    "commission": "Komisi Spot-In",
+    "venuePayable": "Hak pengelola (simulasi)",
+    "spotinRevenue": "Pendapatan Spot-In",
+    "simulated": "Semua angka adalah simulasi pilot. Tidak ada uang yang dipindahkan.",
+    "csv": {
+      "time": "Waktu",
+      "type": "Jenis",
+      "debit": "Debit",
+      "credit": "Kredit",
+      "amount_idr": "Jumlah (Rp)",
+      "memo": "Catatan"
+    },
+    "types": {
+      "payment": "Pembayaran",
+      "refund": "Pengembalian (simulasi)",
+      "release": "Pelepasan dana (simulasi)",
+      "cancellation": "Pembatalan"
+    },
+    "accounts": {
+      "organizer_paid": "Dibayar penyelenggara",
+      "held": "Ditahan",
+      "venue_payable": "Hak pengelola",
+      "spotin_commission": "Komisi Spot-In",
+      "spotin_fee": "Biaya layanan Spot-In",
+      "refunds": "Pengembalian"
     }
+  },
+  "eventPages": {
+    "tooManyQuestions": "Maksimal 3 pertanyaan.",
+    "questionLabelRequired": "Pertanyaan {n} belum diisi.",
+    "sensitiveQuestion": "Pertanyaan {n} meminta data sensitif (misalnya nomor identitas, kesehatan, atau agama). Hapus atau ganti dengan pertanyaan lain.",
+    "choiceOptions": "Pertanyaan {n} perlu minimal dua pilihan jawaban.",
+    "needsConfirmedBooking": "Halaman acara bisa dibuat setelah pemesanan ruang terkonfirmasi.",
+    "closed": "Halaman acara ini sudah ditutup.",
+    "titleRequired": "Isi judul acara.",
+    "summaryRequired": "Isi ringkasan acara.",
+    "summaryTooLong": "Ringkasan maksimal 160 karakter.",
+    "capacityRequired": "Isi kapasitas setiap sesi.",
+    "capacityTooHigh": "Kapasitas tidak bisa melebihi kapasitas ruang ({max} orang).",
+    "capacityBelowTaken": "Kapasitas tidak bisa diturunkan di bawah {n}, jumlah yang sudah mendaftar.",
+    "sessionOutsideBooking": "Waktu sesi harus di dalam jam yang dipesan ({start}–{end}).",
+    "change": {
+      "time": "Waktu sesi {day} berubah menjadi {start}–{end}.",
+      "description": "Deskripsi acara diperbarui."
+    },
+    "notDraft": "Halaman ini sudah tayang.",
+    "coverRequired": "Unggah gambar sampul sebelum menayangkan halaman.",
+    "notClosed": "Pendaftaran sedang dibuka.",
+    "noRoomToReopen": "Tidak ada sesi yang masih punya tempat dan belum dimulai.",
+    "notLive": "Pendaftaran tidak sedang dibuka.",
+    "notFound": "Halaman tidak tersedia."
+  },
+  "registration": {
+    "full": "Pendaftaran penuh",
+    "closed": "Pendaftaran untuk sesi ini sudah ditutup.",
+    "answerRequired": "Jawab pertanyaan: {label}",
+    "duplicate": "Email ini sudah terdaftar untuk sesi ini.",
+    "expired": "Waktu konfirmasi pendaftaran ini sudah habis. Daftar lagi jika masih ada tempat.",
+    "tooLateToCancel": "Sesi sudah dimulai, pendaftaran tidak bisa dibatalkan lagi.",
+    "messageRequired": "Tulis pesan untuk peserta."
+  },
+  "checkin": {
+    "already": "Sudah check-in pukul {time} oleh {member}",
+    "notValid": "Kartu ini tidak bisa dipakai: {status}.",
+    "notCheckedIn": "Kartu ini belum check-in.",
+    "undoExpired": "Check-in hanya bisa dibatalkan dalam 5 menit."
+  },
+  "passStatus": {
+    "issued": "Berlaku",
+    "checked_in": "Sudah check-in",
+    "cancelled": "Dibatalkan",
+    "voided": "Tidak berlaku"
+  },
+  "attendees": {
+    "csv": {
+      "name": "Nama",
+      "email": "Email",
+      "session": "Sesi",
+      "status": "Status",
+      "pass": "Nomor kartu"
+    },
+    "status": {
+      "pending": "Menunggu konfirmasi email",
+      "confirmed": "Belum datang",
+      "checked_in": "Sudah masuk",
+      "cancelled": "Dibatalkan"
+    }
+  },
+  "counts": {
+    "csv": {
+      "enquiry": "Permintaan",
+      "created": "Dibuat",
+      "event": "Acara",
+      "space": "Ruang",
+      "status": "Status",
+      "firstResponse": "Balasan pertama"
+    },
+    "title": "Angka periode",
+    "intro": "Ringkasan permintaan, penawaran dan pemesanan untuk periode yang Anda pilih.",
+    "from": "Dari",
+    "to": "Sampai",
+    "apply": "Tampilkan",
+    "csvLink": "Unduh data (CSV)",
+    "enquiries": "Permintaan masuk",
+    "quotes": "Penawaran terkirim",
+    "bookings": "Pemesanan terkonfirmasi",
+    "conversion": "Konversi",
+    "pct": "{n}%",
+    "median": "Median waktu balas pertama",
+    "none": "Belum ada balasan",
+    "revenue": "Nilai pemesanan (simulasi)",
+    "note": "Waktu balas dihitung dalam jam kerja. Nilai pemesanan adalah total pengelola dari pemesanan yang terkonfirmasi pada periode ini."
+  },
+  "contact": {
+    "textRequired": "Tulis pesan Anda."
+  },
+  "adminProblems": {
+    "title": "Laporan masalah setelah acara",
+    "empty": "Tidak ada laporan masalah yang terbuka.",
+    "findBooking": "Cari pemesanan ini",
+    "outcome": "Keputusan",
+    "releaseAsIs": "Lepas dana apa adanya",
+    "adjust": "Catat penyesuaian (dikembalikan ke penyelenggara, simulasi)",
+    "adjustment": "Jumlah penyesuaian (Rp)",
+    "note": "Alasan dan catatan untuk kedua pihak",
+    "resolve": "Selesaikan laporan",
+    "resolved": "Laporan diselesaikan. Jika jadwal pelepasan sudah lewat, dana dilepas sekarang."
+  },
+  "afterEvent": {
+    "title": "Setelah acara",
+    "windowTitle": "Masa laporan masalah sampai {until}",
+    "windowBody": "Jika ada masalah selama acara, laporkan sebelum masa ini berakhir. Tanpa laporan, dana dilepas (simulasi) pada {release}.",
+    "onHoldTitle": "Pelepasan dana ditahan",
+    "onHoldBody": "Ada laporan masalah yang belum diselesaikan Admin. Dana dilepas setelah Admin mencatat keputusannya.",
+    "problemBy": "Dilaporkan oleh {name} ({side})",
+    "problemStatus": {
+      "open": "Menunggu Admin",
+      "resolved": "Selesai"
+    },
+    "resolution": "Keputusan Admin: {note}",
+    "report": "Laporkan masalah",
+    "describe": "Apa yang terjadi?",
+    "photos": "Foto pendukung (opsional, maksimal 5)",
+    "reportSubmit": "Kirim laporan dan tahan pelepasan dana",
+    "releasedTitle": "Dana sudah dilepas (simulasi)",
+    "releasedBody": "Dilepas pada {at}. Tidak ada uang yang dipindahkan; angka ini tercatat di buku besar uji."
+  },
+  "atRisk": {
+    "title": "Kesiapan acara",
+    "help": "Tandai berisiko jika dokumen wajib atau pelunasan belum beres menjelang acara. Penyelenggara akan diberi tahu.",
+    "isAtRisk": "Pemesanan ini ditandai berisiko",
+    "reason": "Alasan",
+    "mark": "Tandai berisiko",
+    "clear": "Hapus tanda berisiko",
+    "set": "Pemesanan ditandai berisiko. Penyelenggara sudah diberi tahu.",
+    "cleared": "Tanda berisiko dihapus."
+  },
+  "attendeeList": {
+    "title": "Pendaftar",
+    "back": "Kembali ke halaman acara",
+    "print": "Cetak daftar",
+    "csv": "Unduh CSV",
+    "csvOwnerOnly": "Hanya Pemilik yang bisa mengunduh daftar pendaftar.",
+    "sessionCount": "{day}: {taken} dari {capacity}",
+    "search": "Cari nama atau email",
+    "searchPlaceholder": "Cari nama atau email peserta",
+    "session": "Sesi",
+    "allSessions": "Semua sesi",
+    "status": "Status",
+    "filters": {
+      "all": "Semua",
+      "not_checked_in": "Belum datang",
+      "checked_in": "Sudah masuk",
+      "cancelled": "Dibatalkan"
+    },
+    "apply": "Terapkan",
+    "noMatch": "Tidak ada pendaftar yang cocok",
+    "emptyTitle": "Belum ada pendaftar",
+    "emptyBody": "Bagikan tautan halaman acara. Pendaftar muncul di sini setelah mengonfirmasi email.",
+    "actions": "Tindakan",
+    "checkIn": "Check-in",
+    "checkedInAt": "pukul {time} oleh {member}",
+    "cancel": "Batalkan pendaftaran",
+    "cancelMessage": "Pesan untuk peserta",
+    "cancelSubmit": "Batalkan dan kirim pesan",
+    "cancelledOne": "Pendaftaran dibatalkan dan peserta sudah diberi tahu."
+  },
+  "checkinPanel": {
+    "done": "{name} berhasil check-in.",
+    "undone": "Check-in {name} dibatalkan."
+  },
+  "cancelPanel": {
+    "organizerTitle": "Batalkan pemesanan",
+    "venueTitle": "Batalkan pemesanan (Pemilik)",
+    "tier": "Hari ini {days} hari sebelum acara. Menurut kebijakan pembatalan, {pct}% dari total pengelola bisa dikembalikan.",
+    "venuePaid": "Sudah dibayar ke pengelola",
+    "feePaid": "Biaya layanan Spot-In",
+    "feeRefunded": "Ikut dikembalikan (dibatalkan dalam 24 jam setelah konfirmasi)",
+    "feeKept": "Tidak dikembalikan",
+    "youGetBack": "Yang Anda terima kembali",
+    "simulated": "Pengembalian adalah simulasi pilot. Angka yang dijalankan sama dengan angka di atas.",
+    "venueBody": "Pembatalan oleh pengelola mengembalikan semua yang sudah dibayar penyelenggara, termasuk biaya layanan Spot-In. Tidak ada denda selama pilot.",
+    "reason": "Alasan pembatalan",
+    "confirm": "Saya mengerti pembatalan tidak bisa diurungkan dan halaman acara ikut dibatalkan.",
+    "confirmRequired": "Centang pernyataan untuk melanjutkan pembatalan.",
+    "submit": "Batalkan pemesanan",
+    "done": "Pemesanan dibatalkan. Kedua pihak dan pendaftar sudah diberi tahu.",
+    "noShowTitle": "Penyelenggara tidak hadir",
+    "noShowBody": "Jika penyelenggara tidak datang hari ini, catat ketidakhadiran. Ini dihitung sebagai pembatalan oleh penyelenggara pada hari acara.",
+    "noShowConfirm": "Penyelenggara tidak hadir dan tidak bisa dihubungi.",
+    "noShowSubmit": "Catat ketidakhadiran"
+  },
+  "checklistPanel": {
+    "title": "Dokumen yang diperlukan",
+    "empty": "Pengelola tidak meminta dokumen untuk pemesanan ini.",
+    "mandatory": "wajib",
+    "optional": "opsional",
+    "due": "Batas {at}",
+    "comment": "Catatan pengelola: {comment}",
+    "version": "Versi {n}: {name}",
+    "file": "Berkas",
+    "fileHint": "PDF, JPG atau PNG, maksimal 10 MB.",
+    "upload": "Unggah",
+    "uploadNew": "Unggah versi baru",
+    "uploaded": "Dokumen terkirim untuk ditinjau.",
+    "reviewComment": "Catatan untuk penyelenggara (wajib jika minta perubahan)",
+    "approve": "Setujui",
+    "requestChanges": "Minta perubahan",
+    "waive": "Bebaskan",
+    "done": {
+      "approve": "Dokumen disetujui.",
+      "changes": "Permintaan perubahan terkirim.",
+      "waive": "Dokumen dibebaskan."
+    }
+  },
+  "docStatus": {
+    "not_started": "Belum diunggah",
+    "submitted": "Menunggu tinjauan",
+    "changes_requested": "Perlu perubahan",
+    "approved": "Disetujui",
+    "waived": "Dibebaskan"
+  },
+  "contactForm": {
+    "title": "Hubungi kami",
+    "intro": "Tim Spot-In membaca setiap pesan dan berusaha membalas dalam 1 hari kerja.",
+    "helpBody": "Tidak menemukan jawabannya? Kirim pesan ke tim Spot-In.",
+    "link": "Hubungi kami",
+    "loginFirst": "Masuk untuk menghubungi kami",
+    "message": "Pesan Anda",
+    "submit": "Kirim pesan",
+    "sent": "Pesan terkirim. Kami akan membalas ke email Anda.",
+    "about": {
+      "booking": "Pesan ini akan ditautkan ke pemesanan yang Anda buka.",
+      "enquiry": "Pesan ini akan ditautkan ke permintaan yang Anda buka.",
+      "event_page": "Pesan ini akan ditautkan ke halaman acara yang Anda buka."
+    }
+  },
+  "eventDash": {
+    "event": "Acara",
+    "enquiries": "Permintaan",
+    "booking": "Pemesanan",
+    "registrations": "Pendaftar",
+    "next": "Langkah berikutnya",
+    "counts": "{enquiries} permintaan · {quotes} penawaran terbuka",
+    "noBooking": "Belum ada",
+    "regs": "{taken} dari {capacity}",
+    "actions": {
+      "sendEnquiries": "Kirim permintaan",
+      "waitForQuotes": "Tunggu penawaran",
+      "reviewQuotes": "Tinjau penawaran",
+      "agreementAndDeposit": "Setujui perjanjian dan bayar uang muka",
+      "payBalance": "Bayar pelunasan",
+      "createPage": "Buat halaman acara",
+      "publishPage": "Tayangkan halaman acara",
+      "postEvent": "Masa laporan setelah acara",
+      "none": "Tidak ada"
+    }
+  },
+  "myPasses": {
+    "title": "Kartu saya",
+    "intro": "Kartu masuk untuk acara yang Anda daftari.",
+    "pendingTitle": "Konfirmasi pendaftaran Anda di {title}",
+    "pendingBody": "Buka tautan yang kami kirim ke email Anda. Tempat Anda ditahan selama 2 jam.",
+    "emptyTitle": "Belum ada kartu masuk",
+    "emptyBody": "Kartu masuk muncul di sini setelah Anda mendaftar di halaman acara dan mengonfirmasi email.",
+    "cancel": "Batalkan pendaftaran",
+    "cancelBody": "Tempat Anda akan diberikan ke orang lain dan kartu ini tidak berlaku lagi.",
+    "cancelSubmit": "Ya, batalkan pendaftaran",
+    "cancelled": "Pendaftaran dibatalkan."
+  },
+  "pageEditor": {
+    "titleNew": "Buat halaman acara",
+    "back": "Kembali ke acara",
+    "intro": "Halaman acara hanya bisa dibuka lewat tautannya. Halaman ini tidak muncul di pencarian.",
+    "needsBookingTitle": "Belum ada pemesanan terkonfirmasi",
+    "needsBookingBody": "Halaman acara bisa dibuat setelah pemesanan ruang untuk acara ini terkonfirmasi: perjanjian disetujui kedua pihak dan uang muka dibayar.",
+    "publishedTitle": "Halaman acara sudah tayang",
+    "publishedBody": "Bagikan tautan ini ke tamu undangan. Pendaftar menerima kartu masuk setelah mengonfirmasi email.",
+    "saved": "Perubahan tersimpan.",
+    "cancelledTitle": "Acara ini dibatalkan",
+    "cancelledBody": "Pemesanan ruang dibatalkan, jadi pendaftaran ditutup dan semua kartu masuk tidak berlaku. Pendaftar sudah diberi tahu lewat email.",
+    "removedTitle": "Halaman ini dihapus oleh Admin",
+    "title": "Judul acara",
+    "summary": "Ringkasan",
+    "summaryHint": "Tampil di bawah judul dan saat tautan dibagikan. Sisa {n} karakter.",
+    "description": "Deskripsi",
+    "category": "Kategori",
+    "ageNote": "Batas usia",
+    "ageNotePlaceholder": "Khusus 18 tahun ke atas",
+    "ageDefault": "Khusus 18 tahun ke atas (wajib selama pilot)",
+    "cover": "Gambar sampul",
+    "coverRequired": "Wajib sebelum halaman ditayangkan. JPG, PNG atau WebP, maksimal 10 MB.",
+    "coverReplace": "Pilih gambar baru hanya jika ingin mengganti sampul.",
+    "sessions": "Sesi dan kapasitas",
+    "sessionsHint": "Satu sesi untuk setiap hari yang dipesan. Kapasitas maksimal {max} orang, sesuai kapasitas ruang.",
+    "start": "Mulai",
+    "end": "Selesai",
+    "capacity": "Kapasitas",
+    "bookedHours": "Jam yang dipesan {start}–{end}. Sudah mendaftar: {taken}.",
+    "questions": "Pertanyaan pendaftaran",
+    "sensitiveTitle": "Jangan tanyakan data sensitif",
+    "sensitiveBody": "Pertanyaan tidak boleh meminta nomor identitas, data kesehatan, agama, atau data sensitif lain. Pertanyaan seperti itu akan ditolak.",
+    "questionN": "Pertanyaan {n}",
+    "questionKind": "Jenis jawaban",
+    "kinds": {
+      "text": "Teks singkat",
+      "choice": "Pilihan tunggal",
+      "yesno": "Ya atau tidak"
+    },
+    "questionLabel": "Pertanyaan",
+    "options": "Pilihan jawaban (pisahkan dengan koma)",
+    "removeQuestion": "Hapus pertanyaan",
+    "addQuestion": "Tambah pertanyaan",
+    "maxQuestions": "Maksimal 3 pertanyaan.",
+    "closing": "Pendaftaran ditutup",
+    "closeAtStart": "Saat sesi dimulai",
+    "closeManual": "Tutup manual",
+    "confirmTitle": "{n} orang akan diberi tahu",
+    "confirmBody": "Anda mengubah waktu sesi atau deskripsi. Semua pendaftar akan menerima email berisi perubahan ini.",
+    "confirmSave": "Simpan dan kirim email",
+    "confirmCancel": "Jangan ubah",
+    "publish": "Tayangkan halaman",
+    "saveDraft": "Simpan draf",
+    "saveChanges": "Simpan perubahan",
+    "venue": "Tempat",
+    "venueLocked": "Diambil dari pemesanan. Tempat dan peta tidak bisa diubah di halaman acara.",
+    "shareTitle": "Tautan halaman acara",
+    "shareHint": "Bagikan tautan ini ke tamu undangan.",
+    "preview": "Buka halaman",
+    "attendees": "Lihat pendaftar",
+    "registration": "Pendaftaran",
+    "closeNow": "Tutup pendaftaran",
+    "reopen": "Buka lagi pendaftaran",
+    "reopened": "Pendaftaran dibuka lagi.",
+    "closedNow": "Pendaftaran ditutup.",
+    "endedTitle": "Acara ini sudah selesai",
+    "endedBody": "Halaman tetap bisa dibuka lewat tautannya, tetapi tidak bisa diubah lagi. Daftar pendaftar masih tersedia."
+  },
+  "pageStatus": {
+    "draft": "Draf",
+    "live": "Pendaftaran dibuka",
+    "registration_closed": "Pendaftaran ditutup",
+    "ended": "Selesai",
+    "cancelled": "Dibatalkan",
+    "removed": "Dihapus"
+  },
+  "passPage": {
+    "notFoundTitle": "Kartu tidak ditemukan",
+    "notFoundBody": "Periksa tautan di email Anda, atau buka Kartu saya setelah masuk.",
+    "publicTitle": "Kartu masuk milik {name}",
+    "publicHint": "Tunjukkan ke panitia di pintu masuk. Detail lengkap hanya terlihat oleh pemilik kartu dan panitia.",
+    "login": "Masuk untuk melihat detail",
+    "asOrganizer": "Anda melihat kartu ini sebagai panitia.",
+    "cardLabel": "Kartu masuk",
+    "number": "Kartu masuk · {number}",
+    "name": "Nama",
+    "session": "Sesi",
+    "venue": "Tempat",
+    "map": "Buka peta",
+    "qrAlt": "Kode QR kartu masuk",
+    "invalid": "Kartu ini tidak bisa dipakai untuk masuk.",
+    "checkIn": "Check-in {name}",
+    "undo": "Batalkan check-in",
+    "allPasses": "Semua kartu saya",
+    "eventPage": "Halaman acara"
+  },
+  "pipeline": {
+    "title": "Alur permintaan",
+    "intro": "Semua permintaan dan pemesanan menurut tahapnya.",
+    "viewLabel": "Tampilan",
+    "list": "Daftar",
+    "kanban": "Papan",
+    "emptyTitle": "Belum ada permintaan",
+    "emptyBody": "Permintaan dari penyelenggara muncul di sini.",
+    "event": "Acara",
+    "stage": "Tahap",
+    "replyBy": "Balas sebelum",
+    "overdue": "Terlambat dibalas (batas {at})",
+    "overdueShort": "Terlambat dibalas",
+    "columns": {
+      "new": "Baru",
+      "discussion": "Dalam diskusi",
+      "quoted": "Penawaran terkirim",
+      "pending_approval": "Menunggu persetujuan",
+      "accepted": "Diterima (menunggu perjanjian/uang muka)",
+      "confirmed": "Terkonfirmasi",
+      "lost": "Tidak dilanjutkan/ditolak"
+    }
+  },
+  "printList": {
+    "no": "No.",
+    "tick": "Hadir",
+    "print": "Cetak"
+  },
+  "problemPanel": {
+    "reported": "Laporan terkirim. Pelepasan dana ditahan sampai Admin menyelesaikannya."
+  },
+  "publicPage": {
+    "unavailableTitle": "Halaman tidak tersedia",
+    "unavailableBody": "Tautan ini mungkin salah, atau halamannya sudah dihapus.",
+    "coverAlt": "Gambar sampul {title}",
+    "by": "Oleh {organizer}",
+    "cancelledTitle": "Acara ini dibatalkan",
+    "cancelledBody": "Pendaftaran ditutup dan semua kartu masuk tidak berlaku. Pendaftar sudah diberi tahu lewat email.",
+    "cancelledShort": "Acara ini dibatalkan.",
+    "sentTitle": "Satu langkah lagi: buka email Anda",
+    "sentBody": "Kami mengirim tautan konfirmasi ke {email}. Tempat Anda ditahan selama 2 jam. Jika tidak ada di kotak masuk, periksa folder spam.",
+    "when": "Waktu",
+    "spotsLeft": "Sisa {n} tempat",
+    "closedShort": "Pendaftaran ditutup",
+    "where": "Tempat",
+    "about": "Tentang acara",
+    "rules": "Aturan tempat",
+    "register": "Daftar gratis",
+    "alreadyTitle": "Anda sudah terdaftar untuk acara ini",
+    "viewPass": "Lihat kartu masuk",
+    "registrationClosed": "Pendaftaran untuk acara ini sudah ditutup.",
+    "chooseDay": "Pilih hari",
+    "name": "Nama lengkap",
+    "nameHint": "Tulis nama Anda seperti yang ingin tertera di kartu masuk.",
+    "email": "Email",
+    "emailHint": "Kartu masuk dikirim ke sini. Tidak perlu kata sandi.",
+    "choose": "Pilih jawaban",
+    "yes": "Ya",
+    "no": "Tidak",
+    "pilotNotice": "Pemberitahuan pilot",
+    "age": "Saya berusia 18 tahun atau lebih.",
+    "pilotAccept": "Saya sudah membaca pemberitahuan pilot dan memahami ini bukan acara sungguhan.",
+    "submit": "Daftar dan kirim kartu masuk",
+    "share": "Bagikan",
+    "report": "Laporkan halaman ini"
+  },
+  "reportForm": {
+    "title": "Laporkan",
+    "intro": "Laporan dibaca oleh Admin Spot-In. Identitas Anda tidak ditunjukkan ke penyelenggara.",
+    "reason": "Alasan",
+    "choose": "Pilih alasan",
+    "reasons": {
+      "fake": "Acara palsu atau penipuan",
+      "inappropriate": "Konten tidak pantas",
+      "misleading": "Informasi menyesatkan",
+      "spam": "Spam",
+      "other": "Lainnya"
+    },
+    "text": "Ceritakan lebih lanjut (opsional)",
+    "submit": "Kirim laporan",
+    "sent": "Terima kasih. Laporan Anda sudah diterima Admin."
+  },
+  "share": {
+    "link": "Tautan",
+    "copy": "Salin tautan",
+    "copied": "Tautan disalin",
+    "whatsapp": "Bagikan lewat WhatsApp"
+  },
+  "statementLinks": {
+    "pdf": "Laporan pemesanan (PDF)",
+    "csv": "Laporan pemesanan (CSV)"
+  },
+  "thisWeek": {
+    "title": "Minggu ini",
+    "empty": "Tidak ada acara, dokumen atau pelunasan untuk 7 hari ke depan.",
+    "events": "Acara",
+    "docs": "Dokumen untuk ditinjau",
+    "balances": "Pelunasan jatuh tempo",
+    "due": "Jatuh tempo {at}",
+    "pipeline": "Alur permintaan",
+    "counts": "Angka periode"
   }
 }

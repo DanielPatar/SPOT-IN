@@ -20,5 +20,12 @@ export function registerAllJobs(): void {
   registerJob("booking.deposit_deadline", (p, ctx) => depositDeadlineJob(String(p.bookingId), ctx.now));
   registerJob("booking.payment_reminder", (p) => paymentReminderJob(String(p.bookingId), String(p.kind)));
   registerJob("booking.balance_issue", (p, ctx) => balanceIssueJob(String(p.bookingId), ctx.now));
+  registerJob("booking.readiness", (p) => import("./lifecycle").then((m) => m.readinessJob(String(p.bookingId), Number(p.days))));
+  registerJob("booking.event_start", (p) => import("./lifecycle").then((m) => m.eventStartJob(String(p.bookingId))));
+  registerJob("booking.event_end", (p) => import("./lifecycle").then((m) => m.eventEndJob(String(p.bookingId))));
+  registerJob("booking.release", (p) => import("./lifecycle").then((m) => m.releaseJob(String(p.bookingId))));
+  registerJob("event_page.close", (p) => import("./event-pages").then((m) => m.closePageJob(String(p.pageId))));
+  registerJob("event_page.end", (p) => import("./event-pages").then((m) => m.endPageJob(String(p.pageId))));
+  registerJob("registration.expire", (p, ctx) => import("./event-pages").then((m) => m.expireRegistrationJob(String(p.registrationId), ctx.now)));
   registerJob("booking.balance_missed", (p, ctx) => balanceMissedJob(String(p.bookingId), ctx.now));
 }

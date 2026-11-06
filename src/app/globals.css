@@ -229,3 +229,11 @@
   .stepper li.done { @apply border-brand/20 bg-brand-soft text-brand; }
   footer.site { @apply border-t border-line px-4 py-4 text-center text-xs text-muted-foreground; }
 }
+
+/* Printable attendee list (FR-M32-12) */
+.tick-box { display: inline-block; width: 18px; height: 18px; border: 1.5px solid currentColor; border-radius: 3px; }
+@media print {
+  .no-print, header, .skip-link, [aria-label="Mode pilot"] { display: none !important; }
+  .break-after-page { break-after: page; }
+  body { background: #fff; }
+}

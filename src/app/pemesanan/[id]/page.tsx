@@ -11,6 +11,10 @@ import { Form, Submit } from "@/components/Form";
 import { BookingProgress, DocPreview, Facts, MoneyRow, Notice, PageTitle, Panel, PilotEventLabel, Status } from "@/components/kit";
 import { BookingStatus, bookingStep } from "@/components/BookingStatus";
 import { agreementAction, extendBalanceAction, markLostAction } from "@/web/actions/booking";
+import { checklist, problemsFor, organizerCancellationFigures } from "@/server/lifecycle";
+import { localDate } from "@/lib/time";
+import { now } from "@/lib/clock";
+import { AfterEventPanel, AtRiskPanel, CancelPanel, ChecklistPanel, StatementLinks } from "@/components/AfterPanels";
 
 /** Booking workspace (FR-M13, FR-M14, FR-M15-01, FR-M1-05, FR-M9-10). */
 export default async function BookingWorkspacePage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ accepted?: string; done?: string }> }) {
@@ -37,6 +41,19 @@ export default async function BookingWorkspacePage({ params, searchParams }: { p
         where q.event_id = ${b.event_id as string} and q.id <> ${b.enquiry_id as string} and q.status in ('submitted', 'viewed', 'info_requested', 'responded', 'quoted')`
     : [];
   const balanceReq = requests.find((r) => r.kind === "balance");
+  const a = { userId: s.userId };
+  const docs = await checklist(a, id);
+  const problems = await problemsFor(id);
+  const live = ["confirmed", "balance_due", "fully_paid"].includes(status);
+  const role = String(membership.role);
+  const canCancel = role === "owner" && (live || (side === "venue" && status === "pending_agreement_and_deposit"));
+  const figures = side === "organizer" && canCancel && live ? await organizerCancellationFigures(id) : null;
+  const today = localDate(await now(), tz);
+  const eventDay = (b.days as { date: string }[]).some((d) => d.date === today) && ["in_progress", ...["confirmed", "balance_due", "fully_paid"]].includes(status);
+  const [page] = await db()`select ep.id, ep.slug, ep.status, (select coalesce(sum(taken), 0)::int from event_sessions s where s.page_id = ep.id) as taken,
+    (select coalesce(sum(capacity), 0)::int from event_sessions s where s.page_id = ep.id) as capacity from event_pages ep where ep.booking_id = ${id}`;
+  const cancelled = status.startsWith("cancelled");
+  const cx = (b.cancellation ?? null) as { refundTotal?: number; venueKeeps?: number; noShow?: boolean } | null;
   const totals = quote.totals as { organizerTotal: number; venueTotal: number; organizerFee: number };
   return (
     <div>
@@ -58,6 +75,14 @@ export default async function BookingWorkspacePage({ params, searchParams }: { p
         ) : null}
         {status === "confirmed" || status === "balance_due" || status === "fully_paid" ? <Notice tone="positive" title={t("workspace.confirmedTitle")}>{t("workspace.confirmedBody")}</Notice> : null}
         {status === "lapsed" ? <Notice tone="danger" title={t("workspace.lapsedTitle")}>{t("workspace.lapsedBody")}</Notice> : null}
+        {done && ["doc_approve", "doc_changes", "doc_waive"].includes(done) ? <Notice tone="positive" className="alert-ok" title={t(`checklistPanel.done.${done.slice(4)}`)} /> : null}
+        {done === "cancelled" ? <Notice tone="positive" className="alert-ok" title={t("cancelPanel.done")} /> : null}
+        {cancelled ? (
+          <Notice tone="danger" title={t(cx?.noShow ? "workspace.noShowTitle" : status === "cancelled_by_venue" ? "workspace.cancelledByVenue" : "workspace.cancelledByOrganizer")}>
+            {t("workspace.cancelledBody", { reason: String(b.cancel_reason ?? ""), refund: formatRupiah(cx?.refundTotal ?? 0), keeps: formatRupiah(cx?.venueKeeps ?? 0) })}
+          </Notice>
+        ) : null}
+        {b.at_risk && !cancelled ? <Notice tone="danger" title={t("atRisk.isAtRisk")}>{String(b.at_risk_reason ?? "")}</Notice> : null}
         {otherOpen.length ? (
           <Notice tone="info" title={t("workspace.otherOpenTitle", { n: otherOpen.length })}>
             <p className="m-0">{t("workspace.otherOpenBody")}</p>
@@ -189,7 +214,21 @@ export default async function BookingWorkspacePage({ params, searchParams }: { p
               ))}
             </ul>
             <p className="small muted">{t("workspace.receiptNote")}</p>
+            {receipts.length || b.settlement || cancelled ? <StatementLinks bookingId={id} /> : null}
           </Panel>
+
+          {!["pending_agreement_and_deposit", "lapsed"].includes(status) ? (
+            <ChecklistPanel
+              bookingId={id}
+              items={docs}
+              side={side}
+              tz={tz}
+              canUpload={side === "organizer" && can("organizer", membership.role, "documents.upload") && !cancelled}
+              canReview={side === "venue" && can("venue_operator", membership.role, "documents.review") && !cancelled}
+            />
+          ) : null}
+          <AfterEventPanel bookingId={id} booking={b} problems={problems} tz={tz} canReport={side === "organizer" ? can("organizer", membership.role, "quote.accept") : can("venue_operator", membership.role, "quote.send")} />
+          {canCancel ? <CancelPanel bookingId={id} side={side} figures={figures} eventDay={eventDay} /> : null}
         </div>
 
         <div className="grid h-fit gap-4">
@@ -201,6 +240,29 @@ export default async function BookingWorkspacePage({ params, searchParams }: { p
             <p className="small">
               <Link href={`/api/documents/quote/${quote.id}`}>{t("quoteView.pdf")}</Link>
             </p>
+          </Panel>
+          {side === "venue" && live ? <AtRiskPanel bookingId={id} atRisk={!!b.at_risk} reason={(b.at_risk_reason as string) ?? null} canEdit={can("venue_operator", membership.role, "documents.review")} /> : null}
+          <Panel>
+            <h2 className="mt-0">{t("workspace.eventPage")}</h2>
+            {page ? (
+              <>
+                <p className="small m-0">
+                  <Status tone={page.status === "live" ? "positive" : "neutral"}>{t(`pageStatus.${String(page.status)}`)}</Status>
+                </p>
+                <p className="small">{t("workspace.registrations", { taken: Number(page.taken), capacity: Number(page.capacity) })}</p>
+                {side === "organizer" ? (
+                  <p className="small">
+                    <Link href={`/acara/${b.event_id}/halaman`}>{t("workspace.managePage")}</Link> · <Link href={`/acara/${b.event_id}/peserta`}>{t("workspace.attendees")}</Link>
+                  </p>
+                ) : page.status !== "draft" ? (
+                  <p className="small"><Link href={`/e/${page.slug}`}>{t("workspace.viewPage")}</Link></p>
+                ) : null}
+              </>
+            ) : side === "organizer" && live ? (
+              <Link className="btn btn-secondary" href={`/acara/${b.event_id}/halaman`}>{t("workspace.createPage")}</Link>
+            ) : (
+              <p className="small muted">{t("workspace.noPage")}</p>
+            )}
           </Panel>
           <Panel>
             <h2 className="mt-0">{t("workspace.contacts")}</h2>
@@ -220,6 +282,9 @@ export default async function BookingWorkspacePage({ params, searchParams }: { p
             )}
             <p className="small">
               <Link href={side === "organizer" ? `/enquiry/${b.enquiry_id}` : `/venue/enquiry/${b.enquiry_id}`}>{t("workspace.messages")}</Link>
+            </p>
+            <p className="small">
+              <Link href={`/bantuan/hubungi?type=booking&id=${id}`}>{t("contactForm.link")}</Link>
             </p>
           </Panel>
           <Panel>

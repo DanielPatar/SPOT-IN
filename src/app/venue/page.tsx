@@ -7,6 +7,8 @@ import { venueSpaces, propertyOfVenue } from "@/server/listings";
 import { venueInbox } from "@/server/enquiries";
 import { Form, Submit } from "@/components/Form";
 import { teamAction } from "@/web/actions/venue";
+import { venueThisWeek } from "@/server/dashboards";
+import { formatRupiah } from "@/lib/money";
 
 export default async function VenueHome() {
   const { session, venue } = await requireVenuePage("/venue");
@@ -15,6 +17,7 @@ export default async function VenueHome() {
   const { spaces } = await venueSpaces(a);
   const [org] = await db()`select verification_status, verification_reason, verified_by_spotin_at from organizations where id = ${venue.orgId}`;
   const inbox = await venueInbox(a, { view: "unreplied" });
+  const week = await venueThisWeek(a);
   const steps = [
     { key: "profile", done: true },
     { key: "property", done: !!property },
@@ -87,6 +90,35 @@ export default async function VenueHome() {
           </div>
         </div>
         <div>
+          <div className="card" data-testid="this-week">
+            <h2 style={{ marginTop: 0 }}>{t("thisWeek.title")}</h2>
+            {!week.events.length && !week.docs.length && !week.balances.length ? <p className="muted">{t("thisWeek.empty")}</p> : null}
+            {week.events.length ? <h3>{t("thisWeek.events")}</h3> : null}
+            {week.events.map((e) => (
+              <p key={String(e.id)} className="small">
+                <Link href={`/pemesanan/${e.id}`}>{String(e.event_name)}</Link> · {String(e.space_name)}
+                <br />
+                <span className="muted">{formatDateTime(e.event_start_at as Date, String(e.timezone))}</span>
+              </p>
+            ))}
+            {week.docs.length ? <h3>{t("thisWeek.docs")}</h3> : null}
+            {week.docs.map((d) => (
+              <p key={String(d.id)} className="small">
+                <Link href={`/pemesanan/${d.booking_id}`}>{String(d.name)}</Link> · {String(d.event_name)}
+              </p>
+            ))}
+            {week.balances.length ? <h3>{t("thisWeek.balances")}</h3> : null}
+            {week.balances.map((b) => (
+              <p key={String(b.booking_id)} className="small">
+                <Link href={`/pemesanan/${b.booking_id}`}>{String(b.event_name)}</Link> · {formatRupiah(Number(b.amount))}
+                <br />
+                <span className="muted">{t("thisWeek.due", { at: formatDateTime(b.due_at as Date, String(b.timezone)) })}</span>
+              </p>
+            ))}
+            <p className="small">
+              <Link href="/venue/pipeline">{t("thisWeek.pipeline")}</Link> · <Link href="/venue/laporan">{t("thisWeek.counts")}</Link>
+            </p>
+          </div>
           <div className="card">
             <h2 style={{ marginTop: 0 }}>{t("venueHome.unreplied")}</h2>
             {inbox.rows.length === 0 ? <p className="muted">{t("venueHome.nothingWaiting")}</p> : null}

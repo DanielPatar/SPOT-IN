@@ -20,6 +20,7 @@ export async function Header() {
     nav.push({ href: "/cari", label: t("nav.search") }, { href: "/shortlist", label: t("nav.shortlists") }, { href: "/acara", label: t("nav.events") }, { href: "/pemesanan", label: t("nav.bookings") }, { href: "/organizer/tim", label: t("nav.team") });
   }
   if (s && !m?.venue && !m?.organizer && !s.isQuickAttendee) nav.push({ href: "/mulai", label: t("nav.start") });
+  if (s?.isQuickAttendee && !m?.venue && !m?.organizer) nav.push({ href: "/kartu-saya", label: t("nav.myPasses") });
   if (s?.isAdmin) nav.push({ href: "/admin", label: t("nav.admin") });
   const ctxName = ctx === "venue" ? m?.venue?.displayName : ctx === "organizer" ? m?.organizer?.displayName : null;
   return (
