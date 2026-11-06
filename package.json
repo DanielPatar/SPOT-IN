@@ -2,7 +2,7 @@
   "name": "spot-in",
   "version": "0.1.0",
   "private": true,
-  "description": "Spot-In — marketplace connecting event organizers with malls and venue owners (course pilot, PRD v1.2)",
+  "description": "Spot-In \u2014 marketplace connecting event organizers with malls and venue owners (course pilot, PRD v1.2)",
   "type": "module",
   "engines": {
     "node": ">=22"
@@ -15,7 +15,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "e2e": "playwright test",
+    "e2e": "tsx e2e/prepare.ts && playwright test",
     "db:migrate": "tsx scripts/migrate.ts",
     "db:reset": "tsx scripts/migrate.ts --reset",
     "db:seed": "tsx scripts/seed.ts",

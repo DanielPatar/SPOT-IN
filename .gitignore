@@ -12,3 +12,4 @@ next-env.d.ts
 .env.local
 .env.*.local
 storage-e2e/
+.claude/

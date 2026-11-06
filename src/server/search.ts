@@ -67,26 +67,15 @@ export async function expandTokens(tokens: string[]): Promise<string[][]> {
   });
 }
 
-const TYPE_WORDS = `case s.type
-  when 'atrium' then 'atrium'
-  when 'booth' then 'booth promo spot stand'
-  when 'popup_unit' then 'pop-up popup unit toko'
-  when 'event_hall' then 'hall aula ballroom gedung'
-  when 'function_room' then 'ruang meeting function room'
-  when 'outdoor_area' then 'outdoor lapangan taman'
-  else '' end`;
-
 export async function searchSpaces(input: SearchInput) {
   const sql = db();
   const pageSize = Math.min(Math.max(input.pageSize ?? 24, 1), 100);
   const page = Math.max(input.page ?? 1, 1);
   const groups = await expandTokens(normalizeQuery(input.q ?? ""));
-  const doc = sql.unsafe(
-    `lower(spotin_unaccent(s.name || ' ' || p.name || ' ' || p.city || ' ' || coalesce(p.area, '') || ' ' || ${TYPE_WORDS}))`,
-  );
+  const doc = sql`s.search_doc`;
   // Each token group must match; an alternative matches when every one of its words matches.
-  const wordMatch = (w: string) =>
-    sql`(word_similarity(${w}, ${doc}) >= 0.5 or to_tsvector('simple', ${doc}) @@ plainto_tsquery('simple', ${w}))`;
+  // `<%` is pg_trgm word similarity (threshold 0.5, set per database in migration 003) and can use the GIN index.
+  const wordMatch = (w: string) => sql`(${w} <% s.search_doc or s.search_tsv @@ plainto_tsquery('simple', ${w}))`;
   const keywordConds = groups.map(
     (alts) => sql`(${sql` or `.join(alts.map((a) => sql`(${sql` and `.join(a.split(" ").map(wordMatch))})`))})`,
   );

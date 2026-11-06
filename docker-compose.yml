@@ -1,0 +1,23 @@
+# Local services for development. Without Docker, scripts/local-db.sh starts PostgreSQL + PostGIS
+# and the app's dev drivers (email outbox, local storage, EICAR scanner) need nothing else.
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_USER: spotin
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: spotin
+    ports: ["5433:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+  clamav:
+    image: clamav/clamav:stable
+    ports: ["3310:3310"]
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: spotin
+      MINIO_ROOT_PASSWORD: spotin-dev-password
+    ports: ["9000:9000", "9001:9001"]
+volumes:
+  pgdata:

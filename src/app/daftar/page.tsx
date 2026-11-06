@@ -26,9 +26,11 @@ export default async function SignUpPage({ searchParams }: { searchParams: Promi
           </label>
           <label>
             {t("fields.passwordOptional")}
-            <input type="password" name="password" minLength={10} autoComplete="new-password" />
-            <span className="muted small">{t("auth.passwordOptionalHelp")}</span>
+            <input type="password" name="password" minLength={10} autoComplete="new-password" aria-describedby="password-help" />
           </label>
+          <p id="password-help" className="muted small" style={{ margin: 0 }}>
+            {t("auth.passwordOptionalHelp")}
+          </p>
           <label className="check">
             <input type="checkbox" name="age" required /> {t("auth.ageConfirm")}
           </label>

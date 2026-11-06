@@ -19,8 +19,8 @@ fi
 if ! run "$PGBIN/pg_ctl -D '$DIR' status" >/dev/null 2>&1; then
   run "$PGBIN/pg_ctl -D '$DIR' -o '-p $PORT -k /tmp -c listen_addresses=127.0.0.1' -l '$DIR/server.log' start -w >/dev/null"
 fi
-for db in spotin spotin_test; do
+for db in spotin spotin_test spotin_e2e; do
   psql -h 127.0.0.1 -p "$PORT" -U spotin -d postgres -tAc "select 1 from pg_database where datname='$db'" | grep -q 1 \
     || psql -h 127.0.0.1 -p "$PORT" -U spotin -d postgres -qc "create database $db"
 done
-echo "PostgreSQL ready on 127.0.0.1:$PORT (databases spotin, spotin_test)"
+echo "PostgreSQL ready on 127.0.0.1:$PORT (databases spotin, spotin_test, spotin_e2e)"

@@ -132,7 +132,10 @@ export default async function PropertyPage() {
               <img key={ph.fileId} className="thumb" src={fileUrl(ph.fileId)} alt={t("property.photoAlt")} />
             ))}
           </div>
-          <input type="file" name="photos" multiple accept="image/jpeg,image/png,image/webp" />
+          <label>
+            {t("property.addPhotos")}
+            <input type="file" name="photos" multiple accept="image/jpeg,image/png,image/webp" />
+          </label>
         </fieldset>
         <Submit>{t("common.save")}</Submit>
       </Form>

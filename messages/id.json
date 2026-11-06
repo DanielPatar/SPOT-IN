@@ -643,7 +643,8 @@
     "docDue": "Hari sebelum acara",
     "mandatory": "Wajib",
     "photos": "Foto properti",
-    "photoAlt": "Foto properti"
+    "photoAlt": "Foto properti",
+    "addPhotos": "Tambah foto (JPG, PNG atau WebP)"
   },
   "propertyTypes": {
     "mall": "Mal",
