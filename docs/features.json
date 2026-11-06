@@ -1,0 +1,3826 @@
+{
+  "product": "Spot-In",
+  "source": "docs/PRD.md",
+  "prd_version": "1.2",
+  "generated": "2026-11-05",
+  "priority_scale": {
+    "must": "MVP (course pilot) requirement from PRD §7.1–7.19; done only when every listed acceptance criterion passes in the demo environment (PRD §13).",
+    "should": "Phase 2 backlog item from PRD §7.20; needs acceptance criteria before it enters a build plan.",
+    "excluded": "Phase 3 items (Could) and non-goals are not included."
+  },
+  "counts": {
+    "must": 178,
+    "should": 14,
+    "total": 192
+  },
+  "demo_scenarios": {
+    "D1": "Venue onboarding",
+    "D2": "Search and enquiry",
+    "D3": "Quote to acceptance",
+    "D4": "Confirmation and backup quote",
+    "D5": "Before and during the event",
+    "D6": "After the event",
+    "D7": "Cancellation"
+  },
+  "features": [
+    {
+      "id": "FR-M1-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M1",
+      "area": "Accounts and authentication",
+      "prd_section": "§7.1",
+      "description": "Sign up / log in with email + password or Google. Email magic-link login is offered as an alternative to a password.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M1-1",
+          "text": "Given an invited email, when the user signs up with email + password and clicks the verification link, then they can send enquiries; and before verifying, enquiry, quote, accept, pay and register actions prompt them to verify."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M1-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M1",
+      "area": "Accounts and authentication",
+      "prd_section": "§7.1",
+      "description": "A verified email is required before sending an enquiry, sending a quote, accepting a quote, paying or registering for an event.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M1-1",
+          "text": "Given an invited email, when the user signs up with email + password and clicks the verification link, then they can send enquiries; and before verifying, enquiry, quote, accept, pay and register actions prompt them to verify."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M1-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M1",
+      "area": "Accounts and authentication",
+      "prd_section": "§7.1",
+      "description": "2FA (TOTP authenticator app) is required for Spot-In Admins and optional for everyone else.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M1-2",
+          "text": "Given an Admin without 2FA, when they log in, then they must enrol an authenticator before reaching the admin pages; other users can enable 2FA in settings."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M1-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M1",
+      "area": "Accounts and authentication",
+      "prd_section": "§7.1",
+      "description": "Password reset by email; list and revoke active sessions; automatic logout after 30 days of inactivity (configurable).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M1-3",
+          "text": "Given a user logged in on two devices, when they revoke one session, then that device is logged out on its next request; a forgotten password can be reset by email; a session idle for more than the configured period requires login."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M1-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M1",
+      "area": "Accounts and authentication",
+      "prd_section": "§7.1",
+      "description": "Profile: name, photo, contact phone (optional, not verified, shown to the other party only after a booking is confirmed), notification preferences.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M1-4",
+          "text": "Given a phone number on a profile, then the other party sees it only after a booking between them is confirmed."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M1-06",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M1",
+      "area": "Accounts and authentication",
+      "prd_section": "§7.1",
+      "description": "On first login the user chooses Find spaces, List spaces or both; attendees who arrive through an event page skip this step.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M1-5",
+          "text": "Given a first login from an invite, then the user picks Find spaces, List spaces or both; a user who arrived through an event page is not asked. Given a user in both a venue operator and an organizer organization, then the context switcher shows the current context and the data shown belongs only to it."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M1-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M1",
+      "area": "Accounts and authentication",
+      "prd_section": "§7.1",
+      "description": "Context switcher when the user belongs to both a venue operator and an organizer organization; the current context is always visible.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M1-5",
+          "text": "Given a first login from an invite, then the user picks Find spaces, List spaces or both; a user who arrived through an event page is not asked. Given a user in both a venue operator and an organizer organization, then the context switcher shows the current context and the data shown belongs only to it."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M1-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M1",
+      "area": "Accounts and authentication",
+      "prd_section": "§7.1",
+      "description": "Account deletion: the user can request deletion in settings; it is blocked while the user is the only Owner of an organization with an active booking; on completion personal fields are erased and authored records show \"Deleted user\".",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M1-6",
+          "text": "Given the only Owner of an organization with an active booking, when they request deletion, then it is blocked with the reason; given a user without such ties, then deletion erases their personal fields and their messages show \"Deleted user\"."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M1-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M1",
+      "area": "Accounts and authentication",
+      "prd_section": "§7.1",
+      "description": "Consent capture at sign-up: Spot-In pilot terms, privacy and pilot notice (FR-M38-03); stored with version and timestamp. No marketing opt-in in the pilot.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M1-7",
+          "text": "Given a sign-up, then consent records exist for the terms, privacy notice and pilot notice with their versions."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M1-10",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M1",
+      "area": "Accounts and authentication",
+      "prd_section": "§7.1",
+      "description": "Quick attendee account: registering for an event page creates an account from name + email, completed by clicking the emailed verification link; no password needed.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M1-8",
+          "text": "Given a visitor on an event page, when they enter a name and email and click the emailed link, then an account exists, the registration is confirmed and no password was asked."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M1-11",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M1",
+      "area": "Accounts and authentication",
+      "prd_section": "§7.1",
+      "description": "Sign-up is limited to invited emails (FR-M38-02), except quick attendee accounts created through an event-page link.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M1-1",
+          "text": "Given an invited email, when the user signs up with email + password and clicks the verification link, then they can send enquiries; and before verifying, enquiry, quote, accept, pay and register actions prompt them to verify."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M2-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M2",
+      "area": "Organizations and roles",
+      "prd_section": "§7.2",
+      "description": "Create a venue operator (one property) or an organizer organization (individual or company).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M2-1",
+          "text": "Given a Staff member, when they try to invite members or change the threshold, then the action is refused server-side; a Viewer can't send a quote; an organizer Member can't cancel a booking or export attendees; a direct URL to another organization's booking returns a permission error."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M2-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M2",
+      "area": "Organizations and roles",
+      "prd_section": "§7.2",
+      "description": "Profile: display name, legal/company name (free text), logo, city, contact email. No NPWP, NIB or address of record in the pilot.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M2-2",
+          "text": "Given an operator profile, then it has display name, legal name, logo, city and contact email and no NPWP/NIB fields."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M2-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M2",
+      "area": "Organizations and roles",
+      "prd_section": "§7.2",
+      "description": "Invite members by email with a role; invites expire after 7 days; resend and revoke.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M2-3",
+          "text": "Given an invite sent 8 days ago, when it is opened, then it shows expired and can be resent; a revoked invite no longer works."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M2-06",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M2",
+      "area": "Organizations and roles",
+      "prd_section": "§7.2",
+      "description": "Venue approval threshold (optional): quotes with a total at or above an amount set by the Owner need Owner approval before sending.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M2-4",
+          "text": "Given a threshold of Rp 50.000.000, when Staff sends a Rp 60.000.000 quote, then it goes to Pending approval and the organizer doesn't see it until approved."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M2-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M2",
+      "area": "Organizations and roles",
+      "prd_section": "§7.2",
+      "description": "At least one Owner must always exist; ownership can be transferred to another member.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M2-5",
+          "text": "Given an organization with one Owner, when that Owner tries to change their own role, then it is refused until another Owner exists; ownership transfer works."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M2-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M2",
+      "area": "Organizations and roles",
+      "prd_section": "§7.2",
+      "description": "Removing a member requires choosing who takes over their open enquiries, quotes and bookings (default: an Owner).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M2-6",
+          "text": "Given a member with open enquiries, when an Owner removes them, then a reassignee must be chosen first, and the change appears in the organization audit log."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M2-10",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M2",
+      "area": "Organizations and roles",
+      "prd_section": "§7.2",
+      "description": "Organization audit log of membership, role and threshold changes and attendee-list exports.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M2-6",
+          "text": "Given a member with open enquiries, when an Owner removes them, then a reassignee must be chosen first, and the change appears in the organization audit log."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M2-14",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M2",
+      "area": "Organizations and roles",
+      "prd_section": "§7.2",
+      "description": "Roles and permissions as in §4.3, enforced server-side; a direct URL to a record of another organization returns a permission error without revealing whether the record exists.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M2-1",
+          "text": "Given a Staff member, when they try to invite members or change the threshold, then the action is refused server-side; a Viewer can't send a quote; an organizer Member can't cancel a booking or export attendees; a direct URL to another organization's booking returns a permission error."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M3-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M3",
+      "area": "Verification",
+      "prd_section": "§7.3",
+      "description": "Verification queue for the Admin: operators and organizer organizations awaiting review, with notes and approve/reject (reason required). Target: reviewed within 2 business days; items waiting longer are included in the daily admin reminder (FR-M24-10).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M3-1",
+          "text": "Given an unverified operator, when they try to publish a space or send a quote, then it is blocked with an explanation; after the Admin marks them verified (method and date recorded, no documents), the badge appears on their spaces."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M3-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M3",
+      "area": "Verification",
+      "prd_section": "§7.3",
+      "description": "Spaces can't be published and quotes can't be sent until the operator is Verified by Spot-In.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M3-1",
+          "text": "Given an unverified operator, when they try to publish a space or send a quote, then it is blocked with an explanation; after the Admin marks them verified (method and date recorded, no documents), the badge appears on their spaces."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M3-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M3",
+      "area": "Verification",
+      "prd_section": "§7.3",
+      "description": "A \"Verified by Spot-In\" badge on verified operators' spaces.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M3-1",
+          "text": "Given an unverified operator, when they try to publish a space or send a quote, then it is blocked with an explanation; after the Admin marks them verified (method and date recorded, no documents), the badge appears on their spaces."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M3-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M3",
+      "area": "Verification",
+      "prd_section": "§7.3",
+      "description": "Verification is a manual check by the Admin (call or chat with the venue). No identity, company or right-to-rent documents are uploaded or stored; the Admin records only the date, method and outcome.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M3-1",
+          "text": "Given an unverified operator, when they try to publish a space or send a quote, then it is blocked with an explanation; after the Admin marks them verified (method and date recorded, no documents), the badge appears on their spaces."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M4-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M4",
+      "area": "Properties and spaces",
+      "prd_section": "§7.4",
+      "description": "Property fields: name, type (mall, hall/venue building, convention centre, outdoor site, other), address text, city and area (from a list), map pin (required), time zone (WIB/WITA/WIT, prefilled from the pin and editable), operating hours, parking and transport notes, loading access notes, house rules, photos.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-1",
+          "text": "Given a property without a map pin, then it can't be submitted; with a pin, the time zone is prefilled; spaces have no parent/child option and no setup/dismantle fields."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M4-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M4",
+      "area": "Properties and spaces",
+      "prd_section": "§7.4",
+      "description": "Space types: atrium, booth/promo spot, pop-up unit, event hall/ballroom, function/meeting room, outdoor area, other.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-1",
+          "text": "Given a property without a map pin, then it can't be submitted; with a pin, the time zone is prefilled; spaces have no parent/child option and no setup/dismantle fields."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M4-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M4",
+      "area": "Properties and spaces",
+      "prd_section": "§7.4",
+      "description": "Space fields: name, type, level/zone (text), area (m²), ceiling height, capacity by layout (standing, theatre, classroom, banquet, booth count), power (kVA), indoor/outdoor/covered, Wi-Fi, accessibility notes, permitted activities (selling, F&B sampling, cooking/open flame, live music, vehicles), prohibited categories (text), min/max booking duration (days).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-1",
+          "text": "Given a property without a map pin, then it can't be submitted; with a pin, the time zone is prefilled; spaces have no parent/child option and no setup/dismantle fields."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M4-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M4",
+      "area": "Properties and spaces",
+      "prd_section": "§7.4",
+      "description": "Media: up to 15 photos per space (resized server-side, WebP), a cover photo, captions; one optional video link.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-2",
+          "text": "Given 16 photos uploaded to a space, then the 16th is refused; uploaded photos are served as WebP."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M4-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M4",
+      "area": "Properties and spaces",
+      "prd_section": "§7.4",
+      "description": "Required documents per property: name, mandatory flag, due offset (days before event start).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-3",
+          "text": "Given a property's required documents and a space's 2 enquiry questions, then a new booking's checklist uses those documents and the enquiry form requires both answers."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M4-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M4",
+      "area": "Properties and spaces",
+      "prd_section": "§7.4",
+      "description": "Up to 5 enquiry questions per space that the organizer must answer.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-3",
+          "text": "Given a property's required documents and a space's 2 enquiry questions, then a new booking's checklist uses those documents and the enquiry form requires both answers."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M4-10",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M4",
+      "area": "Properties and spaces",
+      "prd_section": "§7.4",
+      "description": "Space status: Draft → In review → Published → Unpublished / Suspended. Changes to price or capacity of a published space go live immediately and don't affect sent quotes.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-4",
+          "text": "Given a draft space, when submitted, then it is In review and not searchable; after approval it is Published; changing its price doesn't change sent quotes; duplicating it creates a draft copy."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M4-11",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M4",
+      "area": "Properties and spaces",
+      "prd_section": "§7.4",
+      "description": "Duplicate a space.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-4",
+          "text": "Given a draft space, when submitted, then it is In review and not searchable; after approval it is Published; changing its price doesn't change sent quotes; duplicating it creates a draft copy."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M4-16",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M4",
+      "area": "Properties and spaces",
+      "prd_section": "§7.4",
+      "description": "One level of spaces only (no parent/child spaces) and no setup/dismantle windows in the MVP; a booking covers whole event days.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-1",
+          "text": "Given a property without a map pin, then it can't be submitted; with a pin, the time zone is prefilled; spaces have no parent/child option and no setup/dismantle fields."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M5-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M5",
+      "area": "Pricing and rate cards",
+      "prd_section": "§7.5",
+      "description": "Pricing unit per space: per hour, per half-day or per day; minimum booking length and optional minimum spend.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-5",
+          "text": "Given weekday Rp 20.000.000 and weekend Rp 25.000.000 rates plus a Lebaran season, when an organizer runs a quick estimate across a weekend in the season, then each day uses the right rate, mandatory add-ons are included, PPN appears only for PKP venues, and the total is labeled non-binding; a \"from\" price is always shown."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M5-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M5",
+      "area": "Pricing and rate cards",
+      "prd_section": "§7.5",
+      "description": "Rate variations: weekday/weekend and date-range seasons (e.g., Lebaran, year-end) with custom date overrides.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-5",
+          "text": "Given weekday Rp 20.000.000 and weekend Rp 25.000.000 rates plus a Lebaran season, when an organizer runs a quick estimate across a weekend in the season, then each day uses the right rate, mandatory add-ons are included, PPN appears only for PKP venues, and the total is labeled non-binding; a \"from\" price is always shown."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M5-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M5",
+      "area": "Pricing and rate cards",
+      "prd_section": "§7.5",
+      "description": "Add-on catalog per property: name, unit (per day, per kVA per day, per person, per item), price, taxable flag, mandatory/optional.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-5",
+          "text": "Given weekday Rp 20.000.000 and weekend Rp 25.000.000 rates plus a Lebaran season, when an organizer runs a quick estimate across a weekend in the season, then each day uses the right rate, mandatory add-ons are included, PPN appears only for PKP venues, and the total is labeled non-binding; a \"from\" price is always shown."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M5-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M5",
+      "area": "Pricing and rate cards",
+      "prd_section": "§7.5",
+      "description": "Tax settings per operator: PKP status (yes/no), PPN rate and DPP rule from admin settings (§11.4), service charge %, prices entered tax-exclusive.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-5",
+          "text": "Given weekday Rp 20.000.000 and weekend Rp 25.000.000 rates plus a Lebaran season, when an organizer runs a quick estimate across a weekend in the season, then each day uses the right rate, mandatory add-ons are included, PPN appears only for PKP venues, and the total is labeled non-binding; a \"from\" price is always shown."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M5-06",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M5",
+      "area": "Pricing and rate cards",
+      "prd_section": "§7.5",
+      "description": "Public price display: show the full rate card or a \"from\" price; a \"from\" price is always required.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-5",
+          "text": "Given weekday Rp 20.000.000 and weekend Rp 25.000.000 rates plus a Lebaran season, when an organizer runs a quick estimate across a weekend in the season, then each day uses the right rate, mandatory add-ons are included, PPN appears only for PKP venues, and the total is labeled non-binding; a \"from\" price is always shown."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M5-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M5",
+      "area": "Pricing and rate cards",
+      "prd_section": "§7.5",
+      "description": "Quick estimate on the space page: for chosen dates and add-ons, show an indicative total labeled non-binding.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M4/M5-5",
+          "text": "Given weekday Rp 20.000.000 and weekend Rp 25.000.000 rates plus a Lebaran season, when an organizer runs a quick estimate across a weekend in the season, then each day uses the right rate, mandatory add-ons are included, PPN appears only for PKP venues, and the total is labeled non-binding; a \"from\" price is always shown."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M6-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M6",
+      "area": "Availability calendar and holds",
+      "prd_section": "§7.6",
+      "description": "Calendar per space (day granularity; hour granularity for hourly spaces) with states: Available, Tentative hold, Booking hold, Booked, Blocked, Closed.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M6-1",
+          "text": "Given a booked, a blocked and a held date, then the venue sees each state and the organizer sees Unavailable, Unavailable and \"Limited availability\"; a weekly recurring block appears every week."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M6-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M6",
+      "area": "Availability calendar and holds",
+      "prd_section": "§7.6",
+      "description": "Organizers see only Available / Unavailable; holds show as \"Limited availability – enquire\".",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M6-1",
+          "text": "Given a booked, a blocked and a held date, then the venue sees each state and the organizer sees Unavailable, Unavailable and \"Limited availability\"; a weekly recurring block appears every week."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M6-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M6",
+      "area": "Availability calendar and holds",
+      "prd_section": "§7.6",
+      "description": "Venue can block dates with a private reason, including weekly recurring blocks.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M6-1",
+          "text": "Given a booked, a blocked and a held date, then the venue sees each state and the organizer sees Unavailable, Unavailable and \"Limited availability\"; a weekly recurring block appears every week."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M6-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M6",
+      "area": "Availability calendar and holds",
+      "prd_section": "§7.6",
+      "description": "Tentative hold: venue places one hold per enquiry with an expiry (default 5 days, max 14); one hold per date range at a time; holder notified on placing, 24 h before expiry and on expiry.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M6-3",
+          "text": "Given a tentative hold placed with 5 days, then the holder is notified on placing, 24 h before expiry and on expiry, and the dates become available at expiry; a second tentative hold on the same dates is refused."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M6-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M6",
+      "area": "Availability calendar and holds",
+      "prd_section": "§7.6",
+      "description": "Booking hold: created on quote acceptance; blocks the dates exclusively until the agreement and deposit deadline.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M6-2",
+          "text": "Given two acceptance requests for the same dates within milliseconds, then exactly one booking hold exists and the other request gets a conflict error."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M6-06",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M6",
+      "area": "Availability calendar and holds",
+      "prd_section": "§7.6",
+      "description": "Booked: on confirmation; released on cancellation or lapse.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M6-4",
+          "text": "Given a confirmed booking, then its dates show Booked; after cancellation they are Available."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M6-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M6",
+      "area": "Availability calendar and holds",
+      "prd_section": "§7.6",
+      "description": "Availability is re-validated atomically (in one database transaction with a row or range lock) when a hold is placed, a quote is accepted and a booking is confirmed; conflicts fail with a clear message (§12.1).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M6-2",
+          "text": "Given two acceptance requests for the same dates within milliseconds, then exactly one booking hold exists and the other request gets a conflict error."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M6-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M6",
+      "area": "Availability calendar and holds",
+      "prd_section": "§7.6",
+      "description": "Buffer time between bookings per space (default 0, configurable in hours); bookings that violate it can't be quoted.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M6-5",
+          "text": "Given a 4-hour buffer, when the venue quotes an hourly booking starting 2 hours after another ends, then sending is blocked."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M7-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M7",
+      "area": "Search, shortlists and comparison",
+      "prd_section": "§7.7",
+      "description": "Search (for logged-in pilot users) by city/area or distance from a point, space type, event type, dates, attendance, budget range, indoor/outdoor.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M7/M8-1",
+          "text": "Given dates in the search, then spaces booked or blocked on any of those dates are excluded (held ones only with the toggle); filters for power and permitted activities return only matching spaces in list and map views; sort by distance uses the stored pins; \"near me\" asks for location permission and falls back to the city."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M7-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M7",
+      "area": "Search, shortlists and comparison",
+      "prd_section": "§7.7",
+      "description": "Filters: power ≥ kVA, permitted activities, verified only.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M7/M8-1",
+          "text": "Given dates in the search, then spaces booked or blocked on any of those dates are excluded (held ones only with the toggle); filters for power and permitted activities return only matching spaces in list and map views; sort by distance uses the stored pins; \"near me\" asks for location permission and falls back to the city."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M7-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M7",
+      "area": "Search, shortlists and comparison",
+      "prd_section": "§7.7",
+      "description": "List view and map view (OpenStreetMap-based tiles, clustered pins); sort by relevance, indicative price, distance, newest.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M7/M8-1",
+          "text": "Given dates in the search, then spaces booked or blocked on any of those dates are excluded (held ones only with the toggle); filters for power and permitted activities return only matching spaces in list and map views; sort by distance uses the stored pins; \"near me\" asks for location permission and falls back to the city."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M7-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M7",
+      "area": "Search, shortlists and comparison",
+      "prd_section": "§7.7",
+      "description": "When dates are given, spaces unavailable on any of those dates are hidden (toggle \"Show limited availability\" includes held spaces).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M7/M8-1",
+          "text": "Given dates in the search, then spaces booked or blocked on any of those dates are excluded (held ones only with the toggle); filters for power and permitted activities return only matching spaces in list and map views; sort by distance uses the stored pins; \"near me\" asks for location permission and falls back to the city."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M7-06",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M7",
+      "area": "Search, shortlists and comparison",
+      "prd_section": "§7.7",
+      "description": "The property page lists all its published spaces.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M7/M8-2",
+          "text": "Given a search for \"aula jaksel\" with a typo (\"aul jaksel\"), then halls in Jakarta Selatan are returned; the property page lists all its published spaces."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M7-10",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M7",
+      "area": "Search, shortlists and comparison",
+      "prd_section": "§7.7",
+      "description": "Typo-tolerant keyword search on space, property, city and area names using PostgreSQL trigram similarity and full-text search, plus a synonym table for common Indonesian abbreviations (e.g., \"jaksel\" → \"Jakarta Selatan\", \"jakbar\" → \"Jakarta Barat\").",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M7/M8-2",
+          "text": "Given a search for \"aula jaksel\" with a typo (\"aul jaksel\"), then halls in Jakarta Selatan are returned; the property page lists all its published spaces."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M7-12",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M7",
+      "area": "Search, shortlists and comparison",
+      "prd_section": "§7.7",
+      "description": "Search runs entirely in PostgreSQL (with PostGIS for distance); availability is computed from calendar entries in the same query so results never show a booked space as available.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M7/M8-1",
+          "text": "Given dates in the search, then spaces booked or blocked on any of those dates are excluded (held ones only with the toggle); filters for power and permitted activities return only matching spaces in list and map views; sort by distance uses the stored pins; \"near me\" asks for location permission and falls back to the city."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M7-13",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M7",
+      "area": "Search, shortlists and comparison",
+      "prd_section": "§7.7",
+      "description": "\"Near me\" uses browser location only after the user allows it; otherwise the city filter is used.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M7/M8-1",
+          "text": "Given dates in the search, then spaces booked or blocked on any of those dates are excluded (held ones only with the toggle); filters for power and permitted activities return only matching spaces in list and map views; sort by distance uses the stored pins; \"near me\" asks for location permission and falls back to the city."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M8-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M8",
+      "area": "Search, shortlists and comparison",
+      "prd_section": "§7.7",
+      "description": "Save spaces to named shortlists.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M7/M8-3",
+          "text": "Given a shortlist share link, when opened logged out, then it shows spaces, notes and indicative prices but no messages or quotes; after revocation it shows \"Tautan tidak tersedia\"; an enquiry can be sent to selected shortlist spaces."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M8-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M8",
+      "area": "Search, shortlists and comparison",
+      "prd_section": "§7.7",
+      "description": "Share a shortlist by a view-only link (no login) showing spaces, notes and indicative prices; the link can be revoked.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M7/M8-3",
+          "text": "Given a shortlist share link, when opened logged out, then it shows spaces, notes and indicative prices but no messages or quotes; after revocation it shows \"Tautan tidak tersedia\"; an enquiry can be sent to selected shortlist spaces."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M8-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M8",
+      "area": "Search, shortlists and comparison",
+      "prd_section": "§7.7",
+      "description": "Send an enquiry to all or selected spaces of a shortlist.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M7/M8-3",
+          "text": "Given a shortlist share link, when opened logged out, then it shows spaces, notes and indicative prices but no messages or quotes; after revocation it shows \"Tautan tidak tersedia\"; an enquiry can be sent to selected shortlist spaces."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M8-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M8",
+      "area": "Search, shortlists and comparison",
+      "prd_section": "§7.7",
+      "description": "Quote comparison table for the latest quotes in one event: total, per day, inclusions, deposit %, payment deadlines, cancellation summary, venue response time; export to PDF (watermarked).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M7/M8-4",
+          "text": "Given three latest quotes in one event, then the comparison table aligns totals, per-day cost, deposit terms and cancellation summaries and exports a watermarked PDF."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M9-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M9",
+      "area": "Events and enquiries",
+      "prd_section": "§7.8",
+      "description": "Event (project) owned by an organizer organization: name, type, brand/client name, category, description, expected attendance, event dates and daily start/end times, budget range, required facilities, attachments.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-1",
+          "text": "Given an event with 2 proposal files, when sent to 3 spaces, then 3 independent threads exist, each venue sees the files and its own deadline; a 6th space in one send and an 11th open enquiry are refused; a file over 10 MB is refused."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M9-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M9",
+      "area": "Events and enquiries",
+      "prd_section": "§7.8",
+      "description": "Proposal files: PDF/JPG/PNG, max 10 MB each, max 5 per event, virus-scanned; shared with each enquired venue.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-1",
+          "text": "Given an event with 2 proposal files, when sent to 3 spaces, then 3 independent threads exist, each venue sees the files and its own deadline; a 6th space in one send and an 11th open enquiry are refused; a file over 10 MB is refused."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M9-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M9",
+      "area": "Events and enquiries",
+      "prd_section": "§7.8",
+      "description": "One send creates one independent enquiry per selected space (max 5 per send, max 10 open enquiries per event, max 20 new enquiries per organization per day).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-1",
+          "text": "Given an event with 2 proposal files, when sent to 3 spaces, then 3 independent threads exist, each venue sees the files and its own deadline; a 6th space in one send and an 11th open enquiry are refused; a file over 10 MB is refused."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M9-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M9",
+      "area": "Events and enquiries",
+      "prd_section": "§7.8",
+      "description": "The enquiry form prefills from the event and asks the space's questions (FR-M4-09).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-1",
+          "text": "Given an event with 2 proposal files, when sent to 3 spaces, then 3 independent threads exist, each venue sees the files and its own deadline; a 6th space in one send and an 11th open enquiry are refused; a file over 10 MB is refused."
+        }
+      ],
+      "demo_scenarios": [
+        "D2"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M9-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M9",
+      "area": "Events and enquiries",
+      "prd_section": "§7.8",
+      "description": "Pre-submit warnings (not blocks): dates outside operating days, length outside min/max, attendance above capacity, required facilities missing.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-2",
+          "text": "Given attendance above a space's capacity, then a warning shows but the enquiry can be sent."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M9-06",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M9",
+      "area": "Events and enquiries",
+      "prd_section": "§7.8",
+      "description": "Enquiry statuses: Submitted → Viewed → Info requested ⇄ Responded → Quoted → Accepted / Declined / Expired / Withdrawn / Lost.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-3",
+          "text": "Given an enquiry sent Friday 16:00 WIB with Monday a holiday and no venue action, then it becomes Expired at Wednesday 23:59 WIB, with reminders at Tuesday 23:59 and Wednesday 19:59, and the organizer is notified."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M9-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M9",
+      "area": "Events and enquiries",
+      "prd_section": "§7.8",
+      "description": "Response deadline: the venue must reply (message, request info, quote or decline) within 2 business days (§11.6); reminders 24 h and 4 h before the computed deadline; on expiry the enquiry becomes Expired, the organizer is notified and the venue's response rate is updated.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-3",
+          "text": "Given an enquiry sent Friday 16:00 WIB with Monday a holiday and no venue action, then it becomes Expired at Wednesday 23:59 WIB, with reminders at Tuesday 23:59 and Wednesday 19:59, and the organizer is notified."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M9-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M9",
+      "area": "Events and enquiries",
+      "prd_section": "§7.8",
+      "description": "Declining requires a reason (dates unavailable, capacity, proposal not suitable, other) shown to the organizer.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-4",
+          "text": "Given a decline, then a reason is required and shown; given the organizer edits the event, then open quotes show \"Event changed – review\" and can't be accepted; given an acceptance, then the organizer is prompted to mark other open enquiries Lost; withdrawing an enquiry notifies the venue; venue notes are invisible to the organizer."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M9-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M9",
+      "area": "Events and enquiries",
+      "prd_section": "§7.8",
+      "description": "Editing the event notifies all enquired venues and marks open quotes \"Event changed – review\"; such quotes can't be accepted until the venue re-sends or revises them.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-4",
+          "text": "Given a decline, then a reason is required and shown; given the organizer edits the event, then open quotes show \"Event changed – review\" and can't be accepted; given an acceptance, then the organizer is prompted to mark other open enquiries Lost; withdrawing an enquiry notifies the venue; venue notes are invisible to the organizer."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M9-10",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M9",
+      "area": "Events and enquiries",
+      "prd_section": "§7.8",
+      "description": "The organizer can withdraw an enquiry; accepting one venue's quote prompts the organizer to mark the event's other open enquiries as Lost (optional feedback).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-4",
+          "text": "Given a decline, then a reason is required and shown; given the organizer edits the event, then open quotes show \"Event changed – review\" and can't be accepted; given an acceptance, then the organizer is prompted to mark other open enquiries Lost; withdrawing an enquiry notifies the venue; venue notes are invisible to the organizer."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M9-11",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M9",
+      "area": "Events and enquiries",
+      "prd_section": "§7.8",
+      "description": "Venue internal notes on an enquiry (not visible to the organizer).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-4",
+          "text": "Given a decline, then a reason is required and shown; given the organizer edits the event, then open quotes show \"Event changed – review\" and can't be accepted; given an acceptance, then the organizer is prompted to mark other open enquiries Lost; withdrawing an enquiry notifies the venue; venue notes are invisible to the organizer."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M10-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M10",
+      "area": "Messaging",
+      "prd_section": "§7.9",
+      "description": "One thread per enquiry/booking between the organizer's and venue's members; new messages appear without reload (polling or websocket); thread-level read status.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-6",
+          "text": "Given a thread, then new messages appear without reload, attachments up to 10 MB in the allowed types upload and preview, a saved reply can be inserted, the inbox filters by unreplied and by space, a message can be reported, edited within 10 minutes and soft-deleted."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M10-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M10",
+      "area": "Messaging",
+      "prd_section": "§7.9",
+      "description": "Attachments: PDF, JPG, PNG, DOCX, XLSX; max 10 MB each; virus-scanned; image preview.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-6",
+          "text": "Given a thread, then new messages appear without reload, attachments up to 10 MB in the allowed types upload and preview, a saved reply can be inserted, the inbox filters by unreplied and by space, a message can be reported, edited within 10 minutes and soft-deleted."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M10-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M10",
+      "area": "Messaging",
+      "prd_section": "§7.9",
+      "description": "Contact masking until a booking is confirmed, in message text only: email addresses; Indonesian phone numbers (prefix +62, 62 or 08, 9–13 digits, allowing spaces, dots and dashes); wa.me and api.whatsapp.com links; any run of 10 or more digits. Amounts in Rupiah (\"Rp …\"), areas (\"… m²\") and dates are not masked. Masked parts show as \"[kontak disembunyikan]\"; the sender sees a notice. Attachments are not scanned; before confirmation the upload dialog says \"Jangan bagikan detail kontak di dalam file.\"",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-5",
+          "text": "Given messages before confirmation, then \"hubungi 0812-3456-7890\", \"a@b.co\", \"wa.me/62812…\" and \"1234567890\" are masked, while \"Rp 25.000.000\", \"300 m²\" and \"12/12/2026\" are not; after confirmation nothing is masked; uploading a file shows the contact warning."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M10-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M10",
+      "area": "Messaging",
+      "prd_section": "§7.9",
+      "description": "Venue saved replies (plain text, no variables).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-6",
+          "text": "Given a thread, then new messages appear without reload, attachments up to 10 MB in the allowed types upload and preview, a saved reply can be inserted, the inbox filters by unreplied and by space, a message can be reported, edited within 10 minutes and soft-deleted."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M10-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M10",
+      "area": "Messaging",
+      "prd_section": "§7.9",
+      "description": "Inbox with filters: unreplied, awaiting me, by space.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-6",
+          "text": "Given a thread, then new messages appear without reload, attachments up to 10 MB in the allowed types upload and preview, a saved reply can be inserted, the inbox filters by unreplied and by space, a message can be reported, edited within 10 minutes and soft-deleted."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M10-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M10",
+      "area": "Messaging",
+      "prd_section": "§7.9",
+      "description": "Report a message (sent to the Admin).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-6",
+          "text": "Given a thread, then new messages appear without reload, attachments up to 10 MB in the allowed types upload and preview, a saved reply can be inserted, the inbox filters by unreplied and by space, a message can be reported, edited within 10 minutes and soft-deleted."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M10-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M10",
+      "area": "Messaging",
+      "prd_section": "§7.9",
+      "description": "Messages can be edited for 10 minutes; deletion is soft (kept for the Admin).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-6",
+          "text": "Given a thread, then new messages appear without reload, attachments up to 10 MB in the allowed types upload and preview, a saved reply can be inserted, the inbox filters by unreplied and by space, a message can be reported, edited within 10 minutes and soft-deleted."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M12-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M12",
+      "area": "Quotes and approval",
+      "prd_section": "§7.10",
+      "description": "Quote builder prefilled from the rate card for the enquiry's dates: editable line items (rental, add-ons, custom items), quantity × unit price, per-line discount, service charge, PPN (if PKP), Spot-In organizer fee; totals computed per §11.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M12-1",
+          "text": "Given the worked example in §11.2, then the quote shows rental + add-ons Rp 81.000.000, PPN 8.910.000, Spot-In fee 2.430.000, total 92.340.000, deposit 47.385.000 and balance 44.955.000, and the PDF (with watermark) matches."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M12-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M12",
+      "area": "Quotes and approval",
+      "prd_section": "§7.10",
+      "description": "Payment schedule: deposit % (minimum 20%, default 50%) due N days after acceptance (1–7, default 3); balance due N days before the event start (default 14, minimum 3); or one full payment. If acceptance falls inside the balance window, the full amount is due at acceptance.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M12-1",
+          "text": "Given the worked example in §11.2, then the quote shows rental + add-ons Rp 81.000.000, PPN 8.910.000, Spot-In fee 2.430.000, total 92.340.000, deposit 47.385.000 and balance 44.955.000, and the PDF (with watermark) matches."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M12-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M12",
+      "area": "Quotes and approval",
+      "prd_section": "§7.10",
+      "description": "Terms: validity (default 7 days), cancellation policy (from the operator's policies), inclusions/exclusions, special terms (free text).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M12-1",
+          "text": "Given the worked example in §11.2, then the quote shows rental + add-ons Rp 81.000.000, PPN 8.910.000, Spot-In fee 2.430.000, total 92.340.000, deposit 47.385.000 and balance 44.955.000, and the PDF (with watermark) matches."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M12-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M12",
+      "area": "Quotes and approval",
+      "prd_section": "§7.10",
+      "description": "Quote templates per space (saved line items).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M12-1",
+          "text": "Given the worked example in §11.2, then the quote shows rental + add-ons Rp 81.000.000, PPN 8.910.000, Spot-In fee 2.430.000, total 92.340.000, deposit 47.385.000 and balance 44.955.000, and the PDF (with watermark) matches."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M12-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M12",
+      "area": "Quotes and approval",
+      "prd_section": "§7.10",
+      "description": "Approval: a quote at or above the operator's threshold goes Draft → Pending approval → Approved → Sent; the Owner can approve, edit (creating a new draft) or return it with a comment.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M2-4",
+          "text": "Given a threshold of Rp 50.000.000, when Staff sends a Rp 60.000.000 quote, then it goes to Pending approval and the organizer doesn't see it until approved."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M12-06",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M12",
+      "area": "Quotes and approval",
+      "prd_section": "§7.10",
+      "description": "Organizer actions: Accept, Request revision (general and per-line comments), Decline (reason).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M12-2",
+          "text": "Given v1 sent and v2 revised after per-line comments, then the organizer sees a diff, can only accept v2, and v1 is read-only; declining requires a reason."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M12-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M12",
+      "area": "Quotes and approval",
+      "prd_section": "§7.10",
+      "description": "Each sent revision is a new read-only version; the organizer sees a diff from the previous version; only the latest version can be accepted.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M12-2",
+          "text": "Given v1 sent and v2 revised after per-line comments, then the organizer sees a diff, can only accept v2, and v1 is read-only; declining requires a reason."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M12-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M12",
+      "area": "Quotes and approval",
+      "prd_section": "§7.10",
+      "description": "At validity end the quote expires; the venue can re-issue.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M12-3",
+          "text": "Given a quote past its validity, then it shows Expired and can't be accepted; accepting requires a verified email and acceptance of the pilot booking terms; a balance due less than 3 days before the event can't be set."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M12-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M12",
+      "area": "Quotes and approval",
+      "prd_section": "§7.10",
+      "description": "Quote PDF download with the venue's logo, Spot-In reference and the pilot watermark.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M12-1",
+          "text": "Given the worked example in §11.2, then the quote shows rental + add-ons Rp 81.000.000, PPN 8.910.000, Spot-In fee 2.430.000, total 92.340.000, deposit 47.385.000 and balance 44.955.000, and the PDF (with watermark) matches."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M12-10",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M12",
+      "area": "Quotes and approval",
+      "prd_section": "§7.10",
+      "description": "Accepting a quote requires a verified email and acceptance of the Spot-In pilot booking terms.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M12-3",
+          "text": "Given a quote past its validity, then it shows Expired and can't be accepted; accepting requires a verified email and acceptance of the pilot booking terms; a balance due less than 3 days before the event can't be set."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M12-11",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M12",
+      "area": "Quotes and approval",
+      "prd_section": "§7.10",
+      "description": "Acceptance re-validates availability atomically (FR-M6-07); on conflict, acceptance fails and both parties are told.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M6-2",
+          "text": "Given two acceptance requests for the same dates within milliseconds, then exactly one booking hold exists and the other request gets a conflict error."
+        }
+      ],
+      "demo_scenarios": [
+        "D3"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M12-13",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M12",
+      "area": "Quotes and approval",
+      "prd_section": "§7.10",
+      "description": "Backup quote: a quote whose dates overlap another organizer's tentative or booking hold is sent as a backup quote labeled \"Tanggal sedang ditahan\" (\"Dates currently on hold\"); Accept is disabled while the hold exists. When the hold is released or lapses, every backup-quote holder for those dates is notified at the same time, Accept is enabled, the first acceptance wins atomically, and each backup quote's validity is extended to at least 2 business days after the release. When the hold becomes a confirmed booking, backup quotes expire with reason \"Tanggal sudah dipesan\" (\"Dates booked\"). A quote can't be sent at all for dates that are already Booked or Blocked.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M12-4",
+          "text": "Given Rina's booking hold on 12–14 Dec, when the venue quotes Sari for 13 Dec, then Sari's quote is labeled \"Tanggal sedang ditahan\" with Accept disabled; when Rina's booking is confirmed, then Sari's quote expires with reason \"Tanggal sudah dipesan\"."
+        },
+        {
+          "id": "AC-M12-5",
+          "text": "Given two backup quotes and the blocking booking lapses, then both holders are notified together, the first to accept gets the booking hold, the other sees a conflict, and a backup quote whose validity would have ended is extended to at least 2 business days after the release."
+        }
+      ],
+      "demo_scenarios": [
+        "D4"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M13-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M13",
+      "area": "Pilot agreement",
+      "prd_section": "§7.11",
+      "description": "On acceptance, generate the agreement PDF from the accepted quote version, the event, both parties, the payment schedule, the cancellation policy, house rules and required documents. Generated within 60 seconds.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M13-1",
+          "text": "Given an accepted quote, then within 60 seconds a \"Sample agreement (pilot)\" PDF with watermark is generated from that version; the organizer accepts first (tick + typed name), then the venue; the last page lists both acceptances with time and IP; the stored hash matches the downloaded file; on lapse the agreement shows Voided."
+        }
+      ],
+      "demo_scenarios": [
+        "D4"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M13-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M13",
+      "area": "Pilot agreement",
+      "prd_section": "§7.11",
+      "description": "Agreement statuses: Generated → Accepted by organizer → Accepted by both / Voided (on lapse or cancellation).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M13-1",
+          "text": "Given an accepted quote, then within 60 seconds a \"Sample agreement (pilot)\" PDF with watermark is generated from that version; the organizer accepts first (tick + typed name), then the venue; the last page lists both acceptances with time and IP; the stored hash matches the downloaded file; on lapse the agreement shows Voided."
+        }
+      ],
+      "demo_scenarios": [
+        "D4"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M13-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M13",
+      "area": "Pilot agreement",
+      "prd_section": "§7.11",
+      "description": "The PDF is stored read-only with a SHA-256 hash; both parties can download it; the acceptance record (user, typed name, time, IP) is shown on the last page.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M13-1",
+          "text": "Given an accepted quote, then within 60 seconds a \"Sample agreement (pilot)\" PDF with watermark is generated from that version; the organizer accepts first (tick + typed name), then the venue; the last page lists both acceptances with time and IP; the stored hash matches the downloaded file; on lapse the agreement shows Voided."
+        }
+      ],
+      "demo_scenarios": [
+        "D4"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M13-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M13",
+      "area": "Pilot agreement",
+      "prd_section": "§7.11",
+      "description": "Click-to-accept: the organizer accepts first, then the venue (Owner or Staff), each by ticking \"Saya telah membaca dan menyetujui\" and typing their full name. The acceptance deadline is the deposit deadline.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M13-1",
+          "text": "Given an accepted quote, then within 60 seconds a \"Sample agreement (pilot)\" PDF with watermark is generated from that version; the organizer accepts first (tick + typed name), then the venue; the last page lists both acceptances with time and IP; the stored hash matches the downloaded file; on lapse the agreement shows Voided."
+        }
+      ],
+      "demo_scenarios": [
+        "D4"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M13-10",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M13",
+      "area": "Pilot agreement",
+      "prd_section": "§7.11",
+      "description": "The agreement is titled \"Sample agreement (pilot)\", carries the pilot watermark on every page and states that it is not a binding contract (FR-M38-01). No e-signature, identity check or e-meterai in the MVP.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M13-1",
+          "text": "Given an accepted quote, then within 60 seconds a \"Sample agreement (pilot)\" PDF with watermark is generated from that version; the organizer accepts first (tick + typed name), then the venue; the last page lists both acceptances with time and IP; the stored hash matches the downloaded file; on lapse the agreement shows Voided."
+        }
+      ],
+      "demo_scenarios": [
+        "D4"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M14-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M14",
+      "area": "Sandbox payments",
+      "prd_section": "§7.12",
+      "description": "Payment methods shown are the provider's test-mode methods: test virtual account, test QRIS, test e-wallet and test card.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M14-1",
+          "text": "Given a booking with both acceptances, when the organizer pays the deposit with a test VA, then the payment is recorded once (even with a duplicate callback), the ledger shows it held, the booking becomes Confirmed and a receipt is emailed."
+        }
+      ],
+      "demo_scenarios": [
+        "D4"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M14-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M14",
+      "area": "Sandbox payments",
+      "prd_section": "§7.12",
+      "description": "The payment schedule follows the accepted quote: deposit request on acceptance; balance request issued 7 days before the balance due date (FR-M15-09).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M14-1",
+          "text": "Given a booking with both acceptances, when the organizer pays the deposit with a test VA, then the payment is recorded once (even with a duplicate callback), the ledger shows it held, the booking becomes Confirmed and a receipt is emailed."
+        }
+      ],
+      "demo_scenarios": [
+        "D4"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M14-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M14",
+      "area": "Sandbox payments",
+      "prd_section": "§7.12",
+      "description": "Every payment is recorded in the ledger as held against the booking (FR-M16-07).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M14-1",
+          "text": "Given a booking with both acceptances, when the organizer pays the deposit with a test VA, then the payment is recorded once (even with a duplicate callback), the ledger shows it held, the booking becomes Confirmed and a receipt is emailed."
+        }
+      ],
+      "demo_scenarios": [
+        "D4"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M14-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M14",
+      "area": "Sandbox payments",
+      "prd_section": "§7.12",
+      "description": "Payment reminders 3 days and 1 day before each due date and on the due date.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M14-2",
+          "text": "Given a deposit unpaid at its deadline, then the booking lapses and both are notified; given a balance unpaid at its due date, then the venue Owner can extend once by up to 3 days or cancel under the organizer policy; reminders are sent 3 days and 1 day before and on the due date."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M14-06",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M14",
+      "area": "Sandbox payments",
+      "prd_section": "§7.12",
+      "description": "Late payment: a missed deposit lapses the booking (§6.5). A missed balance lets the venue Owner either extend once (up to 3 days) or cancel under the organizer-cancellation policy; both sides are notified.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M14-2",
+          "text": "Given a deposit unpaid at its deadline, then the booking lapses and both are notified; given a balance unpaid at its due date, then the venue Owner can extend once by up to 3 days or cancel under the organizer policy; reminders are sent 3 days and 1 day before and on the due date."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M14-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M14",
+      "area": "Sandbox payments",
+      "prd_section": "§7.12",
+      "description": "Payment status and receipts visible to organizer members; receipts emailed.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M14-1",
+          "text": "Given a booking with both acceptances, when the organizer pays the deposit with a test VA, then the payment is recorded once (even with a duplicate callback), the ledger shows it held, the booking becomes Confirmed and a receipt is emailed."
+        }
+      ],
+      "demo_scenarios": [
+        "D4"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M14-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M14",
+      "area": "Sandbox payments",
+      "prd_section": "§7.12",
+      "description": "Refunds are recorded in the ledger and shown as \"Refund (simulated)\"; no money is sent.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M14-3",
+          "text": "Given a cancellation with a refund, then the refund appears as \"Refund (simulated)\" in the ledger and on the receipt history."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M14-12",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M14",
+      "area": "Sandbox payments",
+      "prd_section": "§7.12",
+      "description": "All payment calls go through an internal adapter so a real provider integration (Phase 2) replaces only the adapter.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M14-4",
+          "text": "Given live payment keys in the configuration with pilot mode on, then the server refuses to start; with no test-mode access configured, the simulator produces pending, paid, expired and failed states through the same adapter interface."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M14-13",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M14",
+      "area": "Sandbox payments",
+      "prd_section": "§7.12",
+      "description": "Only test-mode API keys are accepted; the server refuses to start with live keys while pilot mode is on (FR-M38-07). If test-mode access isn't available, the adapter uses a built-in simulator with the same states (pending, paid, expired, failed).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M14-4",
+          "text": "Given live payment keys in the configuration with pilot mode on, then the server refuses to start; with no test-mode access configured, the simulator produces pending, paid, expired and failed states through the same adapter interface."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M15-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M15",
+      "area": "Pilot documents, ledger and simulated settlement",
+      "prd_section": "§7.13",
+      "description": "Each payment has a pilot receipt showing the venue's rental lines (with PPN if PKP) and a separate Spot-In fee line. Receipts are titled \"Pilot receipt – not a tax invoice\".",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M15/M16-1",
+          "text": "Given a deposit payment, then a \"Pilot receipt – not a tax invoice\" with a PILOT- number shows venue rental lines and a separate Spot-In fee line; cancelling it creates a credit note and keeps the original."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M15-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M15",
+      "area": "Pilot documents, ledger and simulated settlement",
+      "prd_section": "§7.13",
+      "description": "Receipt numbers are sequential per issuer with a PILOT- prefix; a cancelled receipt gets a credit note, never deletion.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M15/M16-1",
+          "text": "Given a deposit payment, then a \"Pilot receipt – not a tax invoice\" with a PILOT- number shows venue rental lines and a separate Spot-In fee line; cancelling it creates a credit note and keeps the original."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M15-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M15",
+      "area": "Pilot documents, ledger and simulated settlement",
+      "prd_section": "§7.13",
+      "description": "Balance request timing: issued 7 days before the balance due date (by default 21 days before the event start); if acceptance happens less than 7 days before the balance due date, it is issued immediately.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M15/M16-2",
+          "text": "Given a balance due 14 days before the event, then the balance request is issued 21 days before the event, with reminders 3 days and 1 day before the due date."
+        },
+        {
+          "id": "AC-M15/M16-3",
+          "text": "Given an acceptance 5 days before the balance due date, then the balance request is issued immediately."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M15-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M15",
+      "area": "Pilot documents, ledger and simulated settlement",
+      "prd_section": "§7.13",
+      "description": "Per-booking statement (payments, refunds, fees, PPN, simulated release) downloadable as CSV and watermarked PDF.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M15/M16-4",
+          "text": "Given the worked example and no reported problem, when the event ends Sunday 22:00, then release runs Thursday 10:00, venue payable (simulated) is Rp 81.810.000, Spot-In revenue 10.530.000, the ledger balances, and a watermarked settlement statement and the per-booking CSV are available."
+        }
+      ],
+      "demo_scenarios": [
+        "D6"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M16-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M16",
+      "area": "Pilot documents, ledger and simulated settlement",
+      "prd_section": "§7.13",
+      "description": "Release rule: rental funds are released (simulated) at 10:00 property time on the first business day after the post-event window ends, if no reported problem is open (§6.10).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M15/M16-4",
+          "text": "Given the worked example and no reported problem, when the event ends Sunday 22:00, then release runs Thursday 10:00, venue payable (simulated) is Rp 81.810.000, Spot-In revenue 10.530.000, the ledger balances, and a watermarked settlement statement and the per-booking CSV are available."
+        }
+      ],
+      "demo_scenarios": [
+        "D6"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M16-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M16",
+      "area": "Pilot documents, ledger and simulated settlement",
+      "prd_section": "§7.13",
+      "description": "Double-entry ledger per booking with accounts: organizer paid, held, venue payable (simulated), Spot-In commission, Spot-In organizer fee, PPN collected, refunds. Entries are append-only; every balance reconciles to the quote and receipts to the Rupiah.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M15/M16-4",
+          "text": "Given the worked example and no reported problem, when the event ends Sunday 22:00, then release runs Thursday 10:00, venue payable (simulated) is Rp 81.810.000, Spot-In revenue 10.530.000, the ledger balances, and a watermarked settlement statement and the per-booking CSV are available."
+        }
+      ],
+      "demo_scenarios": [
+        "D6"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M16-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M16",
+      "area": "Pilot documents, ledger and simulated settlement",
+      "prd_section": "§7.13",
+      "description": "Post-event window: 72 hours from the end of the event's last day. During it, either party can Report a problem (description + optional photos), which places a hold on release and alerts the Admin; the Admin records the outcome (release as is, or record a manual adjustment with reason) and closes the hold.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M15/M16-5",
+          "text": "Given a problem reported in the post-event window, then release does not run until an Admin resolves it and records the outcome."
+        }
+      ],
+      "demo_scenarios": [
+        "D6"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M16-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M16",
+      "area": "Pilot documents, ledger and simulated settlement",
+      "prd_section": "§7.13",
+      "description": "Simulated settlement statement per booking (watermarked) when release runs.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M15/M16-4",
+          "text": "Given the worked example and no reported problem, when the event ends Sunday 22:00, then release runs Thursday 10:00, venue payable (simulated) is Rp 81.810.000, Spot-In revenue 10.530.000, the ledger balances, and a watermarked settlement statement and the per-booking CSV are available."
+        }
+      ],
+      "demo_scenarios": [
+        "D6"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M17-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M17",
+      "area": "Booking workspace and required documents",
+      "prd_section": "§7.14",
+      "description": "Each booking has a workspace: summary, dates, contacts (shown after confirmation), payment schedule and status, agreement, document checklist, event page link and registration count, message thread, timeline of all actions.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M17-1",
+          "text": "Given a property with 3 required documents, when a booking is confirmed, then the workspace shows the checklist with due dates from the event start; uploads keep versions; the venue can approve or request changes with a comment; a mandatory item missing 7 days before triggers warnings to both sides and the venue can mark the booking At risk."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M17-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M17",
+      "area": "Booking workspace and required documents",
+      "prd_section": "§7.14",
+      "description": "The document checklist is created from the property's required documents with due dates computed from the event start.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M17-1",
+          "text": "Given a property with 3 required documents, when a booking is confirmed, then the workspace shows the checklist with due dates from the event start; uploads keep versions; the venue can approve or request changes with a comment; a mandatory item missing 7 days before triggers warnings to both sides and the venue can mark the booking At risk."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M17-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M17",
+      "area": "Booking workspace and required documents",
+      "prd_section": "§7.14",
+      "description": "Each item: upload (versions kept, PDF/JPG/PNG, 10 MB), status (Not started, Submitted, Changes requested, Approved, Waived), reviewer comment.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M17-1",
+          "text": "Given a property with 3 required documents, when a booking is confirmed, then the workspace shows the checklist with due dates from the event start; uploads keep versions; the venue can approve or request changes with a comment; a mandatory item missing 7 days before triggers warnings to both sides and the venue can mark the booking At risk."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M17-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M17",
+      "area": "Booking workspace and required documents",
+      "prd_section": "§7.14",
+      "description": "Warnings by email and in-app at 7 and 3 days before the event for missing mandatory documents or unpaid balance; the venue can mark the booking \"At risk\".",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M17-1",
+          "text": "Given a property with 3 required documents, when a booking is confirmed, then the workspace shows the checklist with due dates from the event start; uploads keep versions; the venue can approve or request changes with a comment; a mandatory item missing 7 days before triggers warnings to both sides and the venue can mark the booking At risk."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M18-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M18",
+      "area": "Cancellations",
+      "prd_section": "§7.15",
+      "description": "Cancellation policies: three standard policies (Flexible, Moderate, Strict) defined in admin settings as tiers of days-before-event → % of rental refundable; the venue picks one per space. No custom policies in the MVP.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M18-1",
+          "text": "Given the worked example, Moderate policy and only the deposit paid, when the organizer cancels 35 days before, then the refund shown and executed is Rp 44.955.000 and the Spot-In fee is kept; when cancelling 20 days before, then the refund is 0 and the venue keeps 44.955.000."
+        }
+      ],
+      "demo_scenarios": [
+        "D7"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M18-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M18",
+      "area": "Cancellations",
+      "prd_section": "§7.15",
+      "description": "Organizer cancellation shows the refund for today's tier and what the venue keeps before confirmation; the executed (simulated) refund equals the amount shown.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M18-1",
+          "text": "Given the worked example, Moderate policy and only the deposit paid, when the organizer cancels 35 days before, then the refund shown and executed is Rp 44.955.000 and the Spot-In fee is kept; when cancelling 20 days before, then the refund is 0 and the venue keeps 44.955.000."
+        }
+      ],
+      "demo_scenarios": [
+        "D7"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M18-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M18",
+      "area": "Cancellations",
+      "prd_section": "§7.15",
+      "description": "Spot-In organizer fee: refunded if the organizer cancels within 24 hours of confirmation and at least 14 days before the event; otherwise kept; always refunded when the venue cancels.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M18-1",
+          "text": "Given the worked example, Moderate policy and only the deposit paid, when the organizer cancels 35 days before, then the refund shown and executed is Rp 44.955.000 and the Spot-In fee is kept; when cancelling 20 days before, then the refund is 0 and the venue keeps 44.955.000."
+        }
+      ],
+      "demo_scenarios": [
+        "D7"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M18-06",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M18",
+      "area": "Cancellations",
+      "prd_section": "§7.15",
+      "description": "Venue cancellation (Owner only, reason required): full simulated refund to the organizer including the Spot-In fee. Venue penalties and ranking effects are off in the pilot.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M18-2",
+          "text": "Given a venue cancellation, then the organizer is refunded everything paid including the Spot-In fee, no penalty is recorded, and the cancellation is Owner-only."
+        }
+      ],
+      "demo_scenarios": [
+        "D7"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M18-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M18",
+      "area": "Cancellations",
+      "prd_section": "§7.15",
+      "description": "An organizer no-show is treated as cancellation on the event day.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M18-3",
+          "text": "Given a cancelled booking with registrations, then the event page shows Dibatalkan, passes are voided and registrants are emailed; an organizer no-show recorded on the event day is treated as a cancellation on that day."
+        }
+      ],
+      "demo_scenarios": [
+        "D7"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M18-10",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M18",
+      "area": "Cancellations",
+      "prd_section": "§7.15",
+      "description": "On any cancellation the event page shows \"Dibatalkan\" (Cancelled), registration closes, passes are voided and registrants are emailed.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M18-3",
+          "text": "Given a cancelled booking with registrations, then the event page shows Dibatalkan, passes are voided and registrants are emailed; an organizer no-show recorded on the event day is treated as a cancellation on that day."
+        }
+      ],
+      "demo_scenarios": [
+        "D7"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M28-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M28",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "An event page belongs to one Event with a Confirmed booking of the same organizer organization. Fields: title, summary (≤ 160 characters), description, cover image (required), category, age note, house rules (from the property), organizer display name.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-1",
+          "text": "Given a confirmed 2-day booking, when the organizer creates an event page, then two sessions exist with the booked times, the venue and map are locked, capacity can't exceed the space's layout capacity, and the page shows the pilot label."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M28-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M28",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Sessions: one per booked event day, created automatically with that day's start and end times; times shown in the property's time zone.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-1",
+          "text": "Given a confirmed 2-day booking, when the organizer creates an event page, then two sessions exist with the booked times, the venue and map are locked, capacity can't exceed the space's layout capacity, and the page shows the pilot label."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M28-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M28",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Venue, address and map come from the booking and can't be edited on the page. External venues aren't allowed in the MVP.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-1",
+          "text": "Given a confirmed 2-day booking, when the organizer creates an event page, then two sessions exist with the booked times, the venue and map are locked, capacity can't exceed the space's layout capacity, and the page shows the pilot label."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M28-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M28",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Capacity is required per session and can't exceed the space's capacity for the chosen layout.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-1",
+          "text": "Given a confirmed 2-day booking, when the organizer creates an event page, then two sessions exist with the booked times, the venue and map are locked, capacity can't exceed the space's layout capacity, and the page shows the pilot label."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M28-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M28",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Visibility is unlisted only: reachable by its link, marked noindex, nofollow, excluded from sitemaps, search and any list of events, and with no structured data.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-2",
+          "text": "Given a live event page, then its HTML has noindex, nofollow, no structured data, it is absent from the sitemap and from search, and no page lists it."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M28-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M28",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Event page statuses: Draft → Live → Registration closed → Ended; or Cancelled (booking cancelled) or Removed (Admin).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-3",
+          "text": "Given 40 registrations, when the organizer changes a session time, then a confirmation shows \"40 orang akan diberi tahu\" and all 40 are emailed; the page moves through Live → Registration closed → Ended at the right times."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M28-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M28",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Changing a session's time or the description after registrations exist asks for confirmation (\"N orang akan diberi tahu\") and emails registrants with what changed.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-3",
+          "text": "Given 40 registrations, when the organizer changes a session time, then a confirmation shows \"40 orang akan diberi tahu\" and all 40 are emailed; the page moves through Live → Registration closed → Ended at the right times."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M28-13",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M28",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "The page shows title, cover, dates and times with time-zone label, venue with map, organizer name, spots left, status, the registration form, a \"Bagikan\" (share) button with copy-link and a WhatsApp share link (wa.me, no API), and a \"Laporkan\" (report) link.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-1",
+          "text": "Given a confirmed 2-day booking, when the organizer creates an event page, then two sessions exist with the booked times, the venue and map are locked, capacity can't exceed the space's layout capacity, and the page shows the pilot label."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M28-17",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M28",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Every event page, registration form and pass shows \"Pilot demo – bukan acara sungguhan\" (\"Pilot demo – not a real event\").",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-1",
+          "text": "Given a confirmed 2-day booking, when the organizer creates an event page, then two sessions exist with the booked times, the venue and map are locked, capacity can't exceed the space's layout capacity, and the page shows the pilot label."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M30-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M30",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Registering creates (or uses) an account (FR-M1-10) and one registration with one pass; one registration per email per session.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-4",
+          "text": "Given a session with capacity 100 and 99 registrations, when two people submit together, then one registers and the other sees \"Pendaftaran penuh\"; the same email can't register twice; under-18 can't register; more than 10 registrations per IP per hour are refused; the form refuses a question asking for an ID number; an attendee can cancel and the spot is freed; the organizer can close and reopen registration."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M30-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M30",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Registration form: name, email, up to 3 custom questions (short text, single choice, yes/no). Questions can't ask for ID numbers, health, religion or similar sensitive data; the form shows a fixed note to that effect for organizers.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-4",
+          "text": "Given a session with capacity 100 and 99 registrations, when two people submit together, then one registers and the other sees \"Pendaftaran penuh\"; the same email can't register twice; under-18 can't register; more than 10 registrations per IP per hour are refused; the form refuses a question asking for an ID number; an attendee can cancel and the spot is freed; the organizer can close and reopen registration."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M30-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M30",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Capacity is enforced atomically per session; a registration that would exceed it fails with \"Pendaftaran penuh\".",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-4",
+          "text": "Given a session with capacity 100 and 99 registrations, when two people submit together, then one registers and the other sees \"Pendaftaran penuh\"; the same email can't register twice; under-18 can't register; more than 10 registrations per IP per hour are refused; the form refuses a question asking for an ID number; an attendee can cancel and the spot is freed; the organizer can close and reopen registration."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M30-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M30",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "The attendee can cancel until the session starts; capacity is released.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-4",
+          "text": "Given a session with capacity 100 and 99 registrations, when two people submit together, then one registers and the other sees \"Pendaftaran penuh\"; the same email can't register twice; under-18 can't register; more than 10 registrations per IP per hour are refused; the form refuses a question asking for an ID number; an attendee can cancel and the spot is freed; the organizer can close and reopen registration."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M30-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M30",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Registration closes at a set time, when full, or manually; the organizer can reopen if capacity remains.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-4",
+          "text": "Given a session with capacity 100 and 99 registrations, when two people submit together, then one registers and the other sees \"Pendaftaran penuh\"; the same email can't register twice; under-18 can't register; more than 10 registrations per IP per hour are refused; the form refuses a question asking for an ID number; an attendee can cancel and the spot is freed; the organizer can close and reopen registration."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M30-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M30",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Attendees must confirm they are 18 or older; under-18 registration is not possible in the pilot (FR-M38-09).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-4",
+          "text": "Given a session with capacity 100 and 99 registrations, when two people submit together, then one registers and the other sees \"Pendaftaran penuh\"; the same email can't register twice; under-18 can't register; more than 10 registrations per IP per hour are refused; the form refuses a question asking for an ID number; an attendee can cancel and the spot is freed; the organizer can close and reopen registration."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M30-10",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M30",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Abuse limits: max 10 registrations per IP per hour per event page; email verification required before the pass is issued.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-4",
+          "text": "Given a session with capacity 100 and 99 registrations, when two people submit together, then one registers and the other sees \"Pendaftaran penuh\"; the same email can't register twice; under-18 can't register; more than 10 registrations per IP per hour are refused; the form refuses a question asking for an ID number; an attendee can cancel and the spot is freed; the organizer can close and reopen registration."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M30-11",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M30",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Organizer attendee list: search, status filter, cancel a registration with a message; export CSV (Owner only; logged in the organization audit log).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-5",
+          "text": "Given the attendee list, then the Owner can export CSV (logged) and a Member can't; the organizer can cancel a registration with a message."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M31-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M31",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Each confirmed registration has a pass emailed to the attendee and shown in My passes.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-6",
+          "text": "Given a confirmed registration, then the pass is emailed within 1 minute and shown in My passes with event, session time and zone, venue, name, number and pilot label; opening its QR logged out shows only first name and event."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M31-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M31",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "The QR encodes the pass URL with a random, unguessable token (≥ 128 bits); the pass page shows nothing beyond the attendee's first name and the event to people who aren't logged in as the holder or an organizer member.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-6",
+          "text": "Given a confirmed registration, then the pass is emailed within 1 minute and shown in My passes with event, session time and zone, venue, name, number and pilot label; opening its QR logged out shows only first name and event."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M31-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M31",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Pass content: event title, session date and time with time-zone label, venue and map link, attendee name, pass number, the pilot label.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-6",
+          "text": "Given a confirmed registration, then the pass is emailed within 1 minute and shown in My passes with event, session time and zone, venue, name, number and pilot label; opening its QR logged out shows only first name and event."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M31-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M31",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Pass statuses: Issued → Checked in; or Cancelled / Voided.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-7",
+          "text": "Given an organizer member opens a pass QR, then they can check it in; reopening shows \"Sudah check-in pukul … oleh …\"; undo works within 5 minutes and not after; a cancelled pass shows Dibatalkan; check-in from the list works; the printable list prints all registrants."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M32-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M32",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Organizer members check attendees in from the attendee list (search by name or email) or by opening a pass URL (scanning the QR with the phone camera) while logged in.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-7",
+          "text": "Given an organizer member opens a pass QR, then they can check it in; reopening shows \"Sudah check-in pukul … oleh …\"; undo works within 5 minutes and not after; a cancelled pass shows Dibatalkan; check-in from the list works; the printable list prints all registrants."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M32-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M32",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "An already-used pass shows \"Sudah check-in pukul {time} oleh {member}\"; a cancelled or voided pass shows its status; a pass for another session shows the correct session.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-7",
+          "text": "Given an organizer member opens a pass QR, then they can check it in; reopening shows \"Sudah check-in pukul … oleh …\"; undo works within 5 minutes and not after; a cancelled pass shows Dibatalkan; check-in from the list works; the printable list prints all registrants."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M32-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M32",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "A check-in can be undone within 5 minutes; the undo is logged.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-7",
+          "text": "Given an organizer member opens a pass QR, then they can check it in; reopening shows \"Sudah check-in pukul … oleh …\"; undo works within 5 minutes and not after; a cancelled pass shows Dibatalkan; check-in from the list works; the printable list prints all registrants."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M32-12",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M32",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "A printable attendee list per session (name, status, blank tick column) is available as a fallback.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-7",
+          "text": "Given an organizer member opens a pass QR, then they can check it in; reopening shows \"Sudah check-in pukul … oleh …\"; undo works within 5 minutes and not after; a cancelled pass shows Dibatalkan; check-in from the list works; the printable list prints all registrants."
+        }
+      ],
+      "demo_scenarios": [
+        "D5"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M36-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M36",
+      "area": "Event page, registration, passes, check-in and reports",
+      "prd_section": "§7.16",
+      "description": "Anyone can report an event page or a space (reason + text); reports go to the Admin queue; the Admin can dismiss, remove the page (registrants emailed) or suspend the organization.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M28/M30/M31/M32/M36-8",
+          "text": "Given a report on an event page, then it appears in the Admin queue; removing the page emails registrants and shows \"Halaman tidak tersedia\"."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M21-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M21",
+      "area": "Notifications and dashboards",
+      "prd_section": "§7.17",
+      "description": "Channels: in-app (bell + list) and email.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M21/M22-1",
+          "text": "Given a new enquiry, then venue members receive an in-app and an email notification within 1 minute that links to the enquiry; a user who turned off non-transactional emails still receives \"payment due\"."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M21-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M21",
+      "area": "Notifications and dashboards",
+      "prd_section": "§7.17",
+      "description": "Notification catalog with defaults (list below); users can turn off non-transactional emails; transactional ones (payment due, agreement to accept, booking confirmed/lapsed/cancelled, pass issued, event changed/cancelled) can't be turned off.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M21/M22-1",
+          "text": "Given a new enquiry, then venue members receive an in-app and an email notification within 1 minute that links to the enquiry; a user who turned off non-transactional emails still receives \"payment due\"."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M21-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M21",
+      "area": "Notifications and dashboards",
+      "prd_section": "§7.17",
+      "description": "Every notification links to its record and respects permissions.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M21/M22-1",
+          "text": "Given a new enquiry, then venue members receive an in-app and an email notification within 1 minute that links to the enquiry; a user who turned off non-transactional emails still receives \"payment due\"."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M21-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M21",
+      "area": "Notifications and dashboards",
+      "prd_section": "§7.17",
+      "description": "Email sending uses a domain with SPF, DKIM and DMARC set; bounces are recorded and shown on the user's profile to the Admin; the sign-up and registration screens tell users to check their spam folder.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M21/M22-2",
+          "text": "Given the sending domain, then SPF, DKIM and DMARC checks pass on a test message, and a bounced address is marked on the profile."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M22-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M22",
+      "area": "Notifications and dashboards",
+      "prd_section": "§7.17",
+      "description": "Venue pipeline (list and kanban): New, In discussion, Quoted, Pending approval, Accepted (awaiting agreement/deposit), Confirmed, Lost/Declined; overdue-reply badges.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M21/M22-3",
+          "text": "Given seeded enquiries, then the venue pipeline shows them in the right columns with overdue badges, \"This week\" lists upcoming items, the counts for a period match a raw export, and the organizer dashboard shows each event's next action and registrations vs capacity."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M22-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M22",
+      "area": "Notifications and dashboards",
+      "prd_section": "§7.17",
+      "description": "Venue \"This week\": upcoming events, documents to review, balances due.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M21/M22-3",
+          "text": "Given seeded enquiries, then the venue pipeline shows them in the right columns with overdue badges, \"This week\" lists upcoming items, the counts for a period match a raw export, and the organizer dashboard shows each event's next action and registrations vs capacity."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M22-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M22",
+      "area": "Notifications and dashboards",
+      "prd_section": "§7.17",
+      "description": "Venue counts for a chosen period: enquiries, quotes, bookings, conversion, median first-response time (business hours), simulated revenue; CSV export.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M21/M22-3",
+          "text": "Given seeded enquiries, then the venue pipeline shows them in the right columns with overdue badges, \"This week\" lists upcoming items, the counts for a period match a raw export, and the organizer dashboard shows each event's next action and registrations vs capacity."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M22-06",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M22",
+      "area": "Notifications and dashboards",
+      "prd_section": "§7.17",
+      "description": "Organizer events dashboard: each event with enquiries, quotes, booking status, next action, registrations vs capacity.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M21/M22-3",
+          "text": "Given seeded enquiries, then the venue pipeline shows them in the right columns with overdue badges, \"This week\" lists upcoming items, the counts for a period match a raw export, and the organizer dashboard shows each event's next action and registrations vs capacity."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M24-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M24",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "Admin queues: verification (operators and organizer organizations), space review, reports, reported problems (post-event holds).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M24/M25/M26-1",
+          "text": "Given a submitted operator and space, then they appear in the Admin queues; the Admin can approve or reject with a reason, suspend and unsuspend, and find them by name or email; every action is in the admin audit log."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M24-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M24",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "Search users, organizations, spaces, enquiries, bookings, event pages and passes by ID, name or email.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M24/M25/M26-1",
+          "text": "Given a submitted operator and space, then they appear in the Admin queues; the Admin can approve or reject with a reason, suspend and unsuspend, and find them by name or email; every action is in the admin audit log."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M24-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M24",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "Settings: fee rates (commission, organizer fee and caps), response deadline, hold durations, minimum deposit, standard cancellation policies, PPN rate and DPP rule, post-event window length, invite list, pilot deletion date. Changes apply only to records created afterwards.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M24/M25/M26-2",
+          "text": "Given an Admin changes the organizer fee to 4%, then only quotes created afterwards use 4%; an item waiting more than 2 business days appears in the next daily admin email."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M24-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M24",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "Actions: approve/reject (reason), suspend/unsuspend users, organizations, spaces and event pages; extend a deadline once (reason); void a pass; resolve a reported problem.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M24/M25/M26-1",
+          "text": "Given a submitted operator and space, then they appear in the Admin queues; the Admin can approve or reject with a reason, suspend and unsuspend, and find them by name or email; every action is in the admin audit log."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M24-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M24",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "Sandbox ledger view per booking and totals across bookings, with a reconciliation check that flags any booking whose ledger doesn't match its quote and receipts.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M24/M25/M26-3",
+          "text": "Given a booking whose ledger was altered in the test database, then the ledger view flags the mismatch."
+        }
+      ],
+      "demo_scenarios": [
+        "D6"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M24-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M24",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "Append-only admin audit log (actor, action, record, before/after, time).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M24/M25/M26-1",
+          "text": "Given a submitted operator and space, then they appear in the Admin queues; the Admin can approve or reject with a reason, suspend and unsuspend, and find them by name or email; every action is in the admin audit log."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M24-10",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M24",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "A daily email to all Admins lists items waiting for review longer than 2 business days.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M24/M25/M26-2",
+          "text": "Given an Admin changes the organizer fee to 4%, then only quotes created afterwards use 4%; an item waiting more than 2 business days appears in the next daily admin email."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M24-11",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M24",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "Holiday calendar: national holidays and cuti bersama per year (seeded from the official joint decree), editable by Admins; used by every business-day calculation.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M9/M10-3",
+          "text": "Given an enquiry sent Friday 16:00 WIB with Monday a holiday and no venue action, then it becomes Expired at Wednesday 23:59 WIB, with reminders at Tuesday 23:59 and Wednesday 19:59, and the organizer is notified."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M24-12",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M24",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "One internal role, Spot-In Admin, with 2FA required.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M1-2",
+          "text": "Given an Admin without 2FA, when they log in, then they must enrol an authenticator before reaching the admin pages; other users can enable 2FA in settings."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M25-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M25",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "The UI, emails and documents are in Bahasa Indonesia.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M24/M25/M26-4",
+          "text": "Given any screen, email or PDF, then text is in Bahasa Indonesia, amounts read \"Rp 25.000.000\", dates \"12 Des 2026\", times carry WIB/WITA/WIT for the property; a property in Bali shows WITA to a viewer in Jakarta; a hard-coded UI string fails the lint check."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M25-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M25",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "IDR formatted as \"Rp 25.000.000\"; dates as \"12 Des 2026\"; all event times in the property's time zone with WIB/WITA/WIT label.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M24/M25/M26-4",
+          "text": "Given any screen, email or PDF, then text is in Bahasa Indonesia, amounts read \"Rp 25.000.000\", dates \"12 Des 2026\", times carry WIB/WITA/WIT for the property; a property in Bali shows WITA to a viewer in Jakarta; a hard-coded UI string fails the lint check."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M25-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M25",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "All user-facing strings live in a message catalog; the build fails on hard-coded UI strings (lint rule), so English can be added in Phase 2 without code changes.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M24/M25/M26-4",
+          "text": "Given any screen, email or PDF, then text is in Bahasa Indonesia, amounts read \"Rp 25.000.000\", dates \"12 Des 2026\", times carry WIB/WITA/WIT for the property; a property in Bali shows WITA to a viewer in Jakarta; a hard-coded UI string fails the lint check."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M26-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M26",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "Help page with FAQs (how booking works, what pilot mode means, how to cancel, how passes work).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M24/M25/M26-5",
+          "text": "Given the help page and \"Hubungi kami\" from a booking, then the FAQ covers pilot mode, and the message reaches the Admins with a link to the booking."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M26-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M26",
+      "area": "Admin, localization and help",
+      "prd_section": "§7.18",
+      "description": "\"Hubungi kami\" form from any booking, enquiry or event page that emails the Admins with the record linked; target reply within 1 business day (best effort).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M24/M25/M26-5",
+          "text": "Given the help page and \"Hubungi kami\" from a booking, then the FAQ covers pilot mode, and the message reaches the Admins with a link to the booking."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M38-01",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M38",
+      "area": "Pilot mode",
+      "prd_section": "§7.19",
+      "description": "A persistent banner \"Mode pilot – pemesanan latihan, tidak mengikat, tanpa pembayaran nyata\" on every page of a booking flow, and a diagonal \"PILOT\" watermark on every generated PDF (quotes, comparison, agreement, receipts, statements, passes). No document can be generated without it.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M38-1",
+          "text": "Given any generated PDF and any booking page, then the PILOT watermark and banner are present; a test that generates every document type finds none without it."
+        }
+      ],
+      "demo_scenarios": [
+        "D4"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M38-02",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M38",
+      "area": "Pilot mode",
+      "prd_section": "§7.19",
+      "description": "Invite-only access: only emails on the Admin's invite list can sign up as venue or organizer users; attendees can register only through an event-page link.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M38-2",
+          "text": "Given an email not on the invite list, when it signs up as venue or organizer, then no account is created; attendees can register only via an event-page link."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M38-03",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M38",
+      "area": "Pilot mode",
+      "prd_section": "§7.19",
+      "description": "Pilot notice accepted at sign-up and at registration: who runs the pilot (Group4), its purpose, the data collected, the hosting provider and country where data is stored, that bookings are practice runs with no real payment, the deletion date, and a contact email. Acceptance is recorded per user with the notice version.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M38-3",
+          "text": "Given a new user, then sign-up shows the pilot notice with the hosting provider and storage country, deletion date and practice-booking statement, and records acceptance with its version; users must confirm they are 18 or older."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M38-04",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M38",
+      "area": "Pilot mode",
+      "prd_section": "§7.19",
+      "description": "Data rule: Spot-In has no field for, and must not collect, ID documents or photos of them, selfies, NIK, NPWP, NIB, deeds, bank account or card numbers. Phones are optional contact fields only. A pre-demo script scans the database for the blocked field types and 16-digit NIK-like or card-like numbers and reports any match.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M38-4",
+          "text": "Given the database schema, then no column exists for ID documents, NIK, NPWP, NIB, bank or card numbers; the pre-demo scan reports zero matches on seed and pilot data."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M38-05",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M38",
+      "area": "Pilot mode",
+      "prd_section": "§7.19",
+      "description": "Data lifecycle: every user can download their data (JSON) and delete their account in settings; on the pilot deletion date the Admin runs a documented job that deletes or anonymizes all pilot users' personal data and files.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M38-5",
+          "text": "Given a user, then they can download their data as JSON and delete their account; the documented deletion job, run on a copy of pilot data, leaves no personal fields."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M38-06",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M38",
+      "area": "Pilot mode",
+      "prd_section": "§7.19",
+      "description": "Production database and file storage access is limited to named team members; each access is logged; seed and test data never mix with pilot users' data (separate environments).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M38-6",
+          "text": "Given production access, then only named team members have credentials, each access is logged, and seed data lives in a separate environment."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M38-07",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M38",
+      "area": "Pilot mode",
+      "prd_section": "§7.19",
+      "description": "Payments use test mode only; starting the server with live payment keys while pilot mode is on fails (FR-M14-13).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M14-4",
+          "text": "Given live payment keys in the configuration with pilot mode on, then the server refuses to start; with no test-mode access configured, the simulator produces pending, paid, expired and failed states through the same adapter interface."
+        }
+      ],
+      "demo_scenarios": [],
+      "verified_by": "automated test",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M38-08",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M38",
+      "area": "Pilot mode",
+      "prd_section": "§7.19",
+      "description": "Venue penalties, ranking effects and any money-related consequences outside the ledger are off.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M18-2",
+          "text": "Given a venue cancellation, then the organizer is refunded everything paid including the Spot-In fee, no penalty is recorded, and the cancellation is Owner-only."
+        }
+      ],
+      "demo_scenarios": [
+        "D7"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M38-09",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M38",
+      "area": "Pilot mode",
+      "prd_section": "§7.19",
+      "description": "Pilot users must be 18 or older (confirmed at sign-up and registration).",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M38-3",
+          "text": "Given a new user, then sign-up shows the pilot notice with the hosting provider and storage country, deletion date and practice-booking statement, and records acceptance with its version; users must confirm they are 18 or older."
+        }
+      ],
+      "demo_scenarios": [
+        "D1"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "FR-M38-10",
+      "priority": "must",
+      "phase": "MVP",
+      "module": "M38",
+      "area": "Pilot mode",
+      "prd_section": "§7.19",
+      "description": "Demo clock: in the demo environment only, an Admin can move the application clock forward (e.g., \"+3 days\") so deadlines, holds, reminders, the post-event window and release can be shown live; all scheduled jobs use the application clock. The control doesn't exist in the pilot environment.",
+      "acceptance_criteria": [
+        {
+          "id": "AC-M38-7",
+          "text": "Given the demo environment, when the Admin moves the clock +3 days, then due holds expire, reminders and deadlines fire as at that time, and release runs on schedule; the pilot environment has no clock control."
+        }
+      ],
+      "demo_scenarios": [
+        "D4",
+        "D6"
+      ],
+      "verified_by": "demo script",
+      "status": "not_started",
+      "passes": false
+    },
+    {
+      "id": "P2-01",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Real money and escrow",
+      "prd_section": "§7.20",
+      "description": "Licensed escrow via xenPlatform, real payouts, bank-account verification, invoices with closed VA for companies, chargebacks, trusted-venue early release",
+      "v1_1_reference": "M14, M16, §11.3, FR-M3-04 (v1.1)",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-02",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Contracts",
+      "prd_section": "§7.20",
+      "description": "Certified e-signature with identity check, e-meterai, addenda, custom templates (after legal review, Q5)",
+      "v1_1_reference": "M13",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-03",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Tax",
+      "prd_section": "§7.20",
+      "description": "Faktur Pajak via Coretax/PJAP, PPh 4(2) withholding and slips, venue faktur upload/generation",
+      "v1_1_reference": "M15, §11.4",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-04",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Verification",
+      "prd_section": "§7.20",
+      "description": "Document-based KYB/KYC with right-to-rent proof, organizer tiers",
+      "v1_1_reference": "M3",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-05",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Claims and disputes",
+      "prd_section": "§7.20",
+      "description": "Security deposits, claims against them, organizer disputes, appeals; release after the later of the claim and dispute windows (decision #19)",
+      "v1_1_reference": "M19, FR-M16-05 (v1.1)",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-06",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Changes and force majeure",
+      "prd_section": "§7.20",
+      "description": "Change requests with amended quotes and addenda, force majeure flow, custom cancellation policies",
+      "v1_1_reference": "M18",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-07",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Venue tooling",
+      "prd_section": "§7.20",
+      "description": "Child spaces, floor-plan pins and interactive plans, setup/dismantle windows, shared-resource conflicts, site visits, approval chains, groups and property scoping, full role matrices, portfolio calendar",
+      "v1_1_reference": "M2, M4, M6, M11",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-08",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Reviews and quality",
+      "prd_section": "§7.20",
+      "description": "Two-way reviews, responsiveness badges, ranking penalties",
+      "v1_1_reference": "M20, M27",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-09",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Event operations",
+      "prd_section": "§7.20",
+      "description": "Handover records, incident log, rundown builder, crew/vehicle passes",
+      "v1_1_reference": "M17",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-10",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Channels and language",
+      "prd_section": "§7.20",
+      "description": "WhatsApp templates, SMS/phone OTP, web push, digests, quiet hours, English and bilingual documents, email-to-thread",
+      "v1_1_reference": "M1, M10, M21, M25",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-11",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Search",
+      "prd_section": "§7.20",
+      "description": "Saved searches, SEO landing pages, collections, separate search engine only if PostgreSQL misses targets, address autocomplete",
+      "v1_1_reference": "M7",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-12",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Public events",
+      "prd_section": "§7.20",
+      "description": "Public visibility and discovery, follows, saved events, external-venue events, venue approval of listings (never auto-approved, decision #20), waitlist, approval mode, guests, guardian consent, offline scanner and check-in staff, announcements, analytics, moderation pipeline",
+      "v1_1_reference": "M28–M33, M36",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-13",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Paid ticketing",
+      "prd_section": "§7.20",
+      "description": "Ticket types and tiers, promo codes, all-in pricing, purchase limits and named tickets (with DPIA, Q13), waiting room, rotating QR, transfers, wristband redemption, refunds, organizer payouts, PBJT",
+      "v1_1_reference": "M34, M35, M37",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    },
+    {
+      "id": "P2-14",
+      "priority": "should",
+      "phase": "Phase 2",
+      "module": null,
+      "area": "Growth",
+      "prd_section": "§7.20",
+      "description": "Promoted listings and events, booking and ticket widgets, recommendations",
+      "v1_1_reference": "M23, M27",
+      "acceptance_criteria": [],
+      "acceptance_note": "Write Given/When/Then criteria before this enters a build plan (PRD §13 definition of done; detailed v1.1 wording in docs/archive/PRD-v1.1.md).",
+      "demo_scenarios": [],
+      "status": "backlog",
+      "passes": false
+    }
+  ]
+}
