@@ -45,7 +45,7 @@ jobs:
           APP_ENV: demo
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
-      - name: End-to-end D1 and D2
+      - name: End-to-end demo scripts D1–D4
         run: npm run e2e
         env:
           CI: "true"
