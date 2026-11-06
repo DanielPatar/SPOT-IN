@@ -6,7 +6,7 @@ import react from "eslint-plugin-react";
 // JSX text fails the build. Punctuation and symbols are allowed.
 const allowedStrings = ["·", "—", "–", "/", "|", "×", "•", ":", "(", ")", "*", "→", "←", "+", "-", "%", "#", "…", "✓", "Rp", "m²", "kVA"];
 
-export default [
+const config = [
   ...nextVitals,
   ...nextTs,
   {
@@ -21,7 +21,11 @@ export default [
   },
   {
     rules: {
+      // Files are served through signed, expiring URLs; next/image optimisation would cache them publicly.
+      "@next/next/no-img-element": "off",
       "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
     },
   },
 ];
+
+export default config;
