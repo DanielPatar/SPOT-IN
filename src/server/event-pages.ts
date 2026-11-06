@@ -71,7 +71,11 @@ export async function eventPageSetup(actor: Actor, eventId: string) {
   const booking = await bookingForEvent(eventId, m.orgId);
   const [page] = await db()`select * from event_pages where event_id = ${eventId}`;
   const sessions = page ? await db()`select * from event_sessions where page_id = ${page.id as string} order by day` : [];
-  return { m, event: e, booking, page: page ?? null, sessions };
+  // The venue shown on the page comes from its booking even after that booking is settled or cancelled.
+  const [venue] = page
+    ? await db()`select s.name as space_name, p.name as property_name, p.address_text from bookings b join spaces s on s.id = b.space_id join properties p on p.id = s.property_id where b.id = ${page.booking_id as string}`
+    : booking ? [booking] : [];
+  return { m, event: e, booking, page: page ?? null, sessions, venue: venue ?? null };
 }
 
 function checkSessions(input: PageInput, booking: Record<string, unknown>) {

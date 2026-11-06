@@ -28,8 +28,8 @@ export async function reviewDocumentAction(_: ActionState, form: FormData): Prom
     const a = await actor();
     const op = str(form, "op") as "approve" | "changes" | "waive";
     await life.reviewDocument(a, str(form, "documentId"), op, str(form, "comment"));
-    revalidatePath(`/pemesanan/${str(form, "bookingId")}`);
-    return { ok: t(`checklistPanel.done.${op}`) };
+    // An approved or waived item loses its form, so the confirmation lives on the page.
+    redirect(`/pemesanan/${str(form, "bookingId")}?done=doc_${op}`);
   });
 }
 
@@ -77,8 +77,7 @@ export async function resolveProblemAction(_: ActionState, form: FormData): Prom
     const a = await actor();
     const outcome = str(form, "outcome") === "adjusted" ? "adjusted" : "release_as_is";
     await life.resolveProblem(a, str(form, "problemId"), { outcome, adjustment: int(form, "adjustment") ?? 0, note: str(form, "note") });
-    revalidatePath("/admin/masalah");
-    return { ok: t("adminProblems.resolved") };
+    redirect("/admin/masalah?done=1");
   });
 }
 
@@ -181,9 +180,12 @@ export async function checkInAction(_: ActionState, form: FormData): Promise<Act
     const op = str(form, "op");
     if (op === "undo") await pages.undoCheckIn(a, str(form, "passId"));
     else await pages.checkIn(a, str(form, "passId"));
-    const back = str(form, "back");
-    if (back.startsWith("/")) revalidatePath(back);
-    return { ok: t(op === "undo" ? "checkinPanel.undone" : "checkinPanel.done", { name: str(form, "name") }) };
+    // The check-in button disappears once used, so the confirmation is shown by the page it returns to.
+    const back = str(form, "back").startsWith("/") ? str(form, "back") : "/";
+    const u = new URL(back, "http://x");
+    u.searchParams.set("done", op === "undo" ? "undo" : "checkin");
+    u.searchParams.set("who", str(form, "name"));
+    redirect(`${u.pathname}${u.search}`);
   });
 }
 

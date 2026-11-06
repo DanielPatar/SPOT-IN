@@ -4,17 +4,20 @@ import { formatDateTime } from "@/lib/time";
 import { requireAdminPage } from "@/web/session";
 import { openProblemsQueue } from "@/server/lifecycle";
 import { Form, Submit } from "@/components/Form";
+import { Notice } from "@/components/kit";
 import { AdminNav } from "../AdminNav";
 import { resolveProblemAction } from "@/web/actions/after";
 
 /** FR-M24-01/04, FR-M16-08: reported problems hold release until an Admin records the outcome. */
-export default async function AdminProblemsPage() {
+export default async function AdminProblemsPage({ searchParams }: { searchParams: Promise<{ done?: string }> }) {
   await requireAdminPage();
+  const { done } = await searchParams;
   const rows = await openProblemsQueue();
   return (
     <div>
       <h1>{t("adminProblems.title")}</h1>
       <AdminNav />
+      {done ? <Notice tone="positive" className="alert-ok mb-3" title={t("adminProblems.resolved")} /> : null}
       {rows.length === 0 ? <p className="muted">{t("adminProblems.empty")}</p> : null}
       {rows.map((p) => (
         <div key={String(p.id)} className="card" data-testid="problem-item">

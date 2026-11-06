@@ -75,6 +75,7 @@ export default async function BookingWorkspacePage({ params, searchParams }: { p
         ) : null}
         {status === "confirmed" || status === "balance_due" || status === "fully_paid" ? <Notice tone="positive" title={t("workspace.confirmedTitle")}>{t("workspace.confirmedBody")}</Notice> : null}
         {status === "lapsed" ? <Notice tone="danger" title={t("workspace.lapsedTitle")}>{t("workspace.lapsedBody")}</Notice> : null}
+        {done && ["doc_approve", "doc_changes", "doc_waive"].includes(done) ? <Notice tone="positive" className="alert-ok" title={t(`checklistPanel.done.${done.slice(4)}`)} /> : null}
         {done === "cancelled" ? <Notice tone="positive" className="alert-ok" title={t("cancelPanel.done")} /> : null}
         {cancelled ? (
           <Notice tone="danger" title={t(cx?.noShow ? "workspace.noShowTitle" : status === "cancelled_by_venue" ? "workspace.cancelledByVenue" : "workspace.cancelledByOrganizer")}>

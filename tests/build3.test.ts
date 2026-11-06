@@ -146,7 +146,7 @@ describe("M17 documents and readiness", () => {
 });
 
 describe("M18 cancellations", () => {
-  it("AC-M18-1: Moderate, deposit only, 35 days before → refund 44.955.000, fee kept; reconciles; refund shows as simulated", async () => {
+  it("AC-M18-1 / AC-M14-3: Moderate, deposit only, 35 days before → refund 44.955.000, fee kept; reconciles; refund shows as simulated", async () => {
     const c = await setup();
     const bookingId = await confirmed(c);
     await setNow(new Date("2026-11-06T04:00:00Z")); // 35 days before 11 Dec, > 24 h after confirmation
@@ -436,5 +436,53 @@ describe("M22 dashboards, M26 help, M24 ledger, M1 deletion", () => {
     const c = await setup();
     await confirmed(c);
     expect(await deletionBlockers(c.o.owner.userId)).toEqual(["Rina EO"]);
+  });
+});
+
+describe("M6 buffer, M21 notifications, M14 adapter", () => {
+  it("AC-M6-5: with a 4-hour buffer, quoting an hourly booking 2 hours after another ends is blocked", async () => {
+    const c = await setup([{ date: "2026-12-12", start: "16:00", end: "20:00" }]);
+    await db()`update spaces set buffer_hours = 4 where id = ${c.v.spaceId}`;
+    await db()`update rate_cards set unit = 'hour' where space_id = ${c.v.spaceId}`;
+    const sari = await makeOrganizer(c.admin, "sari@k.id", "Sari");
+    const evS = await createEvent(sari.owner, { name: "Pagi", type: "workshop", category: "tech", expectedAttendance: 50, days: [{ date: "2026-12-12", start: "10:00", end: "14:00" }] });
+    const [eqS] = await sendEnquiries(sari.owner, evS, [c.v.spaceId]);
+    const qS = await draftQuote(c.v.owner, eqS!);
+    await updateDraft(c.v.owner, qS, { lines: [{ ...LINES[0]!, quantity: 4, unitPrice: 1_000_000 }], schedule: SPLIT, validityDays: 7, cancellationPolicy: "moderate" });
+    await submitQuote(c.v.owner, qS);
+    await acceptQuote(sari.owner, qS, { acceptPilotTerms: true });
+    const q = await draftQuote(c.v.owner, c.enquiryId);
+    await updateDraft(c.v.owner, q, { lines: [{ ...LINES[0]!, quantity: 4, unitPrice: 1_000_000 }], schedule: SPLIT, validityDays: 7, cancellationPolicy: "moderate" });
+    await expect(submitQuote(c.v.owner, q)).rejects.toMatchObject({ key: "quotes.bufferViolated" });
+  });
+
+  it("AC-M21/M22-1: a new enquiry notifies venue members in-app and by email with a link; 'payment due' ignores the email opt-out", async () => {
+    const c = await setup();
+    const [n] = await db()`select link from notifications n join users u on u.id = n.user_id where u.email = 'budi@venue.id' and n.event = 'enquiry_new'`;
+    expect(String(n!.link)).toContain(c.enquiryId);
+    expect((await db()`select 1 from email_outbox where to_email = 'budi@venue.id' and category = 'enquiry_new'`).length).toBe(1);
+    await db()`update users set notification_prefs = '{"emailOptional": false}' where email = 'rina@eo.id'`;
+    const bookingId = await confirmed(c);
+    await db()`delete from email_outbox`;
+    await advanceDemoClock(c.admin, new Date("2026-11-20T03:00:00Z").getTime() - (await now()).getTime());
+    expect((await db()`select 1 from email_outbox where to_email = 'rina@eo.id' and category = 'payment_due'`).length).toBeGreaterThan(0);
+    void bookingId;
+  });
+
+  it("AC-M14-4: the simulator produces pending, paid, expired and failed through the adapter interface", async () => {
+    const c = await setup();
+    const id = await draftQuote(c.v.owner, c.enquiryId);
+    await updateDraft(c.v.owner, id, { lines: LINES, schedule: SPLIT, validityDays: 7, cancellationPolicy: "moderate" });
+    await submitQuote(c.v.owner, id);
+    const bookingId = await acceptQuote(c.o.owner, id, { acceptPilotTerms: true });
+    const [r] = await db()`select id from payment_requests where booking_id = ${bookingId}`;
+    const states: string[] = [];
+    for (const outcome of ["failed", "expired", "paid"] as const) {
+      const pid = await startPayment(c.o.owner, String(r!.id), outcome === "expired" ? "test_qris" : outcome === "failed" ? "test_card" : "test_va");
+      states.push(String((await db()`select status from payments where id = ${pid}`)[0]!.status));
+      await simulatePayment(c.o.owner, pid, outcome);
+      states.push(String((await db()`select status from payments where id = ${pid}`)[0]!.status));
+    }
+    expect(states).toEqual(["pending", "failed", "pending", "expired", "pending", "paid"]);
   });
 });

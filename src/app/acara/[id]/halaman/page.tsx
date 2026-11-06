@@ -26,7 +26,7 @@ export default async function EventPageEditor({ params, searchParams }: { params
     if (e instanceof PermissionError) notFound();
     throw e;
   }
-  const { event, booking, page, sessions } = setup;
+  const { event, booking, page, sessions, venue } = setup;
   const back = { href: `/acara/${id}`, label: t("pageEditor.back") };
   if (!booking && !page) {
     return (
@@ -50,6 +50,7 @@ export default async function EventPageEditor({ params, searchParams }: { params
         {done === "published" ? <Notice tone="positive" className="alert-ok" title={t("pageEditor.publishedTitle")}>{t("pageEditor.publishedBody")}</Notice> : null}
         {done === "saved" ? <Notice tone="positive" className="alert-ok" title={t("pageEditor.saved")} /> : null}
         {page?.status === "cancelled" ? <Notice tone="danger" title={t("pageEditor.cancelledTitle")}>{t("pageEditor.cancelledBody")}</Notice> : null}
+        {page?.status === "ended" ? <Notice tone="neutral" title={t("pageEditor.endedTitle")}>{t("pageEditor.endedBody")}</Notice> : null}
         {page?.status === "removed" ? <Notice tone="danger" title={t("pageEditor.removedTitle")}>{String(page.removed_reason ?? "")}</Notice> : null}
       </div>
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
@@ -90,8 +91,8 @@ export default async function EventPageEditor({ params, searchParams }: { params
         <div className="grid h-fit gap-4">
           <Panel>
             <h2 className="mt-0">{t("pageEditor.venue")}</h2>
-            <p className="m-0 font-medium">{t("common.spaceAtProperty", { space: String(booking?.space_name ?? ""), property: String(booking?.property_name ?? "") })}</p>
-            <p className="small muted m-0">{String(booking?.address_text ?? "")}</p>
+            <p className="m-0 font-medium">{t("common.spaceAtProperty", { space: String(venue?.space_name ?? ""), property: String(venue?.property_name ?? "") })}</p>
+            <p className="small muted m-0">{String(venue?.address_text ?? "")}</p>
             <p className="small muted">{t("pageEditor.venueLocked")}</p>
           </Panel>
           {page && url && page.status !== "draft" ? (

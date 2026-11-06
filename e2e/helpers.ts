@@ -36,11 +36,17 @@ export async function logout(page: Page) {
 export async function adminLogin(page: Page) {
   await login(page, "admin@spot-in.test");
   await page.goto("/admin");
-  if (page.url().includes("/admin/2fa")) {
+  // A TOTP code is accepted once; a second admin login in the same 30-second window waits for the next code.
+  for (let i = 0; i < 3 && page.url().includes("/admin/2fa"); i++) {
     await page.getByLabel("Kode 6 digit").fill(await generate({ secret: TOTP }));
     await page.getByRole("button", { name: "Verifikasi kode" }).click();
-    await page.waitForURL(/\/admin$/);
+    try {
+      await page.waitForURL(/\/admin$/, { timeout: 5_000 });
+    } catch {
+      await page.waitForTimeout(30_000 - (Date.now() % 30_000) + 500);
+    }
   }
+  await expect(page).toHaveURL(/\/admin$/);
 }
 
 /** WCAG 2.1 AA check (NFR accessibility): no critical violations. */

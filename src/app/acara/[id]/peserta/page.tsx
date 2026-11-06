@@ -8,13 +8,13 @@ import { PermissionError, can } from "@/lib/permissions";
 import { requireOrganizerPage } from "@/web/view";
 import { attendees } from "@/server/event-pages";
 import { Form, Submit } from "@/components/Form";
-import { PageTitle, StateBlock, Status } from "@/components/kit";
+import { Notice, PageTitle, StateBlock, Status } from "@/components/kit";
 import { checkInAction, organizerCancelRegistrationAction } from "@/web/actions/after";
 
 const FILTERS = ["all", "not_checked_in", "checked_in", "cancelled"] as const;
 
 /** Attendee list with search, status filter, check-in, cancel with message, CSV (FR-M30-11, FR-M32-01, FR-M32-12). */
-export default async function AttendeesPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ q?: string; status?: string; session?: string }> }) {
+export default async function AttendeesPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ q?: string; status?: string; session?: string; done?: string; who?: string }> }) {
   const { id } = await params;
   const sp = await searchParams;
   const { session, organizer } = await requireOrganizerPage(`/acara/${id}/peserta`);
@@ -30,7 +30,8 @@ export default async function AttendeesPage({ params, searchParams }: { params: 
   const { page, rows } = data;
   const sessions = await db()`select s.id, s.day, s.taken, s.capacity, pr.timezone from event_sessions s join event_pages ep on ep.id = s.page_id join bookings b on b.id = ep.booking_id join spaces sp on sp.id = b.space_id join properties pr on pr.id = sp.property_id where s.page_id = ${pg.id as string} order by s.day`;
   const tz = String(sessions[0]?.timezone ?? "Asia/Jakarta");
-  const back = `/acara/${id}/peserta${sp.q || sp.status || sp.session ? `?${new URLSearchParams(Object.entries(sp).filter(([, v]) => v) as [string, string][]).toString()}` : ""}`;
+  const keep = Object.entries({ q: sp.q, status: sp.status, session: sp.session }).filter(([, v]) => v) as [string, string][];
+  const back = `/acara/${id}/peserta${keep.length ? `?${new URLSearchParams(keep).toString()}` : ""}`;
   const isOwner = can("organizer", organizer.role, "attendees.export");
   const dayOf = (d: unknown) => formatWeekdayDate(d instanceof Date ? d.toISOString().slice(0, 10) : String(d));
   return (
@@ -46,6 +47,7 @@ export default async function AttendeesPage({ params, searchParams }: { params: 
           </div>
         }
       />
+      {sp.done === "checkin" || sp.done === "undo" ? <Notice tone="positive" className="alert-ok mb-3" title={t(sp.done === "undo" ? "checkinPanel.undone" : "checkinPanel.done", { name: String(sp.who ?? "") })} /> : null}
       {!isOwner ? <p className="small muted">{t("attendeeList.csvOwnerOnly")}</p> : null}
       <p className="small">
         {sessions.map((x) => t("attendeeList.sessionCount", { day: dayOf(x.day), taken: Number(x.taken), capacity: Number(x.capacity) })).join(" · ")}

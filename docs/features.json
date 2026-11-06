@@ -177,7 +177,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M1-09",
@@ -215,7 +215,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M1-11",
@@ -255,7 +255,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M2-02",
@@ -390,7 +390,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M3-02",
@@ -575,7 +575,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M4-09",
@@ -594,7 +594,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M4-10",
@@ -613,7 +613,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M4-11",
@@ -632,7 +632,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M4-16",
@@ -883,7 +883,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M6-07",
@@ -923,7 +923,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M7-01",
@@ -2027,7 +2027,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M14-12",
@@ -2046,7 +2046,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M14-13",
@@ -2065,7 +2065,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M15-01",
@@ -2128,7 +2128,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M15-07",
@@ -2149,7 +2149,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M16-01",
@@ -2170,7 +2170,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M16-07",
@@ -2191,7 +2191,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M16-08",
@@ -2212,7 +2212,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M16-09",
@@ -2233,7 +2233,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M17-01",
@@ -2254,7 +2254,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M17-02",
@@ -2275,7 +2275,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M17-03",
@@ -2296,7 +2296,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M17-04",
@@ -2317,7 +2317,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M18-03",
@@ -2338,7 +2338,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M18-04",
@@ -2359,7 +2359,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M18-05",
@@ -2380,7 +2380,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M18-06",
@@ -2401,7 +2401,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M18-08",
@@ -2422,7 +2422,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M18-10",
@@ -2443,7 +2443,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M28-01",
@@ -2464,7 +2464,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M28-02",
@@ -2485,7 +2485,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M28-03",
@@ -2506,7 +2506,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M28-04",
@@ -2527,7 +2527,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M28-05",
@@ -2546,7 +2546,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M28-07",
@@ -2565,7 +2565,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M28-09",
@@ -2584,7 +2584,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M28-13",
@@ -2605,7 +2605,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M28-17",
@@ -2626,7 +2626,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M30-01",
@@ -2647,7 +2647,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M30-02",
@@ -2668,7 +2668,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M30-04",
@@ -2689,7 +2689,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M30-07",
@@ -2710,7 +2710,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M30-08",
@@ -2731,7 +2731,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M30-09",
@@ -2752,7 +2752,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M30-10",
@@ -2773,7 +2773,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M30-11",
@@ -2792,7 +2792,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M31-01",
@@ -2813,7 +2813,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M31-02",
@@ -2834,7 +2834,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M31-03",
@@ -2855,7 +2855,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M31-07",
@@ -2876,7 +2876,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M32-01",
@@ -2897,7 +2897,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M32-03",
@@ -2918,7 +2918,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M32-08",
@@ -2939,7 +2939,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M32-12",
@@ -2960,7 +2960,7 @@
       ],
       "verified_by": "demo script",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M36-04",
@@ -2979,7 +2979,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M21-01",
@@ -2998,7 +2998,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M21-02",
@@ -3017,7 +3017,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M21-05",
@@ -3036,7 +3036,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M21-07",
@@ -3074,7 +3074,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M22-02",
@@ -3093,7 +3093,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M22-03",
@@ -3112,7 +3112,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M22-06",
@@ -3131,7 +3131,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M24-01",
@@ -3234,7 +3234,7 @@
       ],
       "verified_by": "demo script",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M24-08",
@@ -3388,7 +3388,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M26-02",
@@ -3407,7 +3407,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "not_started",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M38-01",
@@ -3546,7 +3546,7 @@
       "demo_scenarios": [],
       "verified_by": "automated test",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M38-08",
@@ -3567,7 +3567,7 @@
       ],
       "verified_by": "demo script",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "FR-M38-09",
@@ -3610,7 +3610,7 @@
       ],
       "verified_by": "demo script",
       "status": "in_progress",
-      "passes": false
+      "passes": true
     },
     {
       "id": "P2-01",

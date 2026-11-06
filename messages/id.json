@@ -116,7 +116,8 @@
       "cari": "Cari",
       "pengaturan": "Pengaturan",
       "audit": "Log audit",
-      "bukubesar": "Buku besar"
+      "bukubesar": "Buku besar",
+      "masalah": "Laporan masalah"
     },
     "demoClock": "Jam demo",
     "clockNow": "Waktu aplikasi: {at}",
@@ -192,7 +193,10 @@
     },
     "holidayName": "Nama hari libur",
     "addHoliday": "Simpan hari libur",
-    "auditTitle": "Log audit admin"
+    "auditTitle": "Log audit admin",
+    "bookings": "Pemesanan",
+    "eventPages": "Halaman acara",
+    "passes": "Kartu masuk"
   },
   "calendar": {
     "blockOverlaps": "Tanggal ini bertabrakan dengan tahanan atau pemesanan. Lepaskan tahanan terlebih dahulu.",
@@ -1793,7 +1797,23 @@
       },
       "booking": {
         "confirmed": "Pemesanan terkonfirmasi",
-        "lapsed": "Pemesanan tidak dilanjutkan"
+        "lapsed": "Pemesanan tidak dilanjutkan",
+        "released": "Dana dilepas (simulasi)",
+        "at_risk": "Ditandai berisiko",
+        "at_risk_cleared": "Tanda berisiko dihapus",
+        "cancelled_by_organizer": "Dibatalkan oleh penyelenggara",
+        "cancelled_by_venue": "Dibatalkan oleh pengelola",
+        "no_show": "Penyelenggara tidak hadir"
+      },
+      "document": {
+        "submitted": "Dokumen diunggah",
+        "approved": "Dokumen disetujui",
+        "changes_requested": "Pengelola meminta perubahan dokumen",
+        "waived": "Dokumen dibebaskan"
+      },
+      "problem": {
+        "reported": "Masalah dilaporkan",
+        "resolved": "Admin menyelesaikan laporan masalah"
       }
     },
     "eventPage": "Halaman acara",
@@ -2197,7 +2217,9 @@
     "closeNow": "Tutup pendaftaran",
     "reopen": "Buka lagi pendaftaran",
     "reopened": "Pendaftaran dibuka lagi.",
-    "closedNow": "Pendaftaran ditutup."
+    "closedNow": "Pendaftaran ditutup.",
+    "endedTitle": "Acara ini sudah selesai",
+    "endedBody": "Halaman tetap bisa dibuka lewat tautannya, tetapi tidak bisa diubah lagi. Daftar pendaftar masih tersedia."
   },
   "pageStatus": {
     "draft": "Draf",

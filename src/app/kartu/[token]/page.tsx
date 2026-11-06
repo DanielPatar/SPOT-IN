@@ -15,8 +15,9 @@ import { checkInAction } from "@/web/actions/after";
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 /** Pass (FR-M31-01..07) and check-in by opening the QR while logged in as an organizer member (FR-M32-01..08). */
-export default async function PassPage({ params }: { params: Promise<{ token: string }> }) {
+export default async function PassPage({ params, searchParams }: { params: Promise<{ token: string }>; searchParams: Promise<{ done?: string; who?: string }> }) {
   const { token } = await params;
+  const sp = await searchParams;
   const s = await getSession();
   const v = await passView(token, s?.userId ?? null);
   if (!v) {
@@ -52,6 +53,7 @@ export default async function PassPage({ params }: { params: Promise<{ token: st
     <div className="narrow">
       <PilotEventLabel className="mb-3" />
       {v.role === "organizer" ? <Notice tone="info" className="mb-3" title={t("passPage.asOrganizer")} /> : null}
+      {sp.done === "checkin" || sp.done === "undo" ? <Notice tone="positive" className="alert-ok mb-3" title={t(sp.done === "undo" ? "checkinPanel.undone" : "checkinPanel.done", { name: String(sp.who ?? "") })} /> : null}
       <article className="pilot-watermark rounded-lg border border-line-strong bg-white p-5" aria-label={t("passPage.cardLabel")}>
         <p className="small muted m-0">{t("passPage.number", { number: String(p.number) })}</p>
         <h1 className="mt-1 mb-2">{String(p.title)}</h1>
