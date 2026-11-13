@@ -38,10 +38,14 @@ export async function tick(limit = 200): Promise<number> {
   const { registerAllJobs } = await import("@/server/jobs");
   registerAllJobs();
   let processed = 0;
+  // A job left 'running' by a crash or restart for more than 15 minutes is retried (until 3 attempts).
+  await db()`
+    update jobs set status = case when attempts >= 3 then 'failed' else 'pending' end, last_error = coalesce(last_error, 'stuck in running')
+    where status = 'running' and claimed_at < now() - interval '15 minutes'`;
   for (let i = 0; i < limit; i++) {
     const at = await now();
     const claimed = await db()`
-      update jobs set status = 'running', attempts = attempts + 1
+      update jobs set status = 'running', attempts = attempts + 1, claimed_at = now()
       where id = (
         select id from jobs where status = 'pending' and run_at <= ${at}
         order by run_at, id limit 1 for update skip locked)

@@ -486,3 +486,69 @@ describe("M6 buffer, M21 notifications, M14 adapter", () => {
     expect(states).toEqual(["pending", "failed", "pending", "expired", "pending", "paid"]);
   });
 });
+
+describe("Review fixes (DESIGN-v2 §6)", () => {
+  it("two charges for one request: the second payment is refunded at once and the ledger still reconciles", async () => {
+    const c = await setup();
+    const id = await draftQuote(c.v.owner, c.enquiryId);
+    await updateDraft(c.v.owner, id, { lines: LINES, schedule: SPLIT, validityDays: 7, cancellationPolicy: "moderate" });
+    await submitQuote(c.v.owner, id);
+    const bookingId = await acceptQuote(c.o.owner, id, { acceptPilotTerms: true });
+    const [r] = await db()`select id from payment_requests where booking_id = ${bookingId}`;
+    const va = await startPayment(c.o.owner, String(r!.id), "test_va");
+    const qris = await startPayment(c.o.owner, String(r!.id), "test_qris");
+    expect((await db()`select status from payments where id = ${va}`)[0]!.status).toBe("expired");
+    await simulatePayment(c.o.owner, qris, "paid");
+    await simulatePayment(c.o.owner, va, "paid"); // a late callback for the expired charge
+    const pays = await db()`select status from payments where booking_id = ${bookingId} order by created_at`;
+    expect(pays.map((p) => p.status)).toEqual(["refunded", "paid"]);
+    expect((await reconcile(bookingId)).ok).toBe(true);
+    expect((await balances(bookingId)).held).toBe(47_385_000);
+  });
+
+  it("a double cancel or double problem resolution changes nothing the second time", async () => {
+    const c = await setup();
+    const bookingId = await confirmed(c);
+    await setNow(new Date("2026-11-21T04:00:00Z"));
+    await cancelByOrganizer(c.o.owner, bookingId, { reason: "Batal", expectedRefund: 0 });
+    await expect(cancelByOrganizer(c.o.owner, bookingId, { reason: "Batal", expectedRefund: 0 })).rejects.toMatchObject({ key: "cancel.notAllowed" });
+    await expect(cancelByVenue(c.v.owner, bookingId, "x")).rejects.toMatchObject({ key: "cancel.notAllowed" });
+    expect((await db()`select count(*)::int as n from ledger_entries where booking_id = ${bookingId} and ref_type = 'cancellation'`)[0]!.n).toBe(3);
+    expect((await reconcile(bookingId)).ok).toBe(true);
+  });
+
+  it("concurrent agreement acceptances: only one succeeds", async () => {
+    const c = await setup();
+    const id = await draftQuote(c.v.owner, c.enquiryId);
+    await updateDraft(c.v.owner, id, { lines: LINES, schedule: SPLIT, validityDays: 7, cancellationPolicy: "moderate" });
+    await submitQuote(c.v.owner, id);
+    const bookingId = await acceptQuote(c.o.owner, id, { acceptPilotTerms: true });
+    const rs = await Promise.allSettled([1, 2].map(() => acceptAgreement(c.o.owner, bookingId, { checked: true, typedName: "rina" })));
+    expect(rs.filter((x) => x.status === "fulfilled").length).toBe(1);
+    const [a] = await db()`select acceptances from agreements where booking_id = ${bookingId}`;
+    expect((a!.acceptances as unknown[]).length).toBe(1);
+  });
+
+  it("a stored but unprocessed webhook is processed when the provider retries; a stuck job is retried", async () => {
+    const c = await setup();
+    const id = await draftQuote(c.v.owner, c.enquiryId);
+    await updateDraft(c.v.owner, id, { lines: LINES, schedule: SPLIT, validityDays: 7, cancellationPolicy: "moderate" });
+    await submitQuote(c.v.owner, id);
+    const bookingId = await acceptQuote(c.o.owner, id, { acceptPilotTerms: true });
+    const [r] = await db()`select id from payment_requests where booking_id = ${bookingId}`;
+    const pid = await startPayment(c.o.owner, String(r!.id), "test_va");
+    const [p] = await db()`select provider_ref, amount from payments where id = ${pid}`;
+    const { simulatedCallback } = await import("@/adapters/payments");
+    const { handleCallback } = await import("@/server/bookings");
+    const cb = simulatedCallback(String(p!.provider_ref), Number(p!.amount), "paid", await now());
+    await db()`insert into payment_webhooks (provider, event_id, payload, signature_ok, received_at) values ('simulator', ${cb.payload.eventId}, ${db().json(cb.payload as never)}, true, ${await now()})`;
+    expect(await handleCallback(cb.payload, cb.signature)).toBe("processed");
+    expect(await handleCallback(cb.payload, cb.signature)).toBe("duplicate");
+    expect((await db()`select status from payments where id = ${pid}`)[0]!.status).toBe("paid");
+
+    await db()`insert into jobs (kind, run_at, payload, status, attempts, claimed_at) values ('hold.expire', now() - interval '1 hour', '{"enquiryId":"00000000-0000-4000-8000-000000000000"}', 'running', 1, now() - interval '1 hour')`;
+    const { tick } = await import("@/lib/jobs");
+    await tick();
+    expect((await db()`select status from jobs where kind = 'hold.expire' and payload->>'enquiryId' = '00000000-0000-4000-8000-000000000000'`)[0]!.status).not.toBe("running");
+  });
+});
