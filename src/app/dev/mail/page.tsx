@@ -1,14 +1,17 @@
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
-import { config } from "@/lib/config";
+import { config, registrationOpen } from "@/lib/config";
 import { t } from "@/lib/i18n";
 import { formatDateTime } from "@/lib/time";
 
 export const dynamic = "force-dynamic";
 
-/** Email outbox viewer for development and the demo environment only (never in the pilot). */
+/**
+ * Email outbox viewer for development and the demo environment only. Never in the pilot, and never
+ * while registration is open to the public: the outbox holds magic-link and password-reset links.
+ */
 export default async function DevMailPage({ searchParams }: { searchParams: Promise<{ to?: string }> }) {
-  if (config().APP_ENV === "pilot") notFound();
+  if (config().APP_ENV === "pilot" || registrationOpen()) notFound();
   const { to } = await searchParams;
   const rows = to
     ? await db()`select * from email_outbox where to_email = ${to} order by created_at desc limit 50`

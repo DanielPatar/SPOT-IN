@@ -5,7 +5,7 @@ import { orgAudit } from "@/lib/audit";
 import { randomToken, sha256 } from "@/lib/tokens";
 import { requireOrgPermission, membershipOf, isUuid } from "./access";
 import { adminIds, emailAddress, notify } from "./notify";
-import { isInvited, normalizeEmail, type Actor } from "./accounts";
+import { canSignUp, normalizeEmail, type Actor } from "./accounts";
 
 /** Organizations and roles (M2). */
 const INVITE_TTL_DAYS = 7;
@@ -56,8 +56,8 @@ export async function inviteMember(actor: Actor, orgId: string, emailInput: stri
   if (existing) {
     const already = await db()`select 1 from memberships where user_id = ${existing.id as string} and org_kind = ${m.kind}`;
     if (already.length) throw new AppError("orgs.inviteeAlreadyInOrg");
-  } else if (!(await isInvited(email))) {
-    // FR-M38-02: only emails on the Admin's pilot invite list can sign up.
+  } else if (!(await canSignUp(email))) {
+    // FR-M38-02: in invite mode only emails on the Admin's pilot invite list can sign up.
     await notify({ userIds: await adminIds(), event: "admin_invite_needed", values: { email, org: m.displayName }, link: "/admin/undangan" });
     throw new AppError("orgs.inviteeNotOnPilotList");
   }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { t } from "@/lib/i18n";
+import { registrationOpen } from "@/lib/config";
 import { getSession, memberships } from "@/web/session";
 
 export default async function HomePage({ searchParams }: { searchParams: Promise<{ verified?: string }> }) {
@@ -38,7 +39,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
         </div>
       )}
       <p className="small muted" style={{ marginTop: 24 }}>
-        {t("home.pilotNote")}
+        {registrationOpen() ? t("home.publicNote") : t("home.pilotNote")}
       </p>
     </div>
   );

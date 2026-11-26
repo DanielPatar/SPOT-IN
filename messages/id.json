@@ -68,7 +68,9 @@
       "failed": "Masuk dengan Google gagal. Coba lagi."
     },
     "verifyBannerTitle": "Verifikasi email Anda dulu",
-    "bouncedTitle": "Email ke alamat Anda tidak terkirim"
+    "bouncedTitle": "Email ke alamat Anda tidak terkirim",
+    "signUpTitleOpen": "Daftar di Spot-In",
+    "signUpIntroOpen": "Siapa pun dapat mendaftar sebagai penyelenggara acara atau pengelola tempat. Baca pemberitahuan pilot di bawah sebelum mendaftar."
   },
   "account": {
     "deletionBlocked": "Akun tidak dapat dihapus karena Anda satu-satunya Pemilik dari {orgs} yang memiliki pemesanan aktif. Alihkan kepemilikan atau selesaikan pemesanan terlebih dahulu.",
@@ -196,7 +198,8 @@
     "auditTitle": "Log audit admin",
     "bookings": "Pemesanan",
     "eventPages": "Halaman acara",
-    "passes": "Kartu masuk"
+    "passes": "Kartu masuk",
+    "registrationOpenNote": "Pendaftaran sedang terbuka untuk umum (REGISTRATION_MODE=open). Undangan pilot tidak wajib; undangan di sini hanya mengirim tautan pendaftaran."
   },
   "calendar": {
     "blockOverlaps": "Tanggal ini bertabrakan dengan tahanan atau pemesanan. Lepaskan tahanan terlebih dahulu.",
@@ -654,7 +657,8 @@
   },
   "footer": {
     "text": "Spot-In · pilot tertutup Group4",
-    "help": "Bantuan"
+    "help": "Bantuan",
+    "textOpen": "Spot-In · Group4"
   },
   "common": {
     "save": "Simpan",
@@ -711,7 +715,8 @@
     "point2": "Kirim satu permintaan ke beberapa tempat sekaligus, lalu bandingkan jawabannya.",
     "point3": "Pengelola membalas, bisa menahan tanggal untuk Anda, lalu mengirim penawaran.",
     "continue": "Lanjutkan",
-    "pilotNote": "Spot-In sedang dalam pilot tertutup untuk proyek kuliah. Hanya email yang diundang dapat mendaftar."
+    "pilotNote": "Spot-In sedang dalam pilot tertutup untuk proyek kuliah. Hanya email yang diundang dapat mendaftar.",
+    "publicNote": "Spot-In terbuka untuk umum dalam mode pilot: semua pemesanan adalah latihan, tidak mengikat dan tanpa pembayaran nyata."
   },
   "pilotNotice": {
     "title": "Pemberitahuan pilot",
@@ -723,7 +728,8 @@
     "practice": "Semua pemesanan adalah latihan: tidak mengikat dan tanpa pembayaran nyata.",
     "deletion": "Data pribadi peserta pilot dihapus atau dianonimkan pada {date}.",
     "contact": "Kontak: {email}",
-    "version": "Versi pemberitahuan: {version}"
+    "version": "Versi pemberitahuan: {version}",
+    "purposeOpen": "Tujuannya menguji alur pemesanan ruang acara secara end-to-end dengan pengguna umum."
   },
   "start": {
     "title": "Apa yang ingin Anda lakukan?",

@@ -1,4 +1,5 @@
 import { t } from "@/lib/i18n";
+import { registrationOpen } from "@/lib/config";
 import { formatDateTime } from "@/lib/time";
 import { requireAdminPage } from "@/web/session";
 import { listPilotInvites } from "@/server/admin";
@@ -13,6 +14,7 @@ export default async function AdminInvitesPage() {
     <div>
       <h1>{t("admin.invitesTitle")}</h1>
       <AdminNav />
+      {registrationOpen() ? <p className="alert alert-ok">{t("admin.registrationOpenNote")}</p> : null}
       <div className="card">
         <Form action={invitePilotAction} className="form-inline" resetOnOk>
           <label style={{ flex: 1 }}>

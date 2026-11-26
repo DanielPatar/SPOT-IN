@@ -50,6 +50,8 @@ npm run db:seed:perf && npm run perf:search   # 5,000 spaces / 50,000 calendar e
 
 - `APP_ENV`: `development`, `test`, `demo`, `pilot`. The demo clock (FR-M38-10) exists only in `demo`/`test`.
 - The server refuses to start when `PILOT_MODE` is not `on` or a non-test payment key is configured (FR-M38-07).
+- `REGISTRATION_MODE`: `invite` (default) limits sign-up to the Admin's invite list; `open` lets anyone sign up.
+  Pilot safeguards stay on either way. Production checklist: [`docs/ops/public-launch.md`](docs/ops/public-launch.md).
 - Seed scripts refuse the `pilot` environment; demo and pilot data live in separate databases (FR-M38-06).
 - Scheduled work (deadlines, holds, reminders, daily admin email) runs from a PostgreSQL job table on the
   application clock. The Node server ticks every 30 s; hosts can also call `POST /api/cron/tick` with

@@ -5,9 +5,18 @@ import { z } from "zod";
  * Loading the config throws — and so the server refuses to start — when pilot mode
  * is off or a live payment key is configured.
  */
+/** Shared by config() and registrationOpen() so both read REGISTRATION_MODE the same way. */
+const registrationModeSchema = z.preprocess(
+  (v) => (typeof v === "string" && v.trim() !== "" ? v.trim().toLowerCase() : undefined),
+  z.enum(["invite", "open"]).default("invite"),
+);
+
 const schema = z.object({
   APP_ENV: z.enum(["development", "test", "demo", "pilot"]).default("development"),
   PILOT_MODE: z.string().default("on"),
+  // FR-M38-02 (amended): "invite" keeps sign-up limited to the Admin's invite list; "open" lets anyone
+  // sign up as an organizer or venue user. Pilot safeguards (test-mode payments, watermarks, data rule) stay on.
+  REGISTRATION_MODE: registrationModeSchema,
   APP_URL: z.string().url().default("http://localhost:3000"),
   APP_SECRET: z.string().min(32, "APP_SECRET must be at least 32 characters"),
   DATABASE_URL: z.string().min(1),
@@ -60,6 +69,14 @@ export function config(): AppConfig {
 
 export function resetConfigForTests(): void {
   cached = undefined;
+}
+
+/** True when anyone may sign up without being on the Admin's invite list (REGISTRATION_MODE=open). */
+export function registrationOpen(): boolean {
+  // Parses only this variable (not the full config) so static UI can call it at build time. Same schema as
+  // config(): "Open" or " open " count as open; an invalid value fails closed here and makes config() throw.
+  const parsed = registrationModeSchema.safeParse(process.env.REGISTRATION_MODE);
+  return parsed.success && parsed.data === "open";
 }
 
 export function adminEmails(): string[] {

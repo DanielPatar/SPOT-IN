@@ -2,10 +2,10 @@ import { config } from "@/lib/config";
 import { db } from "@/lib/db";
 import { now } from "@/lib/clock";
 import { audit } from "@/lib/audit";
-import { isInvited, normalizeEmail } from "./accounts";
+import { canSignUp, normalizeEmail } from "./accounts";
 
 /**
- * Google sign-in (FR-M1-01). Only for existing users or invited emails (FR-M1-11);
+ * Google sign-in (FR-M1-01). Only for existing users or emails allowed to sign up (FR-M1-11, REGISTRATION_MODE);
  * new Google users still accept the pilot notice and 18+ on the sign-up page.
  */
 export function googleAuthUrl(state: string): string {
@@ -53,6 +53,6 @@ export async function googleCallback(code: string): Promise<{ userId: string } |
     await audit({ scope: "user", actorId: String(existing.id), action: "user.google_login", entity: "user", entityId: String(existing.id), at });
     return { userId: String(existing.id) };
   }
-  if (!(await isInvited(email))) return { error: "not_invited" };
+  if (!(await canSignUp(email))) return { error: "not_invited" };
   return { signUpEmail: email, name: u.name ?? "" };
 }

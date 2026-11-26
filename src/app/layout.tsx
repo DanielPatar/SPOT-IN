@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { t, messages } from "@/lib/i18n";
+import { registrationOpen } from "@/lib/config";
 import { Header } from "@/components/Header";
 import { PilotBanner } from "@/components/kit";
 import "./globals.css";
@@ -28,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </main>
           <footer className="site">
-            {t("footer.text")} · <a href="/bantuan">{t("footer.help")}</a>
+            {registrationOpen() ? t("footer.textOpen") : t("footer.text")} · <a href="/bantuan">{t("footer.help")}</a>
           </footer>
         </NextIntlClientProvider>
       </body>
