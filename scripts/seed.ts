@@ -4,6 +4,7 @@
  * venues in Jakarta. Budi is only invited, because D1 shows his onboarding.
  * Refuses to run in the pilot environment: seed data never mixes with pilot users.
  */
+import { pathToFileURL } from "node:url";
 import sharp from "sharp";
 import { db, closeDb } from "../src/lib/db";
 import { now } from "../src/lib/clock";
@@ -90,7 +91,7 @@ export async function seed(): Promise<void> {
   console.log(`Seeded. Admin ${adminEmail} / ${DEMO_PASSWORD} (TOTP secret ${DEMO_TOTP_SECRET}); Rina, Sari and venue users share the password; Budi is invited.`);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   seed()
     .catch((e) => {
       console.error(e);

@@ -3,6 +3,7 @@
  * deletes or anonymizes every pilot user's personal data and uploaded files. Run with
  * --confirm; without it the script only reports what it would do. See docs/pilot-deletion.md.
  */
+import { pathToFileURL } from "node:url";
 import { db, closeDb } from "../src/lib/db";
 import { now } from "../src/lib/clock";
 import { getSettings } from "../src/lib/settings";
@@ -45,7 +46,7 @@ export async function pilotDelete(opts: { confirm: boolean; force?: boolean }) {
   return { ran: true, ...counts };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   pilotDelete({ confirm: process.argv.includes("--confirm"), force: process.argv.includes("--force") })
     .then((r) => console.log(JSON.stringify(r)))
     .finally(() => closeDb());

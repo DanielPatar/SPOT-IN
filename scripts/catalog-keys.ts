@@ -2,6 +2,7 @@
  * Lists every message key referenced in src/ (static keys, plus client components'
  * useTranslations namespaces). Used by the catalog test (FR-M25-05).
  */
+import { pathToFileURL } from "node:url";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 
@@ -31,7 +32,7 @@ export function referencedKeys(root = "src"): { keys: Set<string>; dynamic: Set<
   return { keys, dynamic };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const { keys, dynamic } = referencedKeys();
   const msgs = JSON.parse(readFileSync("messages/id.json", "utf8"));
   const has = (k: string) => k.split(".").reduce<unknown>((o, p) => (o && typeof o === "object" ? (o as Record<string, unknown>)[p] : undefined), msgs) !== undefined;
