@@ -14,12 +14,12 @@ export async function Header() {
   const m = s ? await memberships(s.userId) : null;
   const unread = s ? Number((await db()`select count(*)::int as n from notifications where user_id = ${s.userId} and read_at is null`)[0]!.n) : 0;
   const ctx = s?.context ?? (m?.organizer ? "organizer" : m?.venue ? "venue" : null);
-  const nav: { href: string; label: string }[] = [];
+  const nav: { href: string; label: string; match?: string[] }[] = [];
   if (s && ctx === "venue" && m?.venue) {
     nav.push({ href: "/venue", label: t("nav.venueHome") }, { href: "/venue/enquiry", label: t("nav.venueInbox") }, { href: "/venue/ruang", label: t("nav.venueSpaces") }, { href: "/pemesanan", label: t("nav.bookings") }, { href: "/venue/tim", label: t("nav.team") }, { href: "/venue/pengaturan", label: t("nav.venueSettings") });
   }
   if (s && ctx === "organizer" && m?.organizer) {
-    nav.push({ href: "/cari", label: t("nav.search") }, { href: "/shortlist", label: t("nav.shortlists") }, { href: "/acara", label: t("nav.events") }, { href: "/pemesanan", label: t("nav.bookings") }, { href: "/organizer/tim", label: t("nav.team") });
+    nav.push({ href: "/", label: t("nav.search"), match: ["/cari", "/ruang", "/properti"] }, { href: "/shortlist", label: t("nav.shortlists") }, { href: "/acara", label: t("nav.events") }, { href: "/pemesanan", label: t("nav.bookings") }, { href: "/organizer/tim", label: t("nav.team") });
   }
   if (s && !m?.venue && !m?.organizer && !s.isQuickAttendee) nav.push({ href: "/mulai", label: t("nav.start") });
   if (s?.isQuickAttendee && !m?.venue && !m?.organizer) nav.push({ href: "/kartu-saya", label: t("nav.myPasses") });
@@ -68,7 +68,7 @@ export async function Header() {
             </>
           ) : (
             <>
-              <Link href="/cari" className="hidden rounded-md px-3 py-2 text-[15px] font-semibold text-ink no-underline hover:bg-sunken hover:no-underline md:inline-flex">
+              <Link href="/cari?q=" className="hidden rounded-md px-3 py-2 text-[15px] font-semibold text-ink no-underline hover:bg-sunken hover:no-underline md:inline-flex">
                 {t("nav.browse")}
               </Link>
               {registrationOpen() ? (

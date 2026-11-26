@@ -158,7 +158,12 @@ test("D2 — search with dates and filters, map, shortlist shared logged out, on
   await login(page, "rina@spot-in.test");
 
   // Search: Jakarta Selatan, hall, 12–14 Dec, 300 people, F&B sampling, power ≥ 30 kVA (§6.2)
-  await page.goto("/cari");
+  // The list opens from the home search bar (UI v2): what / where / when, then Cari.
+  await page.goto("/");
+  await page.getByLabel("Di mana?").selectOption("Jakarta");
+  await page.getByRole("button", { name: "Cari", exact: true }).click();
+  await page.waitForURL(/\/cari\?/);
+  await expect(page.getByText(/ruang ditemukan/)).toBeVisible();
   await page.getByLabel("Kota").selectOption("Jakarta Selatan");
   await page.getByLabel("Dari tanggal").fill("2026-12-12");
   await page.getByLabel("Sampai tanggal").fill("2026-12-14");

@@ -8,11 +8,12 @@ export function NavLinks({
   items,
   label,
 }: {
-  items: { href: string; label: string }[];
+  items: { href: string; label: string; match?: string[] }[];
   label: string;
 }) {
   const path = usePathname() ?? "/";
-  const active = (href: string) => path === href || (href !== "/" && path.startsWith(`${href}/`));
+  const under = (p: string) => path === p || path.startsWith(`${p}/`);
+  const active = (n: { href: string; match?: string[] }) => (n.href === "/" ? path === "/" : under(n.href)) || !!n.match?.some(under);
   return (
     <nav
       aria-label={label}
@@ -22,10 +23,10 @@ export function NavLinks({
         <Link
           key={n.href}
           href={n.href}
-          aria-current={active(n.href) ? "page" : undefined}
+          aria-current={active(n) ? "page" : undefined}
           className={cn(
             "relative shrink-0 rounded-md px-3 py-2 text-[15px] font-semibold whitespace-nowrap no-underline transition-colors hover:bg-sunken hover:no-underline",
-            active(n.href)
+            active(n)
               ? "text-ink after:absolute after:inset-x-3 after:-bottom-[9px] after:h-0.5 after:rounded-full after:bg-ink lg:after:-bottom-[15px]"
               : "text-muted-foreground hover:text-ink",
           )}

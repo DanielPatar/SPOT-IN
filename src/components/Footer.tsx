@@ -11,7 +11,7 @@ export function Footer() {
     {
       title: t("footer.colExplore"),
       links: [
-        { href: "/cari", label: t("footer.searchSpaces") },
+        { href: "/#cari", label: t("footer.searchSpaces") },
         { href: "/shortlist", label: t("nav.shortlists") },
         { href: "/acara", label: t("footer.manageEvents") },
         { href: "/pemesanan", label: t("footer.bookings") },

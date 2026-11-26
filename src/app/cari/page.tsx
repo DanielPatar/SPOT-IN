@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import { t } from "@/lib/i18n";
 import { config } from "@/lib/config";
@@ -11,6 +12,7 @@ import { parseRupiah } from "@/lib/money";
 import { ResultsMap } from "@/components/MapPicker";
 import { NearMe } from "@/components/NearMe";
 import { StateBlock } from "@/components/kit";
+import { REGIONS } from "@/lib/regions";
 import { BadgeCheck, List, Map as MapIcon, SearchX, SlidersHorizontal, Users } from "lucide-react";
 
 export const metadata: Metadata = { title: t("search.title") };
@@ -22,6 +24,15 @@ const many = (v: string | string[] | undefined) => (Array.isArray(v) ? v : v ? [
 export default async function SearchPage({ searchParams }: { searchParams: Promise<SP> }) {
   await requireOrganizerPage("/cari");
   const sp = await searchParams;
+  // UI v2: the list only opens from a search. A bare /cari goes back to the home search bar.
+  if (Object.keys(sp).length === 0) redirect("/#cari");
+  // "Mau bikin acara apa?" is free text; an exact event-type or space-type name becomes that filter.
+  const said = one(sp.q).trim().toLowerCase();
+  const eventFromQ = said ? EVENT_TYPES.find((x) => t(`eventTypes.${x}`).toLowerCase() === said) : undefined;
+  const typeFromQ = said && !eventFromQ ? SPACE_TYPES.find((x) => t(`spaceTypes.${x}`).toLowerCase() === said) : undefined;
+  const qText = eventFromQ || typeFromQ ? "" : one(sp.q);
+  const eventType = one(sp.eventType) || eventFromQ || "";
+  const spaceTypes = typeFromQ ? [...many(sp.type), typeFromQ] : many(sp.type);
   const from = one(sp.from);
   const to = one(sp.to) || from;
   const dates = /^\d{4}-\d{2}-\d{2}$/.test(from) ? dateRange(from, to >= from ? to : from) : [];
@@ -29,11 +40,11 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const lon = Number(one(sp.lon));
   const page = Math.max(1, Number(one(sp.page)) || 1);
   const res = await searchSpaces({
-    q: one(sp.q),
+    q: qText,
     city: one(sp.city) || undefined,
     near: one(sp.lat) && Number.isFinite(lat) && Number.isFinite(lon) ? { lat, lon, radiusKm: Number(one(sp.radius)) || undefined } : null,
-    spaceTypes: many(sp.type),
-    eventType: one(sp.eventType) || undefined,
+    spaceTypes,
+    eventType: eventType || undefined,
     dates,
     attendance: Number(one(sp.attendance)) || null,
     budgetMin: parseRupiah(one(sp.budgetMin)),
@@ -69,17 +80,26 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-[2fr_1.2fr_1fr_1fr_0.8fr_1fr_auto] xl:items-end">
           <label className="col-span-2 md:col-span-4 xl:col-span-1">
             {t("search.keyword")}
-            <input name="q" defaultValue={one(sp.q)} placeholder={t("search.keywordPlaceholder")} />
+            <input name="q" defaultValue={qText} placeholder={t("search.keywordPlaceholder")} />
           </label>
           <label className="col-span-2 md:col-span-1">
             {t("fields.city")}
             <select name="city" defaultValue={one(sp.city)}>
               <option value="">{t("search.anyCity")}</option>
-              {cityList.map((c) => (
-                <option key={String(c.city)} value={String(c.city)}>
-                  {String(c.city)}
-                </option>
-              ))}
+              <optgroup label={t("search.regionsGroup")}>
+                {REGIONS.map((r) => (
+                  <option key={r} value={r}>
+                    {r}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label={t("search.citiesGroup")}>
+                {cityList.map((c) => String(c.city)).filter((c) => !REGIONS.includes(c as (typeof REGIONS)[number])).map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </optgroup>
             </select>
           </label>
           <label>
@@ -110,7 +130,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-5">
             <label>
               {t("search.eventType")}
-              <select name="eventType" defaultValue={one(sp.eventType)}>
+              <select name="eventType" defaultValue={eventType}>
                 <option value="">{t("search.any")}</option>
                 {EVENT_TYPES.map((x) => (
                   <option key={x} value={x}>
@@ -148,7 +168,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
             <div className="flex flex-wrap gap-x-5 gap-y-2">
               {SPACE_TYPES.map((x) => (
                 <label className="check" key={x}>
-                  <input type="checkbox" name="type" value={x} defaultChecked={many(sp.type).includes(x)} /> {t(`spaceTypes.${x}`)}
+                  <input type="checkbox" name="type" value={x} defaultChecked={spaceTypes.includes(x)} /> {t(`spaceTypes.${x}`)}
                 </label>
               ))}
             </div>
@@ -209,7 +229,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           <ResultsMap tileUrl={cfg.MAP_TILE_URL} attribution={cfg.MAP_TILE_ATTRIBUTION} pins={pins} />
         </div>
       ) : res.rows.length === 0 ? (
-        <StateBlock icon={SearchX} title={t("search.emptyTitle")} action={<Link className="btn btn-secondary" href="/cari">{t("search.reset")}</Link>}>
+        <StateBlock icon={SearchX} title={t("search.emptyTitle")} action={<Link className="btn btn-secondary" href="/cari?q=">{t("search.reset")}</Link>}>
           {t("search.empty")}
         </StateBlock>
       ) : (

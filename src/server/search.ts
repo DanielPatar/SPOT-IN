@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { regionOf } from "@/lib/regions";
 import { now } from "@/lib/clock";
 import { AppError, PermissionError } from "@/lib/permissions";
 import { randomToken } from "@/lib/tokens";
@@ -111,7 +112,7 @@ export async function searchSpaces(input: SearchInput) {
   const where = sql`and`.join([
     sql`s.status = 'published'`,
     sql`o.status = 'active'`,
-    input.city ? sql`lower(p.city) = lower(${input.city})` : null,
+    input.city ? (regionOf(input.city) ? sql`p.city ilike ${`%${regionOf(input.city)}%`}` : sql`lower(p.city) = lower(${input.city})`) : null,
     input.area ? sql`lower(p.area) = lower(${input.area})` : null,
     types.length ? sql`s.type in ${sql(types)}` : null,
     eventTypes ? sql`s.type in ${sql(eventTypes)}` : null,

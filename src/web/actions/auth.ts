@@ -83,7 +83,7 @@ export async function switchContextAction(form: FormData): Promise<void> {
   const a = await actor();
   const ctx = str(form, "context") === "venue" ? "venue" : "organizer";
   await setSessionContext(a.userId, a.session.sessionId, ctx);
-  redirect(ctx === "venue" ? "/venue" : "/cari");
+  redirect(ctx === "venue" ? "/venue" : "/");
 }
 
 /** FR-M1-06: Find spaces / List spaces / both, then create the organization(s). */
@@ -109,7 +109,7 @@ export async function startAction(_: ActionState, form: FormData): Promise<Actio
       });
     }
     await setSessionContext(a.userId, a.session.sessionId, intents.includes("list") ? "venue" : "organizer").catch(() => {});
-    redirect(intents.includes("list") ? "/venue" : "/cari");
+    redirect(intents.includes("list") ? "/venue" : "/");
   });
 }
 
@@ -168,7 +168,7 @@ export async function acceptInviteAction(_: ActionState, form: FormData): Promis
     const orgId = await acceptOrgInvite(a, str(form, "token"));
     const [o] = await db()`select kind from organizations where id = ${orgId}`;
     await setSessionContext(a.userId, a.session.sessionId, o?.kind === "venue_operator" ? "venue" : "organizer");
-    redirect(o?.kind === "venue_operator" ? "/venue" : "/cari");
+    redirect(o?.kind === "venue_operator" ? "/venue" : "/");
   });
 }
 

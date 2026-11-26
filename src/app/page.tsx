@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowRight, CalendarDays, MapPin, Search, Sparkles } from "lucide-react";
+import { ArrowRight, CalendarDays, MapPin, Sparkles } from "lucide-react";
 import { t } from "@/lib/i18n";
 import { registrationOpen } from "@/lib/config";
 import { imagery } from "@/lib/imagery";
@@ -8,6 +8,8 @@ import { getSession, memberships } from "@/web/session";
 import { cities } from "@/server/search";
 import { SPACE_TYPES } from "@/server/listings";
 import { EVENT_TYPES } from "@/server/enquiries";
+import { REGIONS, citiesOutsideRegions } from "@/lib/regions";
+import { HeroSearch } from "@/components/HeroSearch";
 
 export default async function HomePage({ searchParams }: { searchParams: Promise<{ verified?: string }> }) {
   const sp = await searchParams;
@@ -15,62 +17,40 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   if (s && !sp.verified) {
     const m = await memberships(s.userId);
     if (!s.intentChosen && !s.isQuickAttendee) redirect("/mulai");
+    // Organizers start from the home search (UI v2); venue-only users go to their dashboard.
     if (s.context === "venue" && m.venue) redirect("/venue");
-    if (m.organizer) redirect("/cari");
-    if (m.venue) redirect("/venue");
+    if (m.venue && !m.organizer) redirect("/venue");
   }
   const open = registrationOpen();
   const cityList = (await cities()).map((c) => String(c.city));
   const how = [1, 2, 3] as const;
   return (
     <div className="-mt-8">
-      {/* Hero ------------------------------------------------------------ */}
+      {/* Hero (Peerspace-style): ask first, list spaces only after the search --- */}
       <section className="bleed relative isolate overflow-hidden bg-ink">
-        <img src={imagery.hero} alt={t("home.heroImageAlt")} className="absolute inset-0 -z-10 size-full object-cover opacity-80" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-black/70 via-black/40 to-black/10" aria-hidden="true" />
-        <div className="mx-auto max-w-7xl px-4 pt-20 pb-16 sm:px-6 sm:pt-28 sm:pb-24 lg:px-8">
+        <img src={imagery.hero} alt={t("home.heroImageAlt")} className="absolute inset-0 -z-10 size-full object-cover" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/45 via-black/20 to-black/40" aria-hidden="true" />
+        <div className="mx-auto max-w-7xl px-4 pt-20 pb-28 sm:px-6 sm:pt-28 sm:pb-40 lg:px-8">
           {sp.verified ? <p className="alert alert-ok mb-6 max-w-xl">{t("auth.verified")}</p> : null}
-          <h1 className="max-w-3xl text-[40px] leading-[1.02] font-extrabold tracking-[-0.035em] text-white sm:text-[64px]">{t("home.heroTitle")}</h1>
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/90">{t("home.heroLead")}</p>
-
-          <form action="/cari" method="get" role="search" aria-label={t("home.searchLabel")} className="mt-10 grid max-w-4xl gap-1 rounded-2xl bg-white p-2 shadow-float md:grid-cols-[1.25fr_1fr_1fr_auto] md:rounded-full">
-            <label className="gap-0.5 rounded-xl px-4 py-2 focus-within:ring-2 focus-within:ring-brand/40 hover:bg-sunken md:rounded-full md:pl-6">
-              <span className="text-xs font-bold text-ink">{t("home.searchWhat")}</span>
-              <select name="eventType" defaultValue="" className="h-7 border-0 bg-transparent px-0 text-[15px] text-muted-foreground shadow-none focus-visible:ring-0">
-                <option value="">{t("home.searchWhatAny")}</option>
-                {EVENT_TYPES.map((x) => (
-                  <option key={x} value={x}>
-                    {t(`eventTypes.${x}`)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="gap-0.5 rounded-xl px-4 py-2 focus-within:ring-2 focus-within:ring-brand/40 hover:bg-sunken md:rounded-full md:border-l md:border-line">
-              <span className="text-xs font-bold text-ink">{t("home.searchWhere")}</span>
-              <select name="city" defaultValue="" className="h-7 border-0 bg-transparent px-0 text-[15px] text-muted-foreground shadow-none focus-visible:ring-0">
-                <option value="">{t("home.searchWhereAny")}</option>
-                {cityList.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="gap-0.5 rounded-xl px-4 py-2 focus-within:ring-2 focus-within:ring-brand/40 hover:bg-sunken md:rounded-full md:border-l md:border-line">
-              <span className="text-xs font-bold text-ink">{t("home.searchWhen")}</span>
-              <input type="date" name="from" className="h-7 border-0 bg-transparent px-0 text-[15px] text-muted-foreground shadow-none focus-visible:ring-0" />
-            </label>
-            <button type="submit" className="btn btn-primary h-14 rounded-xl px-7 md:rounded-full">
-              <Search className="size-5" aria-hidden="true" />
-              {t("home.searchSubmit")}
-            </button>
-          </form>
-
-          {s ? (
-            <Link className="btn btn-secondary mt-6 border-white bg-white/10 text-white hover:bg-white/20" href="/">
-              {t("home.continue")}
-            </Link>
-          ) : null}
+          <HeroSearch
+            regions={REGIONS}
+            otherCities={citiesOutsideRegions(cityList)}
+            suggestions={[...EVENT_TYPES.filter((x) => x !== "other").map((x) => t(`eventTypes.${x}`)), ...SPACE_TYPES.filter((x) => x !== "other").map((x) => t(`spaceTypes.${x}`))]}
+            defaultCity={REGIONS[0]}
+          />
+        </div>
+      </section>
+      <section className="bleed relative bg-ink text-white">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-6 px-4 pb-14 sm:px-6 lg:px-8">
+          <p className="-mt-12 m-0 text-[52px] leading-[0.95] font-extrabold tracking-[-0.045em] sm:-mt-20 sm:text-[112px]">
+            {t("home.bandLine1")}
+            <br />
+            {t("home.bandLine2")}
+          </p>
+          <p className="m-0 text-right">
+            <span className="block text-lg font-bold">{t("home.bandCaption")}</span>
+            <span className="font-mono text-sm tracking-wider text-white/75">{t("home.bandCaptionPlace")}</span>
+          </p>
         </div>
       </section>
 
@@ -89,14 +69,14 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
             <h2 className="mt-0 mb-2 text-[28px] leading-tight font-extrabold tracking-[-0.02em] sm:text-[36px]">{t("home.momentsTitle")}</h2>
             <p className="m-0 text-lg text-muted-foreground">{t("home.momentsLead")}</p>
           </div>
-          <Link href="/cari" className="inline-flex items-center gap-1.5 text-[15px] font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
+          <Link href="/cari?q=" className="inline-flex items-center gap-1.5 text-[15px] font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
             {t("home.browseAll")} <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>
         <ul className="m-0 grid list-none grid-cols-2 gap-x-4 gap-y-8 p-0 md:grid-cols-4">
           {EVENT_TYPES.map((x) => (
             <li key={x}>
-              <Link href={x === "other" ? "/cari" : `/cari?eventType=${x}`} className="group block text-ink no-underline hover:no-underline">
+              <Link href={x === "other" ? "/cari?q=" : `/cari?eventType=${x}`} className="group block text-ink no-underline hover:no-underline">
                 <span className="block overflow-hidden rounded-xl bg-sunken">
                   <img src={imagery.eventTypes[x]} alt="" loading="lazy" className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]" />
                 </span>
@@ -137,7 +117,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           <div className="absolute bottom-5 left-5 right-5 rounded-xl bg-white/95 p-5 shadow-float backdrop-blur sm:right-auto sm:max-w-sm">
             <p className="m-0 text-lg font-extrabold tracking-tight text-ink">{t("home.closingTitle")}</p>
             <p className="mt-1 mb-3 text-sm text-muted-foreground">{t("home.closingLead")}</p>
-            <Link href="/cari" className="btn btn-dark h-10">
+            <Link href="#cari" className="btn btn-dark h-10">
               {t("home.closingCta")}
             </Link>
           </div>

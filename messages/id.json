@@ -769,7 +769,17 @@
     "closingLead": "Ribuan ide acara butuh satu hal yang sama: ruang yang tepat.",
     "closingCta": "Mulai cari ruang",
     "closingImageAlt": "Ruang kafe industrial yang siap dipakai untuk acara",
-    "tileAll": "Semua ruang"
+    "tileAll": "Semua ruang",
+    "heroAsk": "Mau bikin acara apa?",
+    "heroAskIn": "Mau bikin acara apa di {city}?",
+    "whatPlaceholder": "Tulis jenis acaramu",
+    "whenAny": "Kapan saja",
+    "bandLine1": "Temukan ruang.",
+    "bandLine2": "Wujudkan acaramu.",
+    "bandCaption": "Pameran, bazar, seminar & lainnya",
+    "bandCaptionPlace": "JABODETABEK, ID",
+    "regionsGroup": "Jabodetabek",
+    "otherCitiesGroup": "Kota lain"
   },
   "pilotNotice": {
     "title": "Pemberitahuan pilot",
@@ -1291,7 +1301,9 @@
     "emptyTitle": "Belum ada ruang yang cocok",
     "empty": "Coba longgarkan filter, ubah tanggal, atau cari di kota lain.",
     "reset": "Hapus semua filter",
-    "capacityShort": "{n} orang"
+    "capacityShort": "{n} orang",
+    "regionsGroup": "Wilayah",
+    "citiesGroup": "Kota"
   },
   "spacePage": {
     "sendEnquiry": "Kirim permintaan",
