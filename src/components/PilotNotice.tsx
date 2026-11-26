@@ -1,4 +1,5 @@
 import { t } from "@/lib/i18n";
+import { registrationOpen } from "@/lib/config";
 import { getSettings } from "@/lib/settings";
 import { formatDate } from "@/lib/time";
 
@@ -12,7 +13,7 @@ export async function PilotNotice() {
       </h2>
       <ul>
         <li>{t("pilotNotice.who")}</li>
-        <li>{t("pilotNotice.purpose")}</li>
+        <li>{registrationOpen() ? t("pilotNotice.purposeOpen") : t("pilotNotice.purpose")}</li>
         <li>{t("pilotNotice.data")}</li>
         <li>{t("pilotNotice.notCollected")}</li>
         <li>{t("pilotNotice.hosting", { provider: s.pilot_hosting_provider, country: s.pilot_hosting_country })}</li>

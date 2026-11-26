@@ -2,7 +2,7 @@ import { hash as argonHash, verify as argonVerify } from "@node-rs/argon2";
 import { generateSecret, generateURI, verify as totpVerify } from "otplib";
 import { db, type Tx } from "@/lib/db";
 import { now } from "@/lib/clock";
-import { adminEmails } from "@/lib/config";
+import { adminEmails, registrationOpen } from "@/lib/config";
 import { randomToken, sha256 } from "@/lib/tokens";
 import { AppError } from "@/lib/permissions";
 import { audit } from "@/lib/audit";
@@ -11,7 +11,7 @@ import { getSettings } from "@/lib/settings";
 import { emailAddress } from "./notify";
 
 /**
- * Accounts and authentication (M1) with pilot invite-only access (FR-M38-02) and
+ * Accounts and authentication (M1) with invite-only or open sign-up (FR-M38-02, REGISTRATION_MODE) and
  * consent capture (FR-M1-09, FR-M38-03). No phone OTP; email only.
  */
 export type Actor = { userId: string; ip?: string | null };
@@ -62,6 +62,15 @@ export async function isInvited(email: string): Promise<boolean> {
   return rows.length > 0;
 }
 
+/**
+ * FR-M38-02 (amended): who may create a venue or organizer account. With REGISTRATION_MODE=open
+ * anyone may; otherwise only Admin emails and emails with a pending pilot invite.
+ */
+export async function canSignUp(email: string): Promise<boolean> {
+  if (registrationOpen()) return true;
+  return isInvited(email);
+}
+
 export async function recordConsents(userId: string, ip: string | null, sql: Tx = db()): Promise<void> {
   const s = await getSettings(sql);
   const at = await now();
@@ -90,7 +99,7 @@ export async function signUp(input: {
   if (input.password && input.password.length < MIN_PASSWORD) throw new AppError("errors.passwordTooShort", { min: MIN_PASSWORD });
   if (!input.ageConfirmed) throw new AppError("errors.ageRequired");
   if (!input.acceptedPilotNotice) throw new AppError("errors.consentRequired");
-  if (!(await isInvited(email))) throw new AppError("auth.notInvited");
+  if (!(await canSignUp(email))) throw new AppError("auth.notInvited");
   const existing = await db()`select id from users where email = ${email}`;
   if (existing.length) throw new AppError("errors.emailTaken");
 

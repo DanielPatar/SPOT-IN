@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { t } from "@/lib/i18n";
+import { registrationOpen } from "@/lib/config";
 import { Form, Submit } from "@/components/Form";
 import { PilotNotice } from "@/components/PilotNotice";
 import { signUpAction } from "@/web/actions/auth";
 
-export const metadata: Metadata = { title: t("auth.signUpTitle") };
+export async function generateMetadata(): Promise<Metadata> {
+  return { title: registrationOpen() ? t("auth.signUpTitleOpen") : t("auth.signUpTitle") };
+}
 
 export default async function SignUpPage({ searchParams }: { searchParams: Promise<{ email?: string }> }) {
   const { email } = await searchParams;
+  const open = registrationOpen();
   return (
     <div className="narrow">
-      <h1>{t("auth.signUpTitle")}</h1>
-      <p className="muted">{t("auth.signUpIntro")}</p>
+      <h1>{open ? t("auth.signUpTitleOpen") : t("auth.signUpTitle")}</h1>
+      <p className="muted">{open ? t("auth.signUpIntroOpen") : t("auth.signUpIntro")}</p>
       <PilotNotice />
       <div className="card">
         <Form action={signUpAction}>

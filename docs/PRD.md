@@ -434,7 +434,7 @@ Requirement IDs use `FR-<module>-<nn>` and keep their v1.1 numbers where a requi
 | FR-M1-08 | Account deletion: the user can request deletion in settings; it is blocked while the user is the only Owner of an organization with an active booking; on completion personal fields are erased and authored records show "Deleted user". |
 | FR-M1-09 | Consent capture at sign-up: Spot-In pilot terms, privacy and pilot notice (FR-M38-03); stored with version and timestamp. No marketing opt-in in the pilot. |
 | FR-M1-10 | Quick attendee account: registering for an event page creates an account from name + email, completed by clicking the emailed verification link; no password needed. |
-| FR-M1-11 | Sign-up is limited to invited emails (FR-M38-02), except quick attendee accounts created through an event-page link. |
+| FR-M1-11 | Sign-up is limited to invited emails (FR-M38-02), except quick attendee accounts created through an event-page link. *Proposed amendment (public launch): when `REGISTRATION_MODE=open`, anyone may sign up; see FR-M38-02.* |
 
 ### 7.2 M2 — Organizations and roles
 
@@ -685,7 +685,7 @@ Notification events (MVP): new enquiry; enquiry deadline approaching/expired; in
 | ID | Requirement |
 |---|---|
 | FR-M38-01 | A persistent banner "Mode pilot – pemesanan latihan, tidak mengikat, tanpa pembayaran nyata" on every page of a booking flow, and a diagonal "PILOT" watermark on every generated PDF (quotes, comparison, agreement, receipts, statements, passes). No document can be generated without it. |
-| FR-M38-02 | Invite-only access: only emails on the Admin's invite list can sign up as venue or organizer users; attendees can register only through an event-page link. |
+| FR-M38-02 | Invite-only access: only emails on the Admin's invite list can sign up as venue or organizer users; attendees can register only through an event-page link. *Proposed amendment (public launch): a deployment setting `REGISTRATION_MODE` (`invite` default, `open`) lets anyone sign up as a venue or organizer user. Email verification, 18+, consent, server-side permissions and every other pilot safeguard (FR-M38-01, -03 to -10) stay unchanged.* |
 | FR-M38-03 | Pilot notice accepted at sign-up and at registration: who runs the pilot (Group4), its purpose, the data collected, **the hosting provider and country where data is stored**, that bookings are practice runs with no real payment, the deletion date, and a contact email. Acceptance is recorded per user with the notice version. |
 | FR-M38-04 | Data rule: Spot-In has no field for, and must not collect, ID documents or photos of them, selfies, NIK, NPWP, NIB, deeds, bank account or card numbers. Phones are optional contact fields only. A pre-demo script scans the database for the blocked field types and 16-digit NIK-like or card-like numbers and reports any match. |
 | FR-M38-05 | Data lifecycle: every user can download their data (JSON) and delete their account in settings; on the pilot deletion date the Admin runs a documented job that deletes or anonymizes all pilot users' personal data and files. |
