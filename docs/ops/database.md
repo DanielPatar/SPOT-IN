@@ -76,11 +76,18 @@ Run the migration from a shell with those values (`npx vercel env pull .env.loca
 build: the build must not mutate the schema.
 
 ### Scheduled work
-`src/instrumentation.ts` ticks every 30 s, which only works on a long-lived Node server. On Vercel,
-`vercel.json` schedules `GET /api/cron/tick` every 5 minutes and Vercel sends `CRON_SECRET` as the bearer
-token; the route also still accepts `APP_SECRET` for an external scheduler. Without this, holds never expire
-and deadlines and reminders never fire (FR-M6-05, FR-M24-10). Check a deployment's cron logs once after
-release.
+`src/instrumentation.ts` ticks every 30 s, which only works on a long-lived Node server. On serverless hosts,
+`GET /api/cron/tick` runs due jobs; it accepts `CRON_SECRET` or `APP_SECRET` as the bearer token. Without a
+caller, holds never expire and deadlines and reminders never fire (FR-M6-05, FR-M24-10).
+
+- **Vercel Hobby** allows a cron job to run at most once a day, and a more frequent schedule fails the
+  deployment. `vercel.json` therefore only has a daily backstop at 23:00 UTC (06:00 WIB), which also schedules
+  the daily admin reminder.
+- **Every 5 minutes**: use a free external scheduler, e.g. cron-job.org. Create a job with URL
+  `https://<deployment>/api/cron/tick`, method GET, every 5 minutes, and a request header
+  `Authorization: Bearer <CRON_SECRET>`. A 200 response with `{"processed": n}` means it works; 401 means the
+  secret is wrong.
+- **Vercel Pro**: change the schedule in `vercel.json` to `*/5 * * * *` and drop the external scheduler.
 
 ### File uploads
 `STORAGE_DRIVER=local` writes to disk and fails on Vercel's read-only filesystem. Use Supabase Storage through
