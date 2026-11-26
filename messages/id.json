@@ -676,7 +676,8 @@
     "report": "Laporkan masalah",
     "copyright": "© 2026",
     "language": "Bahasa Indonesia (ID)",
-    "currency": "IDR – Rupiah"
+    "currency": "IDR – Rupiah",
+    "catalog": "Katalog open space"
   },
   "common": {
     "save": "Simpan",
@@ -718,7 +719,8 @@
     "browse": "Jelajahi ruang",
     "listSpace": "Daftarkan ruang",
     "signUp": "Daftar",
-    "menu": "Menu"
+    "menu": "Menu",
+    "catalog": "Katalog venue"
   },
   "fields": {
     "email": "Email",
@@ -2438,5 +2440,70 @@
     "due": "Jatuh tempo {at}",
     "pipeline": "Alur permintaan",
     "counts": "Angka periode"
+  },
+  "catalog": {
+    "title": "Katalog open space",
+    "lead": "Atrium mal, taman kota, dan hall pameran di DKI Jakarta — lengkap dengan denah, spesifikasi teknis, dan estimasi tingkat biaya.",
+    "searchLabel": "Cari di katalog",
+    "keyword": "Nama atau jenis tempat",
+    "keywordPlaceholder": "mis. atrium, taman, convention",
+    "region": "Wilayah",
+    "anyRegion": "Semua wilayah",
+    "budget": "Biaya maksimal",
+    "anyBudget": "Semua tingkat biaya",
+    "minPax": "Kapasitas min.",
+    "submit": "Terapkan",
+    "count": "{n} tempat di katalog",
+    "emptyTitle": "Tidak ada tempat yang cocok",
+    "empty": "Coba hapus salah satu filter.",
+    "reset": "Hapus filter",
+    "upTo": "hingga {n} orang",
+    "m2": "{n} m²",
+    "kva": "{n} kVA",
+    "hasFloorplan": "Ada denah",
+    "back": "Katalog open space",
+    "floorplan": "Denah",
+    "floorplanOpen": "Buka denah ukuran penuh",
+    "floorplanAlt": "Denah {name}",
+    "floorplanMissingTitle": "Denah belum tersedia",
+    "floorplanMissing": "Denah untuk tempat ini belum diunggah. Hubungi pengelola untuk denah terbaru.",
+    "specs": "Spesifikasi teknis",
+    "area": "Luas area",
+    "capacity": "Kapasitas maksimal",
+    "areaType": "Tipe area",
+    "power": "Daya listrik",
+    "loadingDock": "Loading dock",
+    "category": "Kategori",
+    "facilities": "Fasilitas pendukung",
+    "hours": "Jam operasional",
+    "transit": "Akses transportasi",
+    "costTitle": "Estimasi tingkat biaya",
+    "costHelp": "Perkiraan relatif dibanding tempat lain di katalog — bukan harga resmi. Harga pasti dari pengelola.",
+    "contactTitle": "Kontak pengelola",
+    "source": "Sumber data",
+    "sourceLink": "Lihat halaman sumber",
+    "notListedTitle": "Belum bergabung di Spot-In",
+    "notListed": "Data tempat ini dikumpulkan dari sumber publik. Pemesanan belum bisa lewat Spot-In — hubungi pengelola langsung.",
+    "updated": "Data diimpor {date}",
+    "homeTitle": "Katalog open space DKI",
+    "homeLead": "Lihat denah, kapasitas, daya listrik, dan estimasi biaya sebelum menghubungi pengelola.",
+    "homeCta": "Buka katalog",
+    "legendTitle": "Arti simbol biaya"
+  },
+  "budget": {
+    "symbol": "💰",
+    "label": "Tingkat biaya {n} dari 4: {name}",
+    "levels": {
+      "1": "Hemat",
+      "2": "Menengah",
+      "3": "Premium",
+      "4": "Eksklusif"
+    },
+    "desc": {
+      "1": "Biaya sewa paling terjangkau di katalog; cocok untuk komunitas dan acara kecil.",
+      "2": "Biaya menengah; umum untuk atrium mal regional dan ruang publik berizin.",
+      "3": "Biaya tinggi; mal utama dengan lalu lintas pengunjung besar.",
+      "4": "Biaya paling tinggi; lokasi ikonik atau hall berkapasitas sangat besar."
+    }
   }
 }

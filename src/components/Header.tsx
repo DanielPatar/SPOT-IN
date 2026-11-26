@@ -19,7 +19,7 @@ export async function Header() {
     nav.push({ href: "/venue", label: t("nav.venueHome") }, { href: "/venue/enquiry", label: t("nav.venueInbox") }, { href: "/venue/ruang", label: t("nav.venueSpaces") }, { href: "/pemesanan", label: t("nav.bookings") }, { href: "/venue/tim", label: t("nav.team") }, { href: "/venue/pengaturan", label: t("nav.venueSettings") });
   }
   if (s && ctx === "organizer" && m?.organizer) {
-    nav.push({ href: "/", label: t("nav.search"), match: ["/cari", "/ruang", "/properti"] }, { href: "/shortlist", label: t("nav.shortlists") }, { href: "/acara", label: t("nav.events") }, { href: "/pemesanan", label: t("nav.bookings") }, { href: "/organizer/tim", label: t("nav.team") });
+    nav.push({ href: "/", label: t("nav.search"), match: ["/cari", "/ruang", "/properti"] }, { href: "/katalog", label: t("nav.catalog") }, { href: "/shortlist", label: t("nav.shortlists") }, { href: "/acara", label: t("nav.events") }, { href: "/pemesanan", label: t("nav.bookings") }, { href: "/organizer/tim", label: t("nav.team") });
   }
   if (s && !m?.venue && !m?.organizer && !s.isQuickAttendee) nav.push({ href: "/mulai", label: t("nav.start") });
   if (s?.isQuickAttendee && !m?.venue && !m?.organizer) nav.push({ href: "/kartu-saya", label: t("nav.myPasses") });
@@ -68,8 +68,8 @@ export async function Header() {
             </>
           ) : (
             <>
-              <Link href="/cari?q=" className="hidden rounded-md px-3 py-2 text-[15px] font-semibold text-ink no-underline hover:bg-sunken hover:no-underline md:inline-flex">
-                {t("nav.browse")}
+              <Link href="/katalog" className="hidden rounded-md px-3 py-2 text-[15px] font-semibold text-ink no-underline hover:bg-sunken hover:no-underline md:inline-flex">
+                {t("nav.catalog")}
               </Link>
               {registrationOpen() ? (
                 <Link href="/daftar" className="hidden rounded-md px-3 py-2 text-[15px] font-semibold text-ink no-underline hover:bg-sunken hover:no-underline md:inline-flex">

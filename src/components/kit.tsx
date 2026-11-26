@@ -25,18 +25,6 @@ export function Logo({ className, inverted }: { className?: string; inverted?: b
   );
 }
 
-/** FR-M38-01: persistent, non-dismissible banner. */
-export function PilotBanner() {
-  return (
-    <div role="note" aria-label={t("pilot.bannerLabel")} className="flex items-center justify-center gap-2 bg-brand-deep px-4 py-1.5 text-[12.5px] text-white/90">
-      <FlaskConical className="size-3.5 shrink-0 text-[#f6c07a]" aria-hidden="true" />
-      <p className="leading-snug">
-        <span className="font-semibold text-white">{t("pilot.bannerLabel")}</span> {t("pilot.banner")}
-      </p>
-    </div>
-  );
-}
-
 /** FR-M28-17: label on every event page, registration form and pass. */
 export function PilotEventLabel({ className }: { className?: string }) {
   return (

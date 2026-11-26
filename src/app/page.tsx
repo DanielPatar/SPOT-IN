@@ -10,6 +10,8 @@ import { SPACE_TYPES } from "@/server/listings";
 import { EVENT_TYPES } from "@/server/enquiries";
 import { REGIONS, citiesOutsideRegions } from "@/lib/regions";
 import { HeroSearch } from "@/components/HeroSearch";
+import { listCatalog } from "@/server/catalog";
+import { CatalogCard, type CatalogItem } from "@/components/CatalogCard";
 
 export default async function HomePage({ searchParams }: { searchParams: Promise<{ verified?: string }> }) {
   const sp = await searchParams;
@@ -23,6 +25,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   }
   const open = registrationOpen();
   const cityList = (await cities()).map((c) => String(c.city));
+  const catalog = (await listCatalog()).slice(0, 4);
   const how = [1, 2, 3] as const;
   return (
     <div className="-mt-8">
@@ -94,6 +97,26 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           ))}
         </div>
       </section>
+
+      {/* Open-space catalog --------------------------------------------- */}
+      {catalog.length ? (
+        <section className="mt-20">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div className="max-w-2xl">
+              <h2 className="mt-0 mb-2 text-[28px] leading-tight font-extrabold tracking-[-0.02em] sm:text-[36px]">{t("catalog.homeTitle")}</h2>
+              <p className="m-0 text-lg text-muted-foreground">{t("catalog.homeLead")}</p>
+            </div>
+            <Link href="/katalog" className="btn btn-secondary">
+              {t("catalog.homeCta")}
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {catalog.map((v) => (
+              <CatalogCard key={String(v.slug)} v={v as unknown as CatalogItem} />
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       {/* Why Spot-In --------------------------------------------------------- */}
       <section className="mt-20 grid items-center gap-10 lg:grid-cols-2">

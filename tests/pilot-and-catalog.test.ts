@@ -82,6 +82,8 @@ describe("FR-M25-01/05 message catalog", () => {
       "workspace.requestStatus": ["open", "paid", "expired", "cancelled"],
       "ledger.problems": ["ledger_inflow_vs_payments", "ledger_refunds_vs_payments", "receipts_vs_payments", "paid_above_quote", "ledger_unbalanced", "held_not_zero"],
       "booking.steps": ["accepted", "agreement", "deposit", "confirmed", "balance", "event", "settled"],
+      "budget.levels": ["1", "2", "3", "4"],
+      "budget.desc": ["1", "2", "3", "4"],
     };
     const missing: string[] = [];
     for (const [prefix, values] of Object.entries(fam)) for (const v of values) if (!hasMessage(`${prefix}.${v}`)) missing.push(`${prefix}.${v}`);

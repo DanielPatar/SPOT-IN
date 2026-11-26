@@ -23,7 +23,8 @@
     "jobs:tick": "tsx scripts/tick.ts",
     "pii-scan": "tsx scripts/pii-scan.ts",
     "perf:search": "tsx scripts/perf-search.ts",
-    "pilot:delete": "tsx scripts/pilot-delete.ts"
+    "pilot:delete": "tsx scripts/pilot-delete.ts",
+    "catalog:import": "tsx scripts/import-catalog.ts"
   },
   "dependencies": {
     "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
