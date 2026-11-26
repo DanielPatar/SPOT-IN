@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 
 export const pinIcon = L.divIcon({
   className: "",
-  html: '<div style="width:18px;height:18px;border-radius:50% 50% 50% 0;background:#0f5c4d;transform:rotate(-45deg);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
+  html: '<div style="width:18px;height:18px;border-radius:50% 50% 50% 0;background:#5b2bd8;transform:rotate(-45deg);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
   iconSize: [18, 18],
   iconAnchor: [9, 18],
 });

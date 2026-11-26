@@ -70,7 +70,10 @@
     "verifyBannerTitle": "Verifikasi email Anda dulu",
     "bouncedTitle": "Email ke alamat Anda tidak terkirim",
     "signUpTitleOpen": "Daftar di Spot-In",
-    "signUpIntroOpen": "Siapa pun dapat mendaftar sebagai penyelenggara acara atau pengelola tempat. Baca pemberitahuan pilot di bawah sebelum mendaftar."
+    "signUpIntroOpen": "Siapa pun dapat mendaftar sebagai penyelenggara acara atau pengelola tempat. Baca pemberitahuan pilot di bawah sebelum mendaftar.",
+    "asideTitle": "Ruang yang tepat untuk acara berikutnya.",
+    "asideLead": "Masuk untuk mencari ruang, mengirim permintaan, dan memantau pemesanan Anda.",
+    "asideImageAlt": "Tamu menikmati acara di ruang indoor"
   },
   "account": {
     "deletionBlocked": "Akun tidak dapat dihapus karena Anda satu-satunya Pemilik dari {orgs} yang memiliki pemesanan aktif. Alihkan kepemilikan atau selesaikan pemesanan terlebih dahulu.",
@@ -658,7 +661,22 @@
   "footer": {
     "text": "Spot-In · pilot tertutup Group4",
     "help": "Bantuan",
-    "textOpen": "Spot-In · Group4"
+    "textOpen": "Spot-In · Group4",
+    "tagline": "Ruang acara di mal dan gedung di seluruh Indonesia, dalam satu tempat.",
+    "colExplore": "Jelajahi",
+    "colHost": "Pengelola ruang",
+    "colSupport": "Dukungan",
+    "searchSpaces": "Cari ruang",
+    "manageEvents": "Kelola acara",
+    "bookings": "Pemesanan saya",
+    "listSpace": "Daftarkan ruang Anda",
+    "hostLogin": "Masuk sebagai pengelola",
+    "hostDashboard": "Dasbor pengelola",
+    "contact": "Hubungi kami",
+    "report": "Laporkan masalah",
+    "copyright": "© 2026",
+    "language": "Bahasa Indonesia (ID)",
+    "currency": "IDR – Rupiah"
   },
   "common": {
     "save": "Simpan",
@@ -696,7 +714,11 @@
     "ctxOrganizer": "Penyelenggara",
     "account": "Akun: {name}",
     "bookings": "Pemesanan",
-    "myPasses": "Kartu saya"
+    "myPasses": "Kartu saya",
+    "browse": "Jelajahi ruang",
+    "listSpace": "Daftarkan ruang",
+    "signUp": "Daftar",
+    "menu": "Menu"
   },
   "fields": {
     "email": "Email",
@@ -716,7 +738,38 @@
     "point3": "Pengelola membalas, bisa menahan tanggal untuk Anda, lalu mengirim penawaran.",
     "continue": "Lanjutkan",
     "pilotNote": "Spot-In sedang dalam pilot tertutup untuk proyek kuliah. Hanya email yang diundang dapat mendaftar.",
-    "publicNote": "Spot-In terbuka untuk umum dalam mode pilot: semua pemesanan adalah latihan, tidak mengikat dan tanpa pembayaran nyata."
+    "publicNote": "Spot-In terbuka untuk umum dalam mode pilot: semua pemesanan adalah latihan, tidak mengikat dan tanpa pembayaran nyata.",
+    "heroTitle": "Temukan ruang. Wujudkan acaramu.",
+    "heroLead": "Dari atrium mal sampai ballroom dan unit pop-up — cari, bandingkan, dan ajukan permintaan ruang acara dalam satu tempat.",
+    "heroImageAlt": "Ruang jamuan acara yang ditata rapi dengan meja panjang",
+    "searchLabel": "Cari ruang acara",
+    "searchWhat": "Mau bikin acara apa?",
+    "searchWhatAny": "Semua jenis acara",
+    "searchWhere": "Di mana?",
+    "searchWhereAny": "Semua kota",
+    "searchWhen": "Kapan?",
+    "searchSubmit": "Cari",
+    "momentsTitle": "Ruang untuk setiap momen",
+    "momentsLead": "Pilih jenis acaramu, kami tampilkan ruang yang cocok.",
+    "browseAll": "Lihat semua ruang",
+    "typesTitle": "Jelajahi berdasarkan jenis ruang",
+    "howTitle": "Kenapa Spot-In",
+    "howLead": "Dari pencarian sampai penawaran, semua berjalan dalam satu alur yang jelas.",
+    "how1Title": "Cari dengan tepat",
+    "how2Title": "Satu permintaan, banyak tempat",
+    "how3Title": "Penawaran yang jelas",
+    "citiesTitle": "Acaramu dimulai dari sini",
+    "citiesLead": "Kota-kota dengan ruang yang sudah tayang di Spot-In.",
+    "citySpaces": "Lihat ruang",
+    "hostTitle": "Punya ruang? Jadikan sumber penghasilan.",
+    "hostLead": "Pengelola mal dan gedung menerima permintaan, menahan tanggal, dan mengirim penawaran resmi — semuanya dari satu dasbor.",
+    "hostCta": "Daftarkan ruang Anda",
+    "hostImageAlt": "Ruang konferensi dengan meja bundar dan layar besar",
+    "closingTitle": "Tempat hal luar biasa dimulai",
+    "closingLead": "Ribuan ide acara butuh satu hal yang sama: ruang yang tepat.",
+    "closingCta": "Mulai cari ruang",
+    "closingImageAlt": "Ruang kafe industrial yang siap dipakai untuk acara",
+    "tileAll": "Semua ruang"
   },
   "pilotNotice": {
     "title": "Pemberitahuan pilot",
@@ -1231,7 +1284,14 @@
       "price": "Harga terendah",
       "distance": "Jarak terdekat",
       "newest": "Terbaru"
-    }
+    },
+    "filters": "Filter",
+    "results": "Hasil pencarian",
+    "viewToggle": "Tampilan hasil",
+    "emptyTitle": "Belum ada ruang yang cocok",
+    "empty": "Coba longgarkan filter, ubah tanggal, atau cari di kota lain.",
+    "reset": "Hapus semua filter",
+    "capacityShort": "{n} orang"
   },
   "spacePage": {
     "sendEnquiry": "Kirim permintaan",
@@ -1247,7 +1307,16 @@
     "availabilityHelp": "Tanggal yang ditahan tampil sebagai Terbatas – kirim permintaan untuk menanyakan.",
     "docDue": "{n} hari sebelum acara",
     "policyTier": "Batal ≥ {days} hari sebelum acara: {pct}% dikembalikan",
-    "updated": "Diperbarui {date}"
+    "updated": "Diperbarui {date}",
+    "gallery": "Foto ruang",
+    "about": "Tentang ruang ini",
+    "location": "Lokasi",
+    "rules": "Aturan & kebijakan",
+    "bookCardLabel": "Ajukan permintaan",
+    "noCharge": "Anda belum akan dikenai biaya — pengelola akan mengirim penawaran.",
+    "highlights": "Sorotan",
+    "morePhotos": "+{n} foto",
+    "maxCapacity": "Kapasitas maks."
   },
   "estimate": {
     "title": "Perkiraan biaya",

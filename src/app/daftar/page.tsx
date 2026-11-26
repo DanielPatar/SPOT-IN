@@ -3,6 +3,7 @@ import Link from "next/link";
 import { t } from "@/lib/i18n";
 import { registrationOpen } from "@/lib/config";
 import { Form, Submit } from "@/components/Form";
+import { AuthShell } from "@/components/AuthShell";
 import { PilotNotice } from "@/components/PilotNotice";
 import { signUpAction } from "@/web/actions/auth";
 
@@ -14,11 +15,11 @@ export default async function SignUpPage({ searchParams }: { searchParams: Promi
   const { email } = await searchParams;
   const open = registrationOpen();
   return (
-    <div className="narrow">
+    <AuthShell>
       <h1>{open ? t("auth.signUpTitleOpen") : t("auth.signUpTitle")}</h1>
       <p className="muted">{open ? t("auth.signUpIntroOpen") : t("auth.signUpIntro")}</p>
       <PilotNotice />
-      <div className="card">
+      <div className="card shadow-float">
         <Form action={signUpAction}>
           <label>
             {t("fields.fullName")}
@@ -48,6 +49,6 @@ export default async function SignUpPage({ searchParams }: { searchParams: Promi
       <p className="small muted">
         {t("auth.haveAccount")} <Link href="/masuk">{t("auth.loginLink")}</Link>
       </p>
-    </div>
+    </AuthShell>
   );
 }

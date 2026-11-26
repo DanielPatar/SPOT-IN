@@ -5,6 +5,8 @@ import { getSession, memberships } from "@/web/session";
 import { db } from "@/lib/db";
 import { logoutAction, switchContextAction } from "@/web/actions/auth";
 import { Logo, Notice } from "@/components/kit";
+import { NavLinks } from "@/components/NavLinks";
+import { registrationOpen } from "@/lib/config";
 
 /** App header from the mock-ups (AppHeader): logo, active context, navigation, notifications, account. */
 export async function Header() {
@@ -24,67 +26,77 @@ export async function Header() {
   if (s?.isAdmin) nav.push({ href: "/admin", label: t("nav.admin") });
   const ctxName = ctx === "venue" ? m?.venue?.displayName : ctx === "organizer" ? m?.organizer?.displayName : null;
   return (
-    <header className="sticky top-0 z-20 border-b border-line bg-surface">
-      <div className="mx-auto flex min-h-14 max-w-6xl flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 sm:px-6">
+    <header className="sticky top-0 z-[1000] border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+      <div className="mx-auto flex min-h-[68px] max-w-7xl flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 sm:px-6 lg:px-8">
         <Link href="/" className="no-underline hover:no-underline" aria-label={t("brand.home")}>
           <Logo />
         </Link>
         {s && ctxName ? (
-          <span className="inline-flex min-w-0 items-center gap-1 rounded-md border border-line px-2 py-1 text-xs font-medium text-ink">
+          <span className="inline-flex min-w-0 items-center gap-1 rounded-full bg-sunken px-3 py-1 text-xs font-semibold text-ink">
             <span>{ctx === "venue" ? t("nav.ctxVenue") : t("nav.ctxOrganizer")}</span>
-            <span className="hidden truncate text-muted-foreground sm:inline">· {ctxName}</span>
+            <span className="hidden max-w-40 truncate font-medium text-muted-foreground sm:inline">· {ctxName}</span>
           </span>
         ) : null}
-        {nav.length ? (
-          <nav aria-label={t("nav.label")} className="order-last flex w-full flex-wrap items-center gap-1 lg:order-none lg:ml-3 lg:w-auto">
-            {nav.map((n) => (
-              <Link key={n.href} href={n.href} className="rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground no-underline hover:bg-sunken hover:text-ink hover:no-underline">
-                {n.label}
-              </Link>
-            ))}
-          </nav>
-        ) : null}
-        <div className="ml-auto flex items-center gap-1">
+        {nav.length ? <NavLinks items={nav} label={t("nav.label")} /> : null}
+        <div className="ml-auto flex items-center gap-1.5">
           {s && m?.venue && m?.organizer ? (
             <form action={switchContextAction}>
               <input type="hidden" name="context" value={ctx === "venue" ? "organizer" : "venue"} />
-              <button type="submit" className="inline-flex h-9 items-center gap-1.5 rounded-md px-2 text-xs font-medium text-brand hover:bg-sunken">
-                <ArrowLeftRight className="size-3.5" aria-hidden="true" />
-                {ctx === "venue" ? t("nav.switchToOrganizer") : t("nav.switchToVenue")}
+              <button type="submit" className="inline-flex h-10 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-ink hover:bg-sunken">
+                <ArrowLeftRight className="size-4" aria-hidden="true" />
+                <span className="hidden sm:inline">{ctx === "venue" ? t("nav.switchToOrganizer") : t("nav.switchToVenue")}</span>
+                <span className="sr-only sm:hidden">{ctx === "venue" ? t("nav.switchToOrganizer") : t("nav.switchToVenue")}</span>
               </button>
             </form>
           ) : null}
           {s ? (
             <>
-              <Link href="/notifikasi" className="relative grid size-9 place-items-center rounded-md text-ink no-underline hover:bg-sunken" aria-label={unread ? t("nav.notificationsCount", { n: unread }) : t("nav.notifications")}>
+              <Link href="/notifikasi" className="relative grid size-10 place-items-center rounded-full text-ink no-underline hover:bg-sunken" aria-label={unread ? t("nav.notificationsCount", { n: unread }) : t("nav.notifications")}>
                 <Bell className="size-5" aria-hidden="true" />
-                {unread > 0 ? <span className="absolute top-1 right-1 grid min-w-4 place-items-center rounded-full bg-brand px-1 text-[10px] font-bold text-white">{unread}</span> : null}
+                {unread > 0 ? <span className="absolute top-1 right-1 grid min-w-[18px] place-items-center rounded-full bg-brand px-1 text-[10px] font-bold text-white ring-2 ring-white">{unread}</span> : null}
               </Link>
-              <Link href="/akun" className="grid size-8 place-items-center rounded-full bg-brand-soft text-xs font-semibold text-brand no-underline hover:no-underline" aria-label={t("nav.account", { name: s.name || s.email })}>
-                {initials(s.name || s.email)}
-              </Link>
-              <form action={logoutAction}>
-                <button className="h-9 rounded-md px-2 text-sm font-medium text-muted-foreground hover:bg-sunken hover:text-ink" type="submit">
-                  {t("nav.logout")}
-                </button>
-              </form>
+              <div className="flex items-center gap-1 rounded-full border border-line-strong py-1 pr-1 pl-1 transition-shadow hover:shadow-float">
+                <Link href="/akun" className="grid size-8 place-items-center rounded-full bg-ink text-xs font-bold text-white no-underline hover:no-underline" aria-label={t("nav.account", { name: s.name || s.email })}>
+                  {initials(s.name || s.email)}
+                </Link>
+                <form action={logoutAction}>
+                  <button className="h-8 rounded-full px-3 text-sm font-semibold text-ink hover:bg-sunken" type="submit">
+                    {t("nav.logout")}
+                  </button>
+                </form>
+              </div>
             </>
           ) : (
-            <Link href="/masuk" className="btn btn-primary">
-              {t("nav.login")}
-            </Link>
+            <>
+              <Link href="/cari" className="hidden rounded-md px-3 py-2 text-[15px] font-semibold text-ink no-underline hover:bg-sunken hover:no-underline md:inline-flex">
+                {t("nav.browse")}
+              </Link>
+              {registrationOpen() ? (
+                <Link href="/daftar" className="hidden rounded-md px-3 py-2 text-[15px] font-semibold text-ink no-underline hover:bg-sunken hover:no-underline md:inline-flex">
+                  {t("nav.listSpace")}
+                </Link>
+              ) : null}
+              <Link href="/masuk" className="rounded-md px-3 py-2 text-[15px] font-semibold text-ink no-underline hover:bg-sunken hover:no-underline">
+                {t("nav.login")}
+              </Link>
+              {registrationOpen() ? (
+                <Link href="/daftar" className="btn btn-primary h-10 px-4">
+                  {t("nav.signUp")}
+                </Link>
+              ) : null}
+            </>
           )}
         </div>
       </div>
       {s && !s.emailVerified ? (
-        <div className="mx-auto max-w-6xl px-4 pb-3 sm:px-6">
+        <div className="mx-auto max-w-7xl px-4 pb-3 sm:px-6 lg:px-8">
           <Notice tone="waiting" title={t("auth.verifyBannerTitle")} action={<Link href="/akun/verifikasi">{t("auth.resendVerification")}</Link>}>
             {t("auth.verifyBanner")}
           </Notice>
         </div>
       ) : null}
       {s?.emailBounced ? (
-        <div className="mx-auto max-w-6xl px-4 pb-3 sm:px-6">
+        <div className="mx-auto max-w-7xl px-4 pb-3 sm:px-6 lg:px-8">
           <Notice tone="danger" title={t("auth.bouncedTitle")} action={<Link href="/akun">{t("auth.fixEmail")}</Link>}>
             {t("auth.bouncedBanner")}
           </Notice>

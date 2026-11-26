@@ -10,7 +10,7 @@ export type Pin = { id: string; lat: number; lon: number; title: string; subtitl
 function clusterIcon(n: number) {
   return L.divIcon({
     className: "",
-    html: `<div style="width:34px;height:34px;border-radius:50%;background:#d9822b;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)">${n}</div>`,
+    html: `<div style="width:34px;height:34px;border-radius:50%;background:#141414;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)">${n}</div>`,
     iconSize: [34, 34],
     iconAnchor: [17, 17],
   });

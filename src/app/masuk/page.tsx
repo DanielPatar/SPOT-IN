@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { t } from "@/lib/i18n";
 import { config } from "@/lib/config";
 import { Form, Submit } from "@/components/Form";
+import { AuthShell } from "@/components/AuthShell";
 import { loginAction, magicLinkAction } from "@/web/actions/auth";
 import { getSession } from "@/web/session";
 
@@ -14,11 +15,11 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   if (await getSession()) redirect(sp.next ?? "/");
   const google = !!config().GOOGLE_CLIENT_ID;
   return (
-    <div className="narrow">
+    <AuthShell>
       <h1>{t("auth.loginTitle")}</h1>
       {sp.deleted ? <p className="alert alert-ok">{t("account.deleted")}</p> : null}
       {sp.error ? <p className="alert alert-error">{t(`auth.oauth.${sp.error === "not_invited" ? "notInvited" : "failed"}`)}</p> : null}
-      <div className="card">
+      <div className="card shadow-float">
         <Form action={loginAction}>
           <input type="hidden" name="next" value={sp.next ?? "/"} />
           <label>
@@ -36,7 +37,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         </Form>
       </div>
       <div className="card">
-        <h2 style={{ marginTop: 0 }}>{t("auth.magicTitle")}</h2>
+        <h2 className="mt-0 text-base">{t("auth.magicTitle")}</h2>
         <p className="muted small">{t("auth.magicHelp")}</p>
         <Form action={magicLinkAction}>
           <label>
@@ -47,13 +48,13 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         </Form>
       </div>
       {google ? (
-        <a className="btn btn-secondary" href="/api/auth/google">
+        <a className="btn btn-secondary mb-5 w-full" href="/api/auth/google">
           {t("auth.google")}
         </a>
       ) : null}
       <p className="small muted">
         {t("auth.noAccount")} <Link href="/daftar">{t("auth.signUpLink")}</Link>
       </p>
-    </div>
+    </AuthShell>
   );
 }

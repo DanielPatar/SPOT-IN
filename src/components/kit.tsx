@@ -12,16 +12,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 /* Brand -------------------------------------------------------------- */
 
-export function Logo({ className }: { className?: string }) {
+export function Logo({ className, inverted }: { className?: string; inverted?: boolean }) {
   return (
-    <span className={cn("inline-flex items-center gap-2 font-bold tracking-tight text-ink", className)}>
-      <svg viewBox="0 0 32 32" className="size-7" aria-hidden="true">
-        <rect width="32" height="32" rx="8" fill="#0f5c4d" />
-        <circle cx="16" cy="13.5" r="5" fill="none" stroke="#fff" strokeWidth="3" />
-        <path d="M16 18.5v6.5" stroke="#fff" strokeWidth="3" strokeLinecap="round" />
-        <circle cx="16" cy="13.5" r="1.6" fill="#d9822b" />
+    <span className={cn("inline-flex items-center gap-2 font-extrabold tracking-[-0.03em]", inverted ? "text-white" : "text-ink", className)}>
+      <svg viewBox="0 0 32 32" className="size-8" aria-hidden="true">
+        <rect width="32" height="32" rx="9" fill={inverted ? "#ffffff" : "#5b2bd8"} />
+        <path d="M16 6.5c-4.1 0-7.3 3.1-7.3 7.1 0 5.2 6.1 10.9 6.8 11.5a.8.8 0 0 0 1 0c.7-.6 6.8-6.3 6.8-11.5 0-4-3.2-7.1-7.3-7.1Z" fill={inverted ? "#5b2bd8" : "#ffffff"} />
+        <circle cx="16" cy="13.6" r="2.7" fill={inverted ? "#ffffff" : "#5b2bd8"} />
       </svg>
-      <span className="text-[17px]">{t("brand.name")}</span>
+      <span className="text-[20px] leading-none">{t("brand.name")}</span>
     </span>
   );
 }
@@ -29,10 +28,10 @@ export function Logo({ className }: { className?: string }) {
 /** FR-M38-01: persistent, non-dismissible banner. */
 export function PilotBanner() {
   return (
-    <div role="note" aria-label={t("pilot.bannerLabel")} className="flex items-start justify-center gap-2 border-b border-warm/40 bg-warm-soft px-4 py-2 text-[13px] text-warm-ink">
-      <FlaskConical className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+    <div role="note" aria-label={t("pilot.bannerLabel")} className="flex items-center justify-center gap-2 bg-brand-deep px-4 py-1.5 text-[12.5px] text-white/90">
+      <FlaskConical className="size-3.5 shrink-0 text-[#f6c07a]" aria-hidden="true" />
       <p className="leading-snug">
-        <span className="font-semibold">{t("pilot.bannerLabel")}</span> {t("pilot.banner")}
+        <span className="font-semibold text-white">{t("pilot.bannerLabel")}</span> {t("pilot.banner")}
       </p>
     </div>
   );
@@ -53,15 +52,15 @@ export function PilotEventLabel({ className }: { className?: string }) {
 /** Page title: the title states the situation; the description adds context. No eyebrow labels. */
 export function PageTitle({ title, description, actions, back }: { title: React.ReactNode; description?: React.ReactNode; actions?: React.ReactNode; back?: { href: string; label: string } }) {
   return (
-    <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+    <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
       <div className="min-w-0 max-w-2xl">
         {back ? (
-          <a href={back.href} className="mb-2 inline-block text-sm font-medium text-brand hover:underline">
+          <a href={back.href} className="mb-3 inline-block text-sm font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
             ‹ {back.label}
           </a>
         ) : null}
-        <h1 className="text-[22px] leading-tight font-bold tracking-tight text-balance text-ink">{title}</h1>
-        {description ? <p className="mt-1.5 text-[15px] leading-relaxed text-muted-foreground">{description}</p> : null}
+        <h1 className="mb-0 text-[28px] leading-[1.15] font-extrabold tracking-[-0.02em] text-balance text-ink sm:text-[32px]">{title}</h1>
+        {description ? <p className="mt-2 text-base leading-relaxed text-muted-foreground">{description}</p> : null}
       </div>
       {actions ? <div className="flex flex-wrap gap-2">{actions}</div> : null}
     </div>
@@ -71,7 +70,7 @@ export function PageTitle({ title, description, actions, back }: { title: React.
 export function SectionTitle({ children, hint, id }: { children: React.ReactNode; hint?: React.ReactNode; id?: string }) {
   return (
     <div className="mb-3">
-      <h2 id={id} className="text-base font-semibold text-ink">
+      <h2 id={id} className="mt-0 text-lg font-bold tracking-[-0.01em] text-ink">
         {children}
       </h2>
       {hint ? <p className="mt-0.5 text-sm text-muted-foreground">{hint}</p> : null}
@@ -82,7 +81,7 @@ export function SectionTitle({ children, hint, id }: { children: React.ReactNode
 /** A quiet white surface. Hierarchy comes from spacing and type, not stacked shadows. */
 export function Panel({ children, className, as: As = "section", ...rest }: { children: React.ReactNode; className?: string; as?: "section" | "div" | "article" | "aside" } & React.HTMLAttributes<HTMLElement>) {
   return (
-    <As className={cn("rounded-lg border border-line bg-surface p-4", className)} {...rest}>
+    <As className={cn("rounded-xl border border-line bg-surface p-5 sm:p-6", className)} {...rest}>
       {children}
     </As>
   );
@@ -163,7 +162,7 @@ export function Notice({ tone = "info", title, children, action, className, live
   };
   const iconTone: Record<Tone, string> = { neutral: "text-muted-foreground", info: "text-brand", positive: "text-brand", waiting: "text-warm-ink", danger: "text-danger" };
   return (
-    <Alert role={live ? "alert" : "status"} className={cn("rounded-lg px-4 py-3", tones[tone], className)}>
+    <Alert role={live ? "alert" : "status"} className={cn("rounded-xl px-4 py-3", tones[tone], className)}>
       <Icon className={cn(iconTone[tone])} aria-hidden="true" />
       <AlertTitle className="text-[15px] text-ink">{title}</AlertTitle>
       {children || action ? (
@@ -179,12 +178,12 @@ export function Notice({ tone = "info", title, children, action, className, live
 /** Full-area state for empty / error / not-found. One clear next step. */
 export function StateBlock({ icon: Icon = Info, title, children, action, tone = "neutral" }: { icon?: React.ComponentType<{ className?: string }>; title: string; children?: React.ReactNode; action?: React.ReactNode; tone?: "neutral" | "danger" }) {
   return (
-    <div className="flex flex-col items-start gap-3 rounded-lg border border-dashed border-line-strong bg-surface px-5 py-8">
-      <span className={cn("grid size-10 place-items-center rounded-full", tone === "danger" ? "bg-danger-soft text-danger" : "bg-sunken text-muted-foreground")}>
+    <div className="flex flex-col items-start gap-3 rounded-2xl bg-sunken px-6 py-10 sm:px-10">
+      <span className={cn("grid size-10 place-items-center rounded-full", tone === "danger" ? "bg-danger-soft text-danger" : "bg-white text-brand shadow-sm")}>
         <Icon className="size-5" aria-hidden="true" />
       </span>
       <div className="max-w-md">
-        <h2 className="text-base font-semibold text-ink">{title}</h2>
+        <h2 className="mt-0 text-lg font-bold text-ink">{title}</h2>
         {children ? <div className="mt-1 text-sm leading-relaxed text-muted-foreground">{children}</div> : null}
       </div>
       {action ? <div className="flex flex-wrap gap-2">{action}</div> : null}
@@ -301,7 +300,7 @@ export function BookingProgress({ current }: { current: number }) {
             className={cn(
               "flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium",
               done && "border-brand/20 bg-brand-soft text-brand",
-              now && "border-brand bg-brand text-white",
+              now && "border-ink bg-ink text-white",
               !done && !now && "border-line bg-surface text-muted-foreground",
             )}
           >
