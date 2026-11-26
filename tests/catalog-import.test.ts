@@ -33,5 +33,9 @@ describe("open-space catalog import (UI v2)", () => {
     });
     expect(gi.hours).toEqual(["Acara: 10.00-22.00", "Loading: 23.00-06.00"]);
     expect(new Set(rows.map((r) => r.slug)).size).toBe(rows.length);
+    // every photo carries a credit (author + licence) and its source page
+    for (const r of rows.filter((x) => x.photo_url))
+      expect(r.photo_credit && r.photo_page).toBeTruthy();
+    expect(gi.photo_url).toBe("/katalog-foto/grand-indonesia-fountain-atrium.webp");
   });
 });

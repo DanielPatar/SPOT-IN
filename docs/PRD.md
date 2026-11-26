@@ -550,7 +550,7 @@ Requirement IDs use `FR-<module>-<nn>` and keep their v1.1 numbers where a requi
 | FR-M12-03 | Terms: validity (default 7 days), cancellation policy (from the operator's policies), inclusions/exclusions, special terms (free text). |
 | FR-M12-04 | Quote templates per space (saved line items). |
 | FR-M12-05 | Approval: a quote at or above the operator's threshold goes Draft → Pending approval → Approved → Sent; the Owner can approve, edit (creating a new draft) or return it with a comment. |
-| FR-M12-06 | Organizer actions: Accept, Request revision (general and per-line comments), Decline (reason). |
+| FR-M12-06 | Organizer actions: Accept, Request revision (general and per-line comments), Decline (reason). *Proposed amendment (price counter-offer): the revision request may carry one optional proposed total in whole Rupiah; it is not binding and the venue answers with a new quote version or in the conversation.* |
 | FR-M12-07 | Each sent revision is a new read-only version; the organizer sees a diff from the previous version; only the latest version can be accepted. |
 | FR-M12-08 | At validity end the quote expires; the venue can re-issue. |
 | FR-M12-09 | Quote PDF download with the venue's logo, Spot-In reference and the pilot watermark. |
@@ -623,7 +623,7 @@ Requirement IDs use `FR-<module>-<nn>` and keep their v1.1 numbers where a requi
 | FR-M28-02 | Sessions: one per booked event day, created automatically with that day's start and end times; times shown in the property's time zone. |
 | FR-M28-03 | Venue, address and map come from the booking and can't be edited on the page. External venues aren't allowed in the MVP. |
 | FR-M28-04 | Capacity is required per session and can't exceed the space's capacity for the chosen layout. |
-| FR-M28-05 | Visibility is **unlisted only**: reachable by its link, marked `noindex, nofollow`, excluded from sitemaps, search and any list of events, and with no structured data. |
+| FR-M28-05 | Visibility is **unlisted only**: reachable by its link, marked `noindex, nofollow`, excluded from sitemaps, search and any list of events, and with no structured data. *Proposed amendment (visitor discovery): a deployment setting `EVENT_DISCOVERY` (`off` default, `on`) lets an organizer opt a live page into the in-app list "Jelajah acara" (`/jelajah`, by area, with a map). Pages stay `noindex`, out of sitemaps and without structured data, keep the pilot label (FR-M28-17), and are unlisted unless the organizer ticks the opt-in.* |
 | FR-M28-07 | Event page statuses: Draft → Live → Registration closed → Ended; or Cancelled (booking cancelled) or Removed (Admin). |
 | FR-M28-09 | Changing a session's time or the description after registrations exist asks for confirmation ("N orang akan diberi tahu") and emails registrants with what changed. |
 | FR-M28-13 | The page shows title, cover, dates and times with time-zone label, venue with map, organizer name, spots left, status, the registration form, a "Bagikan" (share) button with copy-link and a WhatsApp share link (wa.me, no API), and a "Laporkan" (report) link. |

@@ -10,6 +10,9 @@ import { getSettings } from "@/lib/settings";
 import { PermissionError, can } from "@/lib/permissions";
 import { EnquirySummary } from "@/components/EnquirySummary";
 import { Thread } from "@/components/Thread";
+import { DealSteps, dealStep } from "@/components/DealSteps";
+import { formatRupiah } from "@/lib/money";
+import { Notice } from "@/components/kit";
 import { Form, Submit } from "@/components/Form";
 import { venueEnquiryAction } from "@/web/actions/venue";
 import { startQuoteAction } from "@/web/actions/booking";
@@ -36,7 +39,18 @@ export default async function VenueEnquiryPage({ params }: { params: Promise<{ i
   const s = await getSettings();
   const replies = (await savedReplies(a)).map((r) => ({ id: String(r.id), title: String(r.title), body: String(r.body) }));
   const members = await db()`select u.id, u.name from memberships m join users u on u.id = m.user_id where m.org_id = ${venue.orgId}`;
+  // Latest quote the organizer can see, for the deal stepper and a price counter-offer (UI v2).
+  const [lq] = await db()`select status, revision_comments, totals from quotes where enquiry_id = ${id} and status in ('sent', 'accepted') order by version desc limit 1`;
+  const step = dealStep(String(e.status), lq as never);
+  const counter = lq?.status === "sent" ? ((lq.revision_comments as { proposedTotal?: number } | null)?.proposedTotal ?? null) : null;
   return (
+    <div>
+      <DealSteps step={step} side="venue" action={step === "negotiate" && respond ? <Link className="btn btn-primary h-10" href={`/venue/enquiry/${id}/penawaran`}>{t("deal.counterCta")}</Link> : undefined} />
+      {counter ? (
+        <Notice tone="waiting" className="mb-6" title={t("deal.counterTitle", { amount: formatRupiah(counter) })}>
+          {t("deal.counterBody", { current: formatRupiah(Number((lq!.totals as { organizerTotal?: number }).organizerTotal ?? 0)) })}
+        </Notice>
+      ) : null}
     <div className="cols">
       <div>
         <EnquirySummary e={e} />
@@ -146,6 +160,7 @@ export default async function VenueEnquiryPage({ params }: { params: Promise<{ i
           </Form>
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Globe } from "lucide-react";
 import { t } from "@/lib/i18n";
-import { registrationOpen } from "@/lib/config";
+import { eventDiscoveryOn, registrationOpen } from "@/lib/config";
 import { Logo } from "@/components/kit";
 
 /** Site footer (UI v2): link columns, then a legal/locale row. */
@@ -13,6 +13,7 @@ export function Footer() {
       links: [
         { href: "/#cari", label: t("footer.searchSpaces") },
         { href: "/katalog", label: t("footer.catalog") },
+        ...(eventDiscoveryOn() ? [{ href: "/jelajah", label: t("footer.discover") }] : []),
         { href: "/shortlist", label: t("nav.shortlists") },
         { href: "/acara", label: t("footer.manageEvents") },
         { href: "/pemesanan", label: t("footer.bookings") },

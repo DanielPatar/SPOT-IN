@@ -83,6 +83,9 @@ describe("FR-M25-01/05 message catalog", () => {
       "ledger.problems": ["ledger_inflow_vs_payments", "ledger_refunds_vs_payments", "receipts_vs_payments", "paid_above_quote", "ledger_unbalanced", "held_not_zero"],
       "booking.steps": ["accepted", "agreement", "deposit", "confirmed", "balance", "event", "settled"],
       "budget.levels": ["1", "2", "3", "4"],
+      "deal.steps": ["enquiry", "discuss", "quote", "negotiate", "agree"],
+      "deal.how": ["1", "2", "3", "4"],
+      "home.slides": ["1", "2", "3", "4"],
       "budget.desc": ["1", "2", "3", "4"],
     };
     const missing: string[] = [];
@@ -90,7 +93,7 @@ describe("FR-M25-01/05 message catalog", () => {
     for (const p of ["flexible", "moderate", "strict"]) if (!hasMessage(`policies.${p}.name`)) missing.push(p);
     const used = referencedKeys().dynamic;
     for (const prefix of used) {
-      if (["notify", "help", "events.next", "search.sorts", "report.reasons", "admin.subjects", "admin.methods", "admin.roleHints", "admin.holidayKinds", "estimate.qtyHint", "auth.oauth", "organizerEnquiry.done", "policies", "workspace.events"].includes(prefix)) continue;
+      if (["notify", "help", "events.next", "search.sorts", "report.reasons", "admin.subjects", "admin.methods", "admin.roleHints", "admin.holidayKinds", "estimate.qtyHint", "auth.oauth", "organizerEnquiry.done", "policies", "workspace.events", "deal", "categories"].includes(prefix)) continue;
       expect(Object.keys(fam), `unchecked dynamic family ${prefix}`).toContain(prefix);
     }
     expect(missing).toEqual([]);

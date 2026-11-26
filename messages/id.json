@@ -677,7 +677,8 @@
     "copyright": "© 2026",
     "language": "Bahasa Indonesia (ID)",
     "currency": "IDR – Rupiah",
-    "catalog": "Katalog open space"
+    "catalog": "Katalog open space",
+    "discover": "Jelajah acara"
   },
   "common": {
     "save": "Simpan",
@@ -720,7 +721,8 @@
     "listSpace": "Daftarkan ruang",
     "signUp": "Daftar",
     "menu": "Menu",
-    "catalog": "Katalog venue"
+    "catalog": "Katalog venue",
+    "discover": "Jelajah acara"
   },
   "fields": {
     "email": "Email",
@@ -781,7 +783,35 @@
     "bandCaption": "Pameran, bazar, seminar & lainnya",
     "bandCaptionPlace": "JABODETABEK, ID",
     "regionsGroup": "Jabodetabek",
-    "otherCitiesGroup": "Kota lain"
+    "otherCitiesGroup": "Kota lain",
+    "whatAny": "Apa saja",
+    "whatAnyHint": "Tampilkan semua ruang",
+    "whatEvents": "Jenis acara",
+    "whatSpaces": "Jenis ruang",
+    "tabSpaces": "Sewa ruang",
+    "tabEvents": "Cari acara",
+    "tabsLabel": "Mau cari apa?",
+    "heroEventsAsk": "Ada acara apa?",
+    "heroEventsAskIn": "Ada acara apa di {city}?",
+    "eventsWhat": "Cari acara",
+    "eventsWhatPlaceholder": "mis. bazar, musik, jejepangan",
+    "eventsWhen": "Waktu",
+    "eventsWhenAny": "Kapan saja",
+    "eventsWhenNow": "Sedang berlangsung",
+    "eventsWhenSoon": "Akan datang",
+    "slidesLabel": "Inspirasi acara",
+    "slidePlace": "INSPIRASI ACARA",
+    "slides": {
+      "1": "Jamuan — Aula serbaguna",
+      "2": "Seminar — Ballroom",
+      "3": "Gala dinner — Ballroom",
+      "4": "Komunitas — Ruang industrial"
+    },
+    "prev": "Sebelumnya",
+    "next": "Berikutnya",
+    "visitorTitle": "Cuma mau jalan-jalan? Lihat acara di sekitarmu.",
+    "visitorLead": "Bazar, pameran, pertunjukan — temukan acara yang sedang dan akan berlangsung, lengkap dengan peta lokasinya.",
+    "visitorCta": "Jelajah acara"
   },
   "pilotNotice": {
     "title": "Pemberitahuan pilot",
@@ -1305,7 +1335,11 @@
     "reset": "Hapus semua filter",
     "capacityShort": "{n} orang",
     "regionsGroup": "Wilayah",
-    "citiesGroup": "Kota"
+    "citiesGroup": "Kota",
+    "catalogTitle": "Dari katalog open space",
+    "catalogLead": "Tempat dari sumber publik di wilayah ini. Belum bisa dipesan lewat Spot-In — lihat denah dan hubungi pengelolanya langsung.",
+    "catalogAll": "Buka katalog lengkap",
+    "illustration": "Foto ilustrasi"
   },
   "spacePage": {
     "sendEnquiry": "Kirim permintaan",
@@ -1330,7 +1364,8 @@
     "noCharge": "Anda belum akan dikenai biaya — pengelola akan mengirim penawaran.",
     "highlights": "Sorotan",
     "morePhotos": "+{n} foto",
-    "maxCapacity": "Kapasitas maks."
+    "maxCapacity": "Kapasitas maks.",
+    "illustration": "Foto ilustrasi — pengelola belum mengunggah foto ruang ini."
   },
   "estimate": {
     "title": "Perkiraan biaya",
@@ -1756,7 +1791,8 @@
     "sentForApproval": "Penawaran dikirim ke Pemilik untuk disetujui.",
     "draftSaved": "Draf tersimpan.",
     "approvedSent": "Penawaran disetujui dan dikirim ke penyelenggara.",
-    "returned": "Penawaran dikembalikan ke Staf."
+    "returned": "Penawaran dikembalikan ke Staf.",
+    "counterLine": "Penyelenggara mengajukan total {proposed} — penawaran Anda {current} (selisih {gap})."
   },
   "quoteView": {
     "title": "Penawaran",
@@ -1796,7 +1832,7 @@
     "pilotTerms": "Saya mengerti ini pemesanan pilot: latihan, tidak mengikat, dan tanpa pembayaran nyata.",
     "acceptHint": "Tanggal akan ditahan untuk Anda sampai tenggat uang muka.",
     "accept": "Terima penawaran ini",
-    "revision": "Minta revisi",
+    "revision": "Nego harga / minta revisi",
     "revisionGeneral": "Apa yang perlu diubah?",
     "revisionLine": "Komentar untuk “{label}” (opsional)",
     "sendRevision": "Kirim permintaan revisi",
@@ -1807,7 +1843,11 @@
       "accept": "Penawaran diterima.",
       "revision": "Permintaan revisi terkirim ke pengelola.",
       "decline": "Penawaran ditolak. Pengelola sudah diberi tahu."
-    }
+    },
+    "counterHelp": "Belum cocok dengan harganya? Ajukan harga Anda. Pengelola bisa membalas dengan versi penawaran baru, atau menjelaskan lewat percakapan.",
+    "counterAmount": "Harga total yang Anda ajukan (Rp, opsional)",
+    "counterHint": "Total penawaran saat ini {amount}. Pengajuan ini tidak mengikat.",
+    "counterSentTitle": "Anda mengajukan harga {amount}"
   },
   "bookingStatus": {
     "pending_agreement_and_deposit": "Menunggu perjanjian dan uang muka",
@@ -2309,7 +2349,10 @@
     "reopened": "Pendaftaran dibuka lagi.",
     "closedNow": "Pendaftaran ditutup.",
     "endedTitle": "Acara ini sudah selesai",
-    "endedBody": "Halaman tetap bisa dibuka lewat tautannya, tetapi tidak bisa diubah lagi. Daftar pendaftar masih tersedia."
+    "endedBody": "Halaman tetap bisa dibuka lewat tautannya, tetapi tidak bisa diubah lagi. Daftar pendaftar masih tersedia.",
+    "listedLegend": "Jelajah acara",
+    "listed": "Tampilkan acara ini di halaman Jelajah acara",
+    "listedHint": "Pengunjung umum bisa menemukan acara ini lewat pencarian dan peta di Spot-In. Tanpa centang, halaman hanya bisa dibuka lewat tautan."
   },
   "pageStatus": {
     "draft": "Draf",
@@ -2488,7 +2531,10 @@
     "homeTitle": "Katalog open space DKI",
     "homeLead": "Lihat denah, kapasitas, daya listrik, dan estimasi biaya sebelum menghubungi pengelola.",
     "homeCta": "Buka katalog",
-    "legendTitle": "Arti simbol biaya"
+    "legendTitle": "Arti simbol biaya",
+    "photoAlt": "Foto {name}",
+    "photoCredit": "Foto: {credit}",
+    "photoSource": "Wikimedia Commons"
   },
   "budget": {
     "symbol": "💰",
@@ -2504,6 +2550,74 @@
       "2": "Biaya menengah; umum untuk atrium mal regional dan ruang publik berizin.",
       "3": "Biaya tinggi; mal utama dengan lalu lintas pengunjung besar.",
       "4": "Biaya paling tinggi; lokasi ikonik atau hall berkapasitas sangat besar."
+    }
+  },
+  "discover": {
+    "title": "Jelajah acara",
+    "titleIn": "Acara di {city}",
+    "lead": "Acara yang sedang dan akan berlangsung di ruang-ruang Spot-In. Pilih acara untuk melihat detail dan mendaftar.",
+    "searchLabel": "Cari acara",
+    "keyword": "Cari acara",
+    "keywordPlaceholder": "mis. bazar, musik, jejepangan",
+    "where": "Di mana?",
+    "anyWhere": "Semua wilayah",
+    "when": "Waktu",
+    "whenAny": "Kapan saja",
+    "whenNow": "Sedang berlangsung",
+    "whenSoon": "Akan datang",
+    "submit": "Cari",
+    "count": "{n} acara ditemukan",
+    "ongoing": "Sedang berlangsung",
+    "upcoming": "Akan datang",
+    "at": "di {venue}",
+    "by": "oleh {organizer}",
+    "starts": "Mulai {date}",
+    "until": "Sampai {date}",
+    "open": "Lihat acara",
+    "mapLabel": "Peta lokasi acara",
+    "emptyTitle": "Belum ada acara di sini",
+    "empty": "Coba wilayah lain atau hapus kata kunci. Acara muncul di sini setelah penyelenggara menayangkannya.",
+    "reset": "Lihat semua acara",
+    "myPasses": "Kartu masuk saya",
+    "organizerCta": "Punya acara? Tayangkan di sini",
+    "offTitle": "Jelajah acara belum dibuka",
+    "off": "Fitur ini belum diaktifkan. Acara tetap bisa dibuka lewat tautan dari penyelenggara."
+  },
+  "deal": {
+    "label": "Tahap kesepakatan",
+    "steps": {
+      "enquiry": "Permintaan",
+      "discuss": "Diskusi",
+      "quote": "Penawaran",
+      "negotiate": "Nego harga",
+      "agree": "Sepakat"
+    },
+    "nextTitle": "Langkah berikutnya",
+    "organizer": {
+      "enquiry": "Permintaan Anda sudah terkirim. Tunggu pengelola memeriksa ketersediaan — Anda bisa bertanya lewat percakapan di bawah.",
+      "discuss": "Pengelola sudah merespons. Lanjutkan diskusi di percakapan sampai pengelola mengirim penawaran.",
+      "quote": "Penawaran sudah masuk. Periksa rinciannya, lalu terima — atau ajukan nego harga bila belum cocok.",
+      "negotiate": "Pengajuan harga Anda sudah terkirim. Pengelola akan membalas dengan versi penawaran baru atau lewat percakapan.",
+      "agree": "Penawaran diterima. Lanjutkan ke perjanjian dan uang muka di halaman pemesanan.",
+      "closed": "Permintaan ini sudah ditutup."
+    },
+    "venue": {
+      "enquiry": "Permintaan baru. Periksa ketersediaan, tahan tanggal bila perlu, lalu balas atau buat penawaran.",
+      "discuss": "Diskusi berjalan. Kirim penawaran saat detail acara sudah jelas.",
+      "quote": "Penawaran Anda sudah terkirim. Tunggu jawaban penyelenggara.",
+      "negotiate": "Penyelenggara mengajukan nego harga. Buat versi penawaran baru, atau jelaskan lewat percakapan bila harga tidak bisa diubah.",
+      "agree": "Penawaran diterima. Lanjutkan perjanjian dan pantau uang muka di halaman pemesanan.",
+      "closed": "Permintaan ini sudah ditutup."
+    },
+    "counterTitle": "Penyelenggara mengajukan harga {amount}",
+    "counterBody": "Penawaran Anda saat ini {current}. Setujui dengan membuat versi baru, tawarkan harga tengah, atau jelaskan lewat percakapan.",
+    "counterCta": "Buat revisi penawaran",
+    "howTitle": "Cara kerja pemesanan",
+    "how": {
+      "1": "Kirim permintaan — gratis dan tidak mengikat.",
+      "2": "Diskusi dengan pengelola lewat percakapan di Spot-In.",
+      "3": "Terima penawaran resmi; bisa nego harga sampai cocok.",
+      "4": "Sepakat, setujui perjanjian, lalu bayar uang muka."
     }
   }
 }

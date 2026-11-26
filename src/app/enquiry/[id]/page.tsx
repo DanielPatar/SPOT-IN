@@ -11,6 +11,7 @@ import { QuotePanel } from "@/components/QuotePanel";
 import { PermissionError, can } from "@/lib/permissions";
 import { EnquirySummary } from "@/components/EnquirySummary";
 import { Thread } from "@/components/Thread";
+import { DealSteps, dealStep } from "@/components/DealSteps";
 import { Form, Submit } from "@/components/Form";
 import { organizerEnquiryAction } from "@/web/actions/organizer";
 import { postMessageAction, editMessageAction, deleteMessageAction, reportMessageAction } from "@/web/actions/messages";
@@ -31,12 +32,15 @@ export default async function OrganizerEnquiryPage({ params }: { params: Promise
   const hold = await holdForEnquiry(id);
   const { quotes } = await quotesForEnquiry({ userId: session.userId }, id);
   const [bk] = await db()`select id from bookings where enquiry_id = ${id} and status <> 'lapsed' order by created_at desc limit 1`;
+  const step = dealStep(String(e.status), quotes[0]);
   return (
+    <div>
+      <p>
+        <Link href={`/acara/${e.event_id}`}>{t("organizerEnquiry.backToEvent")}</Link>
+      </p>
+      <DealSteps step={step} side="organizer" action={step === "agree" && bk ? <Link className="btn btn-primary h-10" href={`/pemesanan/${String(bk.id)}`}>{t("quoteView.openWorkspace")}</Link> : undefined} />
     <div className="cols">
       <div>
-        <p>
-          <Link href={`/acara/${e.event_id}`}>{t("organizerEnquiry.backToEvent")}</Link>
-        </p>
         <EnquirySummary e={{ ...e, internal_notes: undefined }} />
         <Thread
           enquiryId={id}
@@ -65,6 +69,7 @@ export default async function OrganizerEnquiryPage({ params }: { params: Promise
           </div>
         ) : null}
       </div>
+    </div>
     </div>
   );
 }

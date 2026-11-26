@@ -32,7 +32,7 @@ export default async function ShortlistPage({ params }: { params: Promise<{ id: 
           <h2 style={{ marginTop: 0 }}>{t("shortlist.spaces")}</h2>
           {d.items.length === 0 ? <p className="muted">{t("shortlist.emptyList")}</p> : null}
           {d.items.map((i) => {
-            const img = coverUrl(i.media);
+            const img = (i.demo_photo_url ? String(i.demo_photo_url) : null) ?? coverUrl(i.media);
             return (
               <div key={String(i.id)} className="row" style={{ marginBottom: 12, alignItems: "flex-start" }}>
                 <input type="checkbox" name="spaces" value={String(i.id)} defaultChecked={i.status === "published"} disabled={i.status !== "published"} aria-label={t("shortlist.select", { name: String(i.name) })} />

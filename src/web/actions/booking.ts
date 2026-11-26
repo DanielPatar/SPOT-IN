@@ -1,5 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
+import { parseRupiah } from "@/lib/money";
 import { revalidatePath } from "next/cache";
 import { t } from "@/lib/i18n";
 import * as quotes from "@/server/quotes";
@@ -79,7 +80,7 @@ export async function organizerQuoteAction(_: ActionState, form: FormData): Prom
     if (op === "revision") {
       const lines: Record<string, string> = {};
       for (const [k, v] of form.entries()) if (k.startsWith("line_") && typeof v === "string") lines[k.slice(5)] = v;
-      await quotes.requestRevision(a, quoteId, { general: str(form, "general"), lines });
+      await quotes.requestRevision(a, quoteId, { general: str(form, "general"), lines, proposedTotal: parseRupiah(str(form, "proposedTotal")) });
     }
     if (op === "decline") await quotes.declineQuote(a, quoteId, str(form, "reason"));
     revalidatePath(`/enquiry/${str(form, "enquiryId")}`);

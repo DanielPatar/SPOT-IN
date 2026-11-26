@@ -8,7 +8,7 @@
  * Expected header (extra columns are ignored; "Denah" is optional):
  *   Nama_Venue,Wilayah,Kategori,Luas_Area_m2,Kapasitas_Max_Pax,Tipe_Area,Daya_Listrik_kVA,
  *   Loading_Dock,Fasilitas_Pendukung,Jam_Operasional,Akses_Transportasi,Rating_Budget,
- *   Kontak_Manajemen,Link_Sumber[,Denah]
+ *   Kontak_Manajemen,Link_Sumber[,Denah,Foto,Kredit_Foto,Halaman_Foto]
  *
  * Floor plans: put /public/denah/<slug>.(webp|png|jpg|jpeg|svg|pdf), or give an https URL
  * or a file name in the "Denah" column.
@@ -114,6 +114,13 @@ export function toRecord(h: Record<string, string>) {
     contacts: split(h.Kontak_Manajemen, /\s\/\s/),
     source_url: /^https?:\/\//.test((h.Link_Sumber ?? "").trim()) ? h.Link_Sumber!.trim() : null,
     floorplan_path: floorplanFor(slug, h.Denah),
+    // Only freely licensed photos, always with a credit (author + licence) and the source page.
+    photo_url:
+      /^(https:\/\/|\/katalog-foto\/)/.test((h.Foto ?? "").trim()) && (h.Kredit_Foto ?? "").trim()
+        ? h.Foto!.trim()
+        : null,
+    photo_credit: (h.Kredit_Foto ?? "").trim() || null,
+    photo_page: /^https:\/\//.test((h.Halaman_Foto ?? "").trim()) ? h.Halaman_Foto!.trim() : null,
   };
 }
 
@@ -147,7 +154,7 @@ export async function importCatalog(
         max_pax = excluded.max_pax, area_type = excluded.area_type, power_kva = excluded.power_kva,
         loading_dock = excluded.loading_dock, facilities = excluded.facilities, hours = excluded.hours,
         transit = excluded.transit, budget_level = excluded.budget_level, budget_note = excluded.budget_note,
-        contacts = excluded.contacts, source_url = excluded.source_url, floorplan_path = excluded.floorplan_path,
+        contacts = excluded.contacts, source_url = excluded.source_url, floorplan_path = excluded.floorplan_path, photo_url = excluded.photo_url, photo_credit = excluded.photo_credit, photo_page = excluded.photo_page,
         imported_at = now()`;
     }
   } finally {

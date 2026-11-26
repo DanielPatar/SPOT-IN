@@ -30,7 +30,7 @@ export default async function PropertyPublicPage({ params }: { params: Promise<{
       <div className="cols">
         <div className="card-grid">
           {spaces.map((s) => {
-            const img = coverUrl(s.media);
+            const img = (s.demo_photo_url ? String(s.demo_photo_url) : null) ?? coverUrl(s.media);
             return (
               <Link key={String(s.id)} href={`/ruang/${s.id}`} className="card space-card">
                 {img ? <img src={img} alt="" /> : <div className="thumb-empty" />}

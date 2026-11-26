@@ -14,6 +14,7 @@ import { CalendarGrid, shiftMonth } from "@/components/Calendar";
 import { StaticMap } from "@/components/MapPicker";
 import { Estimate } from "@/components/Estimate";
 import { Form, Submit } from "@/components/Form";
+import { HowBookingWorks } from "@/components/DealSteps";
 import { BadgeCheck, Images, LayoutGrid, MapPin, Ruler, Users, Zap } from "lucide-react";
 import { addToShortlistAction, createShortlistAction, reportSpaceAction } from "@/web/actions/organizer";
 
@@ -48,7 +49,8 @@ export default async function SpacePage({ params, searchParams }: { params: Prom
     s.area_m2 ? { icon: Ruler, label: t("spaces.area"), value: t("spacePage.m2", { n: String(s.area_m2) }) } : null,
     s.power_kva ? { icon: Zap, label: t("spaces.power"), value: t("spacePage.kva", { n: Number(s.power_kva) }) } : null,
   ].filter((x): x is { icon: typeof Users; label: string; value: string } => !!x);
-  const shown = media.slice(0, 5);
+  const demoPhoto = s.demo_photo_url ? String(s.demo_photo_url) : null;
+  const shown = demoPhoto ? [] : media.slice(0, 5);
   const canEnquire = m.organizer && s.status === "published";
   return (
     <div>
@@ -74,7 +76,12 @@ export default async function SpacePage({ params, searchParams }: { params: Prom
       </div>
 
       <section aria-label={t("spacePage.gallery")} className="mb-10">
-        {shown.length === 0 ? (
+        {demoPhoto ? (
+          <figure className="m-0">
+            <img className="aspect-[16/9] max-h-[460px] w-full rounded-2xl object-cover sm:aspect-[21/9]" src={demoPhoto} alt="" />
+            <figcaption className="mt-2 text-[13px] text-muted-foreground">{t("spacePage.illustration")}</figcaption>
+          </figure>
+        ) : shown.length === 0 ? (
           <div className="thumb-empty aspect-[21/9]" />
         ) : shown.length === 1 ? (
           <img className="aspect-[16/9] max-h-[460px] w-full rounded-2xl object-cover sm:aspect-[21/9]" src={fileUrl(shown[0]!.fileId)} alt={shown[0]!.caption || String(s.name)} />
@@ -316,6 +323,7 @@ export default async function SpacePage({ params, searchParams }: { params: Prom
               </Link>
             ) : null}
             {canEnquire ? <p className="mt-2 mb-0 text-center text-[13px] text-muted-foreground">{t("spacePage.noCharge")}</p> : null}
+            <HowBookingWorks />
           {m.organizer ? (
             <div className="mt-5 grid gap-5 border-t border-line pt-5">
               <h2 className="mt-0 mb-0 text-base">{t("shortlist.save")}</h2>

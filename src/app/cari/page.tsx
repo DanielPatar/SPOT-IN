@@ -12,7 +12,9 @@ import { parseRupiah } from "@/lib/money";
 import { ResultsMap } from "@/components/MapPicker";
 import { NearMe } from "@/components/NearMe";
 import { StateBlock } from "@/components/kit";
-import { REGIONS } from "@/lib/regions";
+import { REGIONS, regionOf } from "@/lib/regions";
+import { listCatalog } from "@/server/catalog";
+import { CatalogCard, type CatalogItem } from "@/components/CatalogCard";
 import { BadgeCheck, List, Map as MapIcon, SearchX, SlidersHorizontal, Users } from "lucide-react";
 
 export const metadata: Metadata = { title: t("search.title") };
@@ -27,10 +29,11 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   // UI v2: the list only opens from a search. A bare /cari goes back to the home search bar.
   if (Object.keys(sp).length === 0) redirect("/#cari");
   // "Mau bikin acara apa?" is free text; an exact event-type or space-type name becomes that filter.
-  const said = one(sp.q).trim().toLowerCase();
+  const saidRaw = one(sp.q).trim().toLowerCase();
+  const said = saidRaw === t("home.whatAny").toLowerCase() ? "" : saidRaw; // "Apa saja" = no filter
   const eventFromQ = said ? EVENT_TYPES.find((x) => t(`eventTypes.${x}`).toLowerCase() === said) : undefined;
   const typeFromQ = said && !eventFromQ ? SPACE_TYPES.find((x) => t(`spaceTypes.${x}`).toLowerCase() === said) : undefined;
-  const qText = eventFromQ || typeFromQ ? "" : one(sp.q);
+  const qText = eventFromQ || typeFromQ || !said ? "" : one(sp.q);
   const eventType = one(sp.eventType) || eventFromQ || "";
   const spaceTypes = typeFromQ ? [...many(sp.type), typeFromQ] : many(sp.type);
   const from = one(sp.from);
@@ -58,6 +61,12 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
     page,
   });
   const cityList = await cities();
+  // Open-space catalog venues in the same area (read-only, not bookable) — shown under the results.
+  const cityParam = one(sp.city);
+  const catalog =
+    page === 1
+      ? await listCatalog({ q: qText, ...(cityParam ? (regionOf(cityParam) ? { regionLike: regionOf(cityParam)! } : { region: cityParam }) : {}), minPax: Number(one(sp.attendance)) || null })
+      : [];
   const isMap = one(sp.view) === "map";
   const cfg = config();
   const qs = (extra: Record<string, string>) => {
@@ -228,7 +237,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         <div className="[&_.map]:h-[620px]">
           <ResultsMap tileUrl={cfg.MAP_TILE_URL} attribution={cfg.MAP_TILE_ATTRIBUTION} pins={pins} />
         </div>
-      ) : res.rows.length === 0 ? (
+      ) : res.rows.length === 0 && catalog.length ? null : res.rows.length === 0 ? (
         <StateBlock icon={SearchX} title={t("search.emptyTitle")} action={<Link className="btn btn-secondary" href="/cari?q=">{t("search.reset")}</Link>}>
           {t("search.empty")}
         </StateBlock>
@@ -236,7 +245,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_400px] xl:grid-cols-[minmax(0,1fr)_460px]">
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2">
             {res.rows.map((r) => {
-              const img = coverUrl(r.media);
+              const demo = r.demo_photo_url ? String(r.demo_photo_url) : null;
+              const img = demo ?? coverUrl(r.media);
               return (
                 <Link key={String(r.id)} href={`/ruang/${r.id}${dates.length ? `?from=${from}&to=${to}` : ""}`} className="space-card group" data-testid="result">
                   <span className="space-photo block">
@@ -259,6 +269,7 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
                   </span>
                   <span className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
                     <span>{t(`spaceTypes.${String(r.type)}`)}</span>
+                    {demo ? <span className="italic">{t("search.illustration")}</span> : null}
                     {r.max_capacity ? (
                       <span className="inline-flex items-center gap-1">
                         <Users className="size-3.5" aria-hidden="true" />
@@ -281,6 +292,26 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           ) : null}
         </div>
       )}
+      {catalog.length && !isMap ? (
+        <section className="mt-16 border-t border-line pt-10" aria-labelledby="dari-katalog">
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+            <div className="max-w-2xl">
+              <h2 id="dari-katalog" className="mt-0 mb-1 text-[22px]">
+                {t("search.catalogTitle")}
+              </h2>
+              <p className="m-0 text-[15px] text-muted-foreground">{t("search.catalogLead")}</p>
+            </div>
+            <Link href="/katalog" className="btn btn-secondary h-10">
+              {t("search.catalogAll")}
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {catalog.map((v) => (
+              <CatalogCard key={String(v.slug)} v={v as unknown as CatalogItem} />
+            ))}
+          </div>
+        </section>
+      ) : null}
       {res.total > res.pageSize ? (
         <div className="mt-10 flex items-center justify-center gap-4 text-sm font-semibold">
           {page > 1 ? <Link href={qs({ page: String(page - 1) })}>{t("search.prev")}</Link> : null}

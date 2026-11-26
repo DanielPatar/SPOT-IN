@@ -20,14 +20,17 @@ export function PageEditorForm({
   categories,
   maxCapacity,
   isDraft,
+  discovery,
 }: {
   action: (s: ActionState, f: FormData) => Promise<ActionState>;
   eventId: string;
-  initial: { title: string; summary: string; description: string; category: string; ageNote: string; closeMode: string; questions: Q[]; hasCover: boolean };
+  initial: { title: string; summary: string; description: string; category: string; ageNote: string; closeMode: string; questions: Q[]; hasCover: boolean; listed?: boolean };
   sessions: Session[];
   categories: { value: string; label: string }[];
   maxCapacity: number;
   isDraft: boolean;
+  /** EVENT_DISCOVERY=on: offer the opt-in to the public "Jelajah acara" list. */
+  discovery?: boolean;
 }) {
   const t = useTranslations("pageEditor");
   const tc = useTranslations("common");
@@ -163,6 +166,18 @@ export function PageEditorForm({
           <input type="radio" name="closeMode" value="manual" defaultChecked={val("closeMode", initial.closeMode) === "manual"} /> {t("closeManual")}
         </label>
       </fieldset>
+
+      {discovery ? (
+        <fieldset>
+          <legend>{t("listedLegend")}</legend>
+          <label className="check">
+            <input type="checkbox" name="listed" defaultChecked={!!initial.listed} aria-describedby="listed-hint" /> {t("listed")}
+          </label>
+          <p id="listed-hint" className="small muted m-0">
+            {t("listedHint")}
+          </p>
+        </fieldset>
+      ) : null}
 
       {needsConfirm ? (
         <div role="alertdialog" aria-labelledby="confirm-title" className="rounded-lg border-2 border-warm bg-warm-soft p-4">

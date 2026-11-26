@@ -138,7 +138,7 @@ export async function searchSpaces(input: SearchInput) {
           : sql`s.published_at desc nulls last`;
 
   const rows = await sql`
-    select s.id, s.name, s.type, s.max_capacity, s.power_kva, s.environment, s.media, s.capacities,
+    select s.id, s.name, s.type, s.max_capacity, s.power_kva, s.environment, s.media, s.demo_photo_url, s.capacities,
            p.id as property_id, p.name as property_name, p.city, p.area, p.timezone,
            ST_Y(p.geo::geometry) as lat, ST_X(p.geo::geometry) as lon,
            r.from_price, r.unit, o.verification_status = 'verified' as verified,
@@ -180,7 +180,7 @@ export async function publicProperty(propertyId: string) {
     from properties p join organizations o on o.id = p.operator_id where p.id = ${propertyId}`;
   if (!p || p.operator_status !== "active") throw new PermissionError();
   const spaces = await db()`
-    select s.id, s.name, s.type, s.max_capacity, s.media, r.from_price, r.unit
+    select s.id, s.name, s.type, s.max_capacity, s.media, s.demo_photo_url, r.from_price, r.unit
     from spaces s left join rate_cards r on r.space_id = s.id where s.property_id = ${propertyId} and s.status = 'published' order by s.name`;
   return { property: p, spaces };
 }
@@ -246,7 +246,7 @@ export async function removeFromShortlist(actor: Actor, shortlistId: string, spa
 
 async function shortlistItems(shortlistId: string) {
   return db()`
-    select s.id, s.name, s.type, s.max_capacity, s.media, s.status, p.name as property_name, p.city, p.area, i.note, r.from_price, r.unit
+    select s.id, s.name, s.type, s.max_capacity, s.media, s.demo_photo_url, s.status, p.name as property_name, p.city, p.area, i.note, r.from_price, r.unit
     from shortlist_items i join spaces s on s.id = i.space_id join properties p on p.id = s.property_id
     left join rate_cards r on r.space_id = s.id where i.shortlist_id = ${shortlistId} order by i.added_at`;
 }

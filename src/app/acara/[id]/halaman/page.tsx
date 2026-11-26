@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { eventDiscoveryOn } from "@/lib/config";
 import { notFound } from "next/navigation";
 import { CalendarX } from "lucide-react";
 import { t } from "@/lib/i18n";
@@ -60,6 +61,7 @@ export default async function EventPageEditor({ params, searchParams }: { params
               action={saveEventPageAction}
               eventId={id}
               isDraft={!page || page.status === "draft"}
+              discovery={eventDiscoveryOn()}
               maxCapacity={Number(booking.max_capacity)}
               categories={CATEGORIES.map((c) => ({ value: c, label: t(`categories.${c}`) }))}
               initial={{
@@ -69,6 +71,7 @@ export default async function EventPageEditor({ params, searchParams }: { params
                 category: String(page?.category ?? event.category ?? "other"),
                 ageNote: String(page?.age_note ?? t("pageEditor.ageDefault")),
                 closeMode: String(page?.close_mode ?? "session_start"),
+                listed: !!page?.listed,
                 questions: (page?.questions ?? []) as never,
                 hasCover: !!page?.cover_file_id,
               }}

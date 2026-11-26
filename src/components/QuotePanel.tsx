@@ -25,7 +25,7 @@ export async function QuotePanel({ quotes, tz, canAccept, bookingId }: { quotes:
   const s = latest.payment_schedule as unknown as { mode: string; depositBps: number; depositDays: number; balanceDaysBefore: number };
   const tot = latest.totals;
   const deposit = s.mode === "full" ? tot.organizerTotal : null;
-  const revision = latest.revision_comments as { general?: string } | null;
+  const revision = latest.revision_comments as { general?: string; proposedTotal?: number } | null;
   return (
     <Panel>
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -45,7 +45,11 @@ export async function QuotePanel({ quotes, tz, canAccept, bookingId }: { quotes:
       {blocker === "quotes.eventChanged" ? <Notice tone="waiting" title={t("quoteView.eventChangedTitle")}>{t("quoteView.eventChangedBody")}</Notice> : null}
       {blocker === "quotes.datesBookedOrganizer" ? <Notice tone="danger" title={t("quoteView.takenTitle")}>{t("quoteView.takenBody")}</Notice> : null}
       {latest.status === "declined" ? <Notice tone="neutral" title={t("quoteView.declinedTitle")}>{String(latest.decline_reason ?? "")}</Notice> : null}
-      {revision && latest.status === "sent" ? <Notice tone="waiting" title={t("quoteView.revisionSentTitle")}>{t("quoteView.revisionSentBody")}</Notice> : null}
+      {revision && latest.status === "sent" ? (
+        <Notice tone="waiting" title={revision.proposedTotal ? t("quoteView.counterSentTitle", { amount: formatRupiah(revision.proposedTotal) }) : t("quoteView.revisionSentTitle")}>
+          {t("quoteView.revisionSentBody")}
+        </Notice>
+      ) : null}
 
       <div className="mt-3">
         {latest.lines.map((l) => (
@@ -102,6 +106,14 @@ export async function QuotePanel({ quotes, tz, canAccept, bookingId }: { quotes:
             <Form action={organizerQuoteAction}>
               <input type="hidden" name="quoteId" value={latest.id} />
               <input type="hidden" name="enquiryId" value={String(latest.enquiry_id)} />
+              <p className="small muted m-0">{t("quoteView.counterHelp")}</p>
+              <label>
+                {t("quoteView.counterAmount")}
+                <input name="proposedTotal" inputMode="numeric" placeholder={formatRupiah(tot.organizerTotal)} aria-describedby="counter-hint" />
+              </label>
+              <p id="counter-hint" className="small muted m-0">
+                {t("quoteView.counterHint", { amount: formatRupiah(tot.organizerTotal) })}
+              </p>
               <label>
                 {t("quoteView.revisionGeneral")}
                 <textarea name="general" />

@@ -71,6 +71,14 @@ export function resetConfigForTests(): void {
   cached = undefined;
 }
 
+/**
+ * Public event discovery (proposed amendment to FR-M28-05): EVENT_DISCOVERY=on lets organizers opt a live
+ * event page into the public "Jelajah acara" list. Default off = every page stays unlisted, as in PRD v1.2.
+ */
+export function eventDiscoveryOn(): boolean {
+  return (process.env.EVENT_DISCOVERY ?? "").trim().toLowerCase() === "on";
+}
+
 /** True when anyone may sign up without being on the Admin's invite list (REGISTRATION_MODE=open). */
 export function registrationOpen(): boolean {
   // Parses only this variable (not the full config) so static UI can call it at build time. Same schema as

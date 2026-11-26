@@ -7,6 +7,8 @@ import { db } from "@/lib/db";
 export type CatalogFilters = {
   q?: string;
   region?: string;
+  /** Matches every region containing this text, e.g. "Jakarta" → Jakarta Barat, Jakarta Pusat, … */
+  regionLike?: string;
   budgetMax?: number | null;
   minPax?: number | null;
 };
@@ -21,11 +23,12 @@ export async function listCatalog(f: CatalogFilters = {}) {
         ? sql`(name ilike ${`%${q}%`} or category ilike ${`%${q}%`} or area_type ilike ${`%${q}%`})`
         : null,
       f.region ? sql`lower(region) = lower(${f.region})` : null,
+      f.regionLike ? sql`region ilike ${`%${f.regionLike}%`}` : null,
       f.budgetMax ? sql`budget_level <= ${f.budgetMax}` : null,
       f.minPax ? sql`max_pax >= ${f.minPax}` : null,
     ].filter((x): x is NonNullable<typeof x> => x !== null),
   );
-  return sql`select slug, name, region, category, area_m2, max_pax, area_type, budget_level, budget_note, floorplan_path
+  return sql`select slug, name, region, category, area_m2, max_pax, area_type, budget_level, budget_note, floorplan_path, photo_url
              from catalog_venues where ${where} order by region, name`;
 }
 

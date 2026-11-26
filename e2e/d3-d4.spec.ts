@@ -105,7 +105,7 @@ test("D3 — quote above threshold, Owner approval, revision with diff, comparis
   await page.goto(`/enquiry/${aula}`);
   await expect(page.getByRole("heading", { name: "Penawaran versi 1" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Unduh PDF penawaran" })).toBeVisible();
-  await page.getByText("Minta revisi", { exact: true }).click();
+  await page.getByText("Nego harga / minta revisi", { exact: true }).click();
   await page.getByLabel("Apa yang perlu diubah?").fill("Mohon potongan harga untuk sewa tiga hari.");
   await page.getByLabel(/Komentar untuk/).first().fill("Bisa diskon 5 juta?");
   await page.getByRole("button", { name: "Kirim permintaan revisi" }).click();

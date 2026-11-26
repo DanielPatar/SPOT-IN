@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 import { logoutAction, switchContextAction } from "@/web/actions/auth";
 import { Logo, Notice } from "@/components/kit";
 import { NavLinks } from "@/components/NavLinks";
-import { registrationOpen } from "@/lib/config";
+import { eventDiscoveryOn, registrationOpen } from "@/lib/config";
 
 /** App header from the mock-ups (AppHeader): logo, active context, navigation, notifications, account. */
 export async function Header() {
@@ -23,6 +23,7 @@ export async function Header() {
   }
   if (s && !m?.venue && !m?.organizer && !s.isQuickAttendee) nav.push({ href: "/mulai", label: t("nav.start") });
   if (s?.isQuickAttendee && !m?.venue && !m?.organizer) nav.push({ href: "/kartu-saya", label: t("nav.myPasses") });
+  if (s && eventDiscoveryOn() && !m?.venue && !m?.organizer) nav.push({ href: "/jelajah", label: t("nav.discover") });
   if (s?.isAdmin) nav.push({ href: "/admin", label: t("nav.admin") });
   const ctxName = ctx === "venue" ? m?.venue?.displayName : ctx === "organizer" ? m?.organizer?.displayName : null;
   return (
@@ -68,6 +69,11 @@ export async function Header() {
             </>
           ) : (
             <>
+              {eventDiscoveryOn() ? (
+                <Link href="/jelajah" className="hidden rounded-md px-3 py-2 text-[15px] font-semibold text-ink no-underline hover:bg-sunken hover:no-underline md:inline-flex">
+                  {t("nav.discover")}
+                </Link>
+              ) : null}
               <Link href="/katalog" className="hidden rounded-md px-3 py-2 text-[15px] font-semibold text-ink no-underline hover:bg-sunken hover:no-underline md:inline-flex">
                 {t("nav.catalog")}
               </Link>

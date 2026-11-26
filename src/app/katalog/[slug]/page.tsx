@@ -85,6 +85,25 @@ export default async function CatalogVenuePage({ params }: { params: Promise<{ s
         </p>
       </div>
 
+      {v.photo_url ? (
+        <figure className="mx-0 mt-0 mb-10">
+          <img src={String(v.photo_url)} alt={t("catalog.photoAlt", { name: String(v.name) })} className="aspect-[16/9] max-h-[460px] w-full rounded-2xl object-cover sm:aspect-[21/9]" />
+          {v.photo_credit ? (
+            <figcaption className="mt-2 text-[13px] text-muted-foreground">
+              {t("catalog.photoCredit", { credit: String(v.photo_credit) })}
+              {v.photo_page ? (
+                <>
+                  {" · "}
+                  <a href={String(v.photo_page)} target="_blank" rel="noreferrer">
+                    {t("catalog.photoSource")}
+                  </a>
+                </>
+              ) : null}
+            </figcaption>
+          ) : null}
+        </figure>
+      ) : null}
+
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div className="min-w-0">
           <section aria-labelledby="denah">

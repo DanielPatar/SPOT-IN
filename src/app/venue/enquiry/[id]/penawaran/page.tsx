@@ -36,7 +36,7 @@ export default async function QuoteBuilderPage({ params, searchParams }: { param
   const { quotes } = await quotesForEnquiry(a, id);
   const draft = quotes.find((q) => q.status === "draft" || q.status === "pending_approval");
   const latestSent = quotes.find((q) => q.status === "sent");
-  const revision = latestSent?.revision_comments as { general?: string; lines?: Record<string, string> } | null | undefined;
+  const revision = latestSent?.revision_comments as { general?: string; lines?: Record<string, string>; proposedTotal?: number } | null | undefined;
   const [ctx] = await db()`select e.days, p.timezone, coalesce(r.unit, 'day') as unit, q.space_id, o.approval_threshold, o.verification_status
     from enquiries q join events e on e.id = q.event_id join spaces s on s.id = q.space_id join properties p on p.id = s.property_id
     join organizations o on o.id = p.operator_id left join rate_cards r on r.space_id = s.id where q.id = ${id}`;
@@ -60,6 +60,11 @@ export default async function QuoteBuilderPage({ params, searchParams }: { param
         {!booked && held ? <Notice tone="waiting" title={t("quoteBuilder.backupTitle")}>{t("quoteBuilder.backupBody")}</Notice> : null}
         {revision ? (
           <Notice tone="waiting" title={t("quoteBuilder.revisionTitle", { version: Number(latestSent!.version) })}>
+            {revision.proposedTotal ? (
+              <p className="m-0 font-semibold">
+                {t("quoteBuilder.counterLine", { proposed: formatRupiah(revision.proposedTotal), current: formatRupiah(latestSent!.totals.organizerTotal), gap: formatRupiah(Math.abs(latestSent!.totals.organizerTotal - revision.proposedTotal)) })}
+              </p>
+            ) : null}
             {revision.general ? <p className="m-0">{revision.general}</p> : null}
             {Object.keys(revision.lines ?? {}).length ? <p className="m-0">{t("quoteBuilder.revisionLinesHint")}</p> : null}
           </Notice>

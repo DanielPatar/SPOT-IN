@@ -101,6 +101,7 @@ function parsePage(form: FormData): pages.PageInput {
     ageNote: str(form, "ageNote"),
     questions,
     closeMode: str(form, "closeMode") === "manual" ? "manual" : "session_start",
+    listed: form.get("listed") === "on",
     sessions: days.map((day) => ({ day, start: str(form, `start_${day}`), end: str(form, `end_${day}`), capacity: int(form, `capacity_${day}`) ?? 0 })),
   };
 }

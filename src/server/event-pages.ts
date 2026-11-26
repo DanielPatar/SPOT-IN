@@ -1,4 +1,5 @@
 import { db, type Tx } from "@/lib/db";
+import { eventDiscoveryOn } from "@/lib/config";
 import { now } from "@/lib/clock";
 import { t } from "@/lib/i18n";
 import { AppError, PermissionError } from "@/lib/permissions";
@@ -60,6 +61,8 @@ export type PageInput = {
   ageNote?: string;
   questions: Question[];
   closeMode: "session_start" | "manual";
+  /** Opt-in to the public "Jelajah acara" list; only honoured when EVENT_DISCOVERY=on. */
+  listed?: boolean;
   sessions: { day: string; start: string; end: string; capacity: number }[];
 };
 
@@ -165,6 +168,7 @@ export async function saveEventPage(actor: Actor, eventId: string, input: PageIn
     const regs = await db()`select distinct user_id from registrations where page_id = ${pageId} and status <> 'cancelled'`;
     await notify({ userIds: regs.map((r) => String(r.user_id)), event: "event_changed", values: { title, changes: changes.join(" ") }, link: `/e/${page.slug}` });
   }
+  await db()`update event_pages set listed = ${!!input.listed && eventDiscoveryOn()} where id = ${pageId}`;
   if (page?.status === "live") await scheduleSessionJobs(pageId);
   return { pageId };
 }
@@ -234,6 +238,34 @@ export async function publicPage(slug: string) {
   if (!p) return null;
   const sessions = await db()`select * from event_sessions where page_id = ${p.id as string} order by day`;
   return { page: p, sessions };
+}
+
+/**
+ * Public discovery ("Jelajah acara", proposed amendment to FR-M28-05): live pages the organizer opted in,
+ * with at least one session that has not ended. Returns nothing unless EVENT_DISCOVERY=on.
+ */
+export async function listedEvents(f: { q?: string; region?: string; when?: "now" | "soon" | "" } = {}) {
+  if (!eventDiscoveryOn()) return [];
+  const sql = db();
+  const at = await now();
+  const q = (f.q ?? "").trim();
+  const region = (f.region ?? "").trim();
+  const rows = await sql`
+    select ep.slug, ep.title, ep.summary, ep.description, ep.category, ep.cover_file_id, ep.status,
+           o.display_name as organizer_name, s.name as space_name, pr.name as property_name, pr.city, pr.area, pr.timezone,
+           ST_Y(pr.geo::geometry) as lat, ST_X(pr.geo::geometry) as lon,
+           (select min(es.starts_at) from event_sessions es where es.page_id = ep.id and es.ends_at >= ${at}) as next_start,
+           (select max(es.ends_at) from event_sessions es where es.page_id = ep.id) as last_end,
+           exists (select 1 from event_sessions es where es.page_id = ep.id and es.starts_at <= ${at} and es.ends_at >= ${at}) as ongoing
+    from event_pages ep join organizations o on o.id = ep.organizer_org_id join bookings b on b.id = ep.booking_id
+    join spaces s on s.id = b.space_id join properties pr on pr.id = s.property_id
+    where ep.listed and ep.status in ('live', 'registration_closed')
+      and exists (select 1 from event_sessions es where es.page_id = ep.id and es.ends_at >= ${at})
+      and (${q} = '' or ep.title ilike ${`%${q}%`} or ep.summary ilike ${`%${q}%`} or ep.description ilike ${`%${q}%`} or pr.name ilike ${`%${q}%`})
+      and (${region} = '' or pr.city ilike ${`%${region}%`})
+    order by ongoing desc, next_start asc
+    limit 60`;
+  return rows.filter((r) => (f.when === "now" ? r.ongoing : f.when === "soon" ? !r.ongoing : true));
 }
 
 export async function sessionOpen(session: Record<string, unknown>, page: Record<string, unknown>, at?: Date): Promise<"open" | "full" | "closed"> {

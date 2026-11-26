@@ -10,6 +10,9 @@ export const imagery = {
   host: u("1511578314322-379afb476865", 1400),
   closing: u("1555396273-367ea4eb4db5", 1400),
   auth: u("1528605248644-14dd04022da1", 1200),
+  /** Rotating hero backgrounds (keys match home.slides.N). */
+  heroSlides: [u("1464366400600-7168b8af9bc3", 2000), u("1511578314322-379afb476865", 2000), u("1519167758481-83f550bb49b3", 2000), u("1555396273-367ea4eb4db5", 2000)],
+  events: u("1517457373958-b7bdd4587205", 1400),
   /** One photo per event type (keys match EVENT_TYPES). */
   eventTypes: {
     exhibition: u("1567958451986-2de427a4a0be", 800),

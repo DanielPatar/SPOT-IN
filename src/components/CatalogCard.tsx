@@ -12,6 +12,7 @@ export type CatalogItem = {
   max_pax: unknown;
   budget_level: unknown;
   floorplan_path: unknown;
+  photo_url?: unknown;
 };
 
 export function isImage(p: unknown): p is string {
@@ -39,7 +40,9 @@ export function CatalogCard({ v }: { v: CatalogItem }) {
       data-testid="catalog-item"
     >
       <span className="space-photo block">
-        {isImage(fp) ? (
+        {v.photo_url ? (
+          <img src={String(v.photo_url)} alt="" loading="lazy" />
+        ) : isImage(fp) ? (
           <img src={fp} alt="" className="bg-white object-contain p-3" />
         ) : (
           <span className="grid aspect-[4/3] w-full place-items-center bg-gradient-to-br from-brand-soft via-white to-sunken">

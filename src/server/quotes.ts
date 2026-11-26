@@ -255,13 +255,16 @@ async function sendQuote(quoteId: string, _actorId: string): Promise<void> {
 }
 
 /** Organizer asks for a revision with general and per-line comments (FR-M12-06). */
-export async function requestRevision(actor: Actor, quoteId: string, input: { general: string; lines: Record<string, string> }): Promise<void> {
+export async function requestRevision(actor: Actor, quoteId: string, input: { general: string; lines: Record<string, string>; proposedTotal?: number | null }): Promise<void> {
   const { quote, ctx } = await quoteForOrganizer(actor, quoteId, "quote.accept");
   if (quote.status !== "sent") throw new AppError("quotes.notOpen");
   const lineComments = Object.fromEntries(Object.entries(input.lines).filter(([, v]) => v.trim()).map(([k, v]) => [k, v.trim().slice(0, 500)]));
-  if (!input.general.trim() && !Object.keys(lineComments).length) throw new AppError("quotes.revisionEmpty");
+  // Price counter-offer (UI v2): the total the organizer is willing to pay, in whole Rupiah. Not binding —
+  // the venue answers with a new quote version, or explains in the conversation why the price stays.
+  const proposedTotal = input.proposedTotal && Number.isSafeInteger(input.proposedTotal) && input.proposedTotal > 0 ? input.proposedTotal : null;
+  if (!input.general.trim() && !Object.keys(lineComments).length && !proposedTotal) throw new AppError("quotes.revisionEmpty");
   const at = await now();
-  await db()`update quotes set revision_comments = ${db().json({ general: input.general.trim(), lines: lineComments, at: at.toISOString(), by: actor.userId } as never)} where id = ${quoteId}`;
+  await db()`update quotes set revision_comments = ${db().json({ general: input.general.trim(), lines: lineComments, ...(proposedTotal ? { proposedTotal } : {}), at: at.toISOString(), by: actor.userId } as never)} where id = ${quoteId}`;
   await notify({ userIds: await orgMemberIds(String(ctx.operator_id), ["owner", "staff"]), event: "quote_revision_requested", values: { event: String(ctx.event_name) }, link: `/venue/enquiry/${quote.enquiry_id}/penawaran` });
 }
 

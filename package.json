@@ -24,7 +24,8 @@
     "pii-scan": "tsx scripts/pii-scan.ts",
     "perf:search": "tsx scripts/perf-search.ts",
     "pilot:delete": "tsx scripts/pilot-delete.ts",
-    "catalog:import": "tsx scripts/import-catalog.ts"
+    "catalog:import": "tsx scripts/import-catalog.ts",
+    "demo:photos": "tsx scripts/demo-photos.ts"
   },
   "dependencies": {
     "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
