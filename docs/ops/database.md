@@ -44,3 +44,56 @@ Then open the app with that `DATABASE_URL` and sign in as a seeded user (demo pr
 - Only named team members get access to the Supabase organization; each access is logged.
 - Test a backup restore before the pilot and record it (AC-NFR-2). Free tier has no PITR.
 - Rotate the database password if it was ever shared in plain text.
+
+## 7. Data API
+Turn **Settings > Data API > Enable Data API** off. The app holds no Supabase SDK; it connects only through
+`DATABASE_URL` with postgres.js, and every permission check is server-side (PRD §4.3). Leaving the
+auto-generated REST/GraphQL endpoints on would expose the tables over HTTP with the anon key and bypass those
+checks. Migrations and the Table Editor are unaffected. If it is ever needed, enable RLS on every table first.
+
+## 8. Deploying on Vercel
+Environment variables (Production, Preview and Development):
+
+| Key | Value |
+|---|---|
+| `DATABASE_URL` | Session pooler string with `?sslmode=require` |
+| `APP_SECRET` | 32+ random bytes; the same value used when seeding |
+| `APP_ENV` | `demo` on the demo project, `pilot` on the pilot project |
+| `PILOT_MODE` | `on` |
+| `APP_URL` | the deployment URL |
+| `DB_POOL_MAX` | `3` — each serverless instance opens its own pool |
+| `DISABLE_JOB_TICKER` | `1` — the in-process ticker cannot run on serverless |
+| `CRON_SECRET` | random string; Vercel Cron sends it as the bearer token |
+| `ADMIN_EMAILS` | admin addresses, comma separated |
+| `EMAIL_DRIVER` | `outbox` until an email provider is chosen (`docs/ops/email.md`) |
+| `SCANNER_DRIVER` | `eicar` (ClamAV has no serverless host) |
+| `GEOCODER_DRIVER` | `nominatim` |
+| `NOMINATIM_USER_AGENT` | must carry a real contact address, per Nominatim's policy |
+
+Leave `XENDIT_SECRET_KEY` unset; the pilot guard refuses anything but an `xnd_development_` key (FR-M14-13).
+
+Run the migration from a shell with those values (`npx vercel env pull .env.local` fetches them), not from the
+build: the build must not mutate the schema.
+
+### Scheduled work
+`src/instrumentation.ts` ticks every 30 s, which only works on a long-lived Node server. On Vercel,
+`vercel.json` schedules `GET /api/cron/tick` every 5 minutes and Vercel sends `CRON_SECRET` as the bearer
+token; the route also still accepts `APP_SECRET` for an external scheduler. Without this, holds never expire
+and deadlines and reminders never fire (FR-M6-05, FR-M24-10). Check a deployment's cron logs once after
+release.
+
+### File uploads
+`STORAGE_DRIVER=local` writes to disk and fails on Vercel's read-only filesystem. Use Supabase Storage through
+the existing S3 adapter: create a bucket, then Storage > S3 Configuration > enable the S3 connection and
+generate an access key.
+
+| Key | Value |
+|---|---|
+| `STORAGE_DRIVER` | `s3` |
+| `S3_ENDPOINT` | `https://<ref>.storage.supabase.co/storage/v1/s3` |
+| `S3_BUCKET` | the bucket name |
+| `S3_ACCESS_KEY` / `S3_SECRET_KEY` | from the generated access key |
+| `S3_REGION` | the project region, e.g. `ap-southeast-1` |
+
+The secret is shown once. These keys bypass Storage RLS and are server-side only; never expose them to the
+browser. Keep the bucket private — the app serves files through its own signed, expiring URLs.
