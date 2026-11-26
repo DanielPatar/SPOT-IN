@@ -24,7 +24,9 @@ export async function now(): Promise<Date> {
 
 export async function setClockOffsetMs(offsetMs: number, actorId: string | null): Promise<void> {
   if (!config().demoClockEnabled) throw new Error("The demo clock exists only in the demo environment (FR-M38-10).");
-  if (offsetMs < 0) throw new Error("The demo clock only moves forward.");
+  // FR-M38-10: forward only, relative to the clock's current position (not to real time, so a clock that
+  // tests or a demo pinned to a past date can still be advanced).
+  if (!Number.isFinite(offsetMs) || offsetMs < (await clockOffsetMs())) throw new Error("The demo clock only moves forward.");
   await db()`
     insert into settings (key, value, changed_by, changed_at)
     values ('demo_clock_offset_ms', ${JSON.stringify(offsetMs)}::jsonb, ${actorId}, now())
