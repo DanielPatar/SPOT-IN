@@ -2,6 +2,7 @@
  * Pre-demo data scan (FR-M38-04, AC-M38-4): no column for blocked data types exists, and
  * no text value contains a 16-digit NIK-like or card-like number. Exits 1 on any match.
  */
+import { pathToFileURL } from "node:url";
 import { db, closeDb } from "../src/lib/db";
 
 const BLOCKED_COLUMN = /(^|_)(nik|ktp|npwp|nib|passport|selfie|deed|akta|iban|bank_account|account_number|card_number|cvv)(_|$)/i;
@@ -30,7 +31,7 @@ export async function piiScan(): Promise<{ columns: string[]; values: { table: s
   return { columns, values };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   piiScan()
     .then((r) => {
       console.log(JSON.stringify(r, null, 2));

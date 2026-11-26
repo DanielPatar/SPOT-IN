@@ -2,6 +2,7 @@
  * Applies db/migrations/*.sql in order, once each. `--reset` drops everything first
  * (refused in the pilot environment).
  */
+import { pathToFileURL } from "node:url";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import postgres from "postgres";
@@ -31,7 +32,7 @@ export async function migrate(databaseUrl: string, opts: { reset?: boolean; quie
   }
 }
 
-const isMain = import.meta.url === `file://${process.argv[1]}`;
+const isMain = import.meta.url === pathToFileURL(process.argv[1] ?? "").href;
 if (isMain) {
   const url = process.env.DATABASE_URL;
   if (!url) throw new Error("DATABASE_URL is required");

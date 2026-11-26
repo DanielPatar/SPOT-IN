@@ -12,6 +12,9 @@ export function db(): Sql {
     g.__spotinSql = postgres(config().DATABASE_URL, {
       max: Number(process.env.DB_POOL_MAX ?? 10),
       idle_timeout: 20,
+      // Supabase's transaction pooler (port 6543) does not support prepared statements.
+      // Set DB_PREPARE=false only when DATABASE_URL points at that pooler.
+      prepare: process.env.DB_PREPARE !== "false",
       onnotice: () => {},
       types: {
         bigint: postgres.BigInt,
