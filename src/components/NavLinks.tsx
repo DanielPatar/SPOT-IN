@@ -17,7 +17,7 @@ export function NavLinks({
   return (
     <nav
       aria-label={label}
-      className="order-last -mx-1 flex w-full gap-1 overflow-x-auto lg:order-none lg:mx-0 lg:ml-6 lg:w-auto"
+      className="rail order-last -mx-1 flex w-full gap-1 overflow-x-auto overflow-y-hidden lg:order-none lg:mx-0 lg:ml-6 lg:w-auto"
     >
       {items.map((n) => (
         <Link
@@ -27,7 +27,7 @@ export function NavLinks({
           className={cn(
             "relative shrink-0 rounded-md px-3 py-2 text-[15px] font-semibold whitespace-nowrap no-underline transition-colors hover:bg-sunken hover:no-underline",
             active(n)
-              ? "text-ink after:absolute after:inset-x-3 after:-bottom-[9px] after:h-0.5 after:rounded-full after:bg-ink lg:after:-bottom-[15px]"
+              ? "text-ink after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:rounded-full after:bg-ink"
               : "text-muted-foreground hover:text-ink",
           )}
         >

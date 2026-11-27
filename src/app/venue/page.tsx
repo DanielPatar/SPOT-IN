@@ -19,12 +19,12 @@ export default async function VenueHome() {
   const inbox = await venueInbox(a, { view: "unreplied" });
   const week = await venueThisWeek(a);
   const steps = [
-    { key: "profile", done: true },
-    { key: "property", done: !!property },
-    { key: "pin", done: !!property?.lat },
-    { key: "space", done: spaces.length > 0 },
-    { key: "submitted", done: spaces.some((s) => s.status !== "draft") },
-    { key: "verified", done: org?.verification_status === "verified" },
+    { key: "profile", done: true, href: "" },
+    { key: "property", done: !!property, href: "/venue/properti" },
+    { key: "pin", done: !!property?.lat, href: "/venue/properti" },
+    { key: "space", done: spaces.length > 0, href: "/venue/ruang/baru" },
+    { key: "submitted", done: spaces.some((s) => s.status !== "draft"), href: spaces[0] ? `/venue/ruang/${String((spaces.find((x) => x.status === "draft") ?? spaces[0]).id)}` : "" },
+    { key: "verified", done: org?.verification_status === "verified", href: "" },
   ];
   const status = String(org?.verification_status);
   return (
@@ -37,7 +37,13 @@ export default async function VenueHome() {
         {steps.map((s) => (
           <li key={s.key} className={s.done ? "done" : ""}>
             {s.done ? "✓ " : ""}
-            {t(`venueHome.step.${s.key}`)}
+            {!s.done && s.href ? (
+              <Link href={s.href} className="font-semibold text-ink underline">
+                {t(`venueHome.step.${s.key}`)}
+              </Link>
+            ) : (
+              t(`venueHome.step.${s.key}`)
+            )}
           </li>
         ))}
       </ol>

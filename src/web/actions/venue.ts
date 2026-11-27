@@ -16,8 +16,17 @@ const WEEKDAYS = listings.WEEKDAYS;
 export async function savePropertyAction(_: ActionState, form: FormData): Promise<ActionState> {
   return run(async () => {
     const a = await actor();
-    const lat = str(form, "lat") ? Number(str(form, "lat")) : null;
-    const lon = str(form, "lon") ? Number(str(form, "lon")) : null;
+    let lat = str(form, "lat") ? Number(str(form, "lat")) : null;
+    let lon = str(form, "lon") ? Number(str(form, "lon")) : null;
+    // A pasted Google Maps link sets the pin (short links are resolved here, once, on save).
+    const mapsLink = str(form, "mapsLink").trim();
+    if (mapsLink) {
+      const { coordsFromMapsLink } = await import("@/adapters/geocoder");
+      const found = await coordsFromMapsLink(mapsLink);
+      if (!found) return { error: t("map.linkUnreadable") };
+      lat = found.lat;
+      lon = found.lon;
+    }
     const hours: Record<string, { open: string; close: string } | null> = {};
     for (const d of WEEKDAYS) hours[d] = bool(form, `${d}_closed`) ? null : { open: str(form, `${d}_open`) || "10:00", close: str(form, `${d}_close`) || "22:00" };
     const names = form.getAll("docName").map(String);

@@ -1,5 +1,6 @@
 import { config } from "@/lib/config";
 import { db } from "@/lib/db";
+import { isGoogleMapsHost, parseMapsLink, type LatLon } from "@/lib/maps-link";
 
 /**
  * Geocoding adapter (PRD §10): Nominatim, called once when a property is saved (never per
@@ -14,7 +15,13 @@ export async function geocode(query: string): Promise<GeocodeResult> {
   if (!q) return null;
   const cached = await db()`select lat, lon, display_name from geocode_cache where query = ${q}`;
   if (cached[0]) {
-    return cached[0].lat == null ? null : { lat: Number(cached[0].lat), lon: Number(cached[0].lon), displayName: String(cached[0].display_name) };
+    return cached[0].lat == null
+      ? null
+      : {
+          lat: Number(cached[0].lat),
+          lon: Number(cached[0].lon),
+          displayName: String(cached[0].display_name),
+        };
   }
   let result: GeocodeResult = null;
   if (config().GEOCODER_DRIVER === "fake") {
@@ -25,10 +32,22 @@ export async function geocode(query: string): Promise<GeocodeResult> {
     lastCall = Date.now();
     try {
       const url = `${config().NOMINATIM_URL}/search?format=json&limit=1&countrycodes=id&q=${encodeURIComponent(query)}`;
-      const res = await fetch(url, { headers: { "User-Agent": config().NOMINATIM_USER_AGENT }, signal: AbortSignal.timeout(8000) });
+      const res = await fetch(url, {
+        headers: { "User-Agent": config().NOMINATIM_USER_AGENT },
+        signal: AbortSignal.timeout(8000),
+      });
       if (res.ok) {
-        const data = (await res.json()) as Array<{ lat: string; lon: string; display_name: string }>;
-        if (data[0]) result = { lat: Number(data[0].lat), lon: Number(data[0].lon), displayName: data[0].display_name };
+        const data = (await res.json()) as Array<{
+          lat: string;
+          lon: string;
+          display_name: string;
+        }>;
+        if (data[0])
+          result = {
+            lat: Number(data[0].lat),
+            lon: Number(data[0].lon),
+            displayName: data[0].display_name,
+          };
       } else {
         return null; // provider issue: don't cache
       }
@@ -40,4 +59,44 @@ export async function geocode(query: string): Promise<GeocodeResult> {
     insert into geocode_cache (query, lat, lon, display_name) values (${q}, ${result?.lat ?? null}, ${result?.lon ?? null}, ${result?.displayName ?? null})
     on conflict (query) do nothing`;
   return result;
+}
+
+/**
+ * Coordinates from a pasted Google Maps link. Full links are parsed as text; short links
+ * (maps.app.goo.gl) are followed, redirect by redirect, only across Google Maps hosts.
+ * Called once when a property is saved.
+ */
+export async function coordsFromMapsLink(link: string): Promise<LatLon | null> {
+  const direct = parseMapsLink(link);
+  if (direct) return direct;
+  if (config().GEOCODER_DRIVER === "fake") return null;
+  let url: URL;
+  try {
+    url = new URL(link.trim());
+  } catch {
+    return null;
+  }
+  for (let hop = 0; hop < 5; hop++) {
+    if (url.protocol !== "https:" || !isGoogleMapsHost(url.hostname)) return null;
+    let res: Response;
+    try {
+      res = await fetch(url, {
+        redirect: "manual",
+        headers: { "User-Agent": config().NOMINATIM_USER_AGENT },
+        signal: AbortSignal.timeout(8000),
+      });
+    } catch {
+      return null;
+    }
+    const next = res.headers.get("location");
+    if (!next) return null;
+    const found = parseMapsLink(next);
+    if (found) return found;
+    try {
+      url = new URL(next, url);
+    } catch {
+      return null;
+    }
+  }
+  return null;
 }

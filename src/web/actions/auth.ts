@@ -83,6 +83,9 @@ export async function switchContextAction(form: FormData): Promise<void> {
   const a = await actor();
   const ctx = str(form, "context") === "venue" ? "venue" : "organizer";
   await setSessionContext(a.userId, a.session.sessionId, ctx);
+  // The header lives in the root layout, which is kept across navigations: without this, switching
+  // while already on the target page (e.g. /venue) left the old role's menu on screen.
+  revalidatePath("/", "layout");
   redirect(ctx === "venue" ? "/venue" : "/");
 }
 

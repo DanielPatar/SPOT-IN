@@ -892,7 +892,13 @@
   "map": {
     "pickHelp": "Klik peta atau geser pin untuk menandai lokasi properti.",
     "lat": "Lintang",
-    "lon": "Bujur"
+    "lon": "Bujur",
+    "linkLabel": "Tautan Google Maps (opsional)",
+    "linkPlaceholder": "Tempel tautan dari Google Maps, mis. https://maps.app.goo.gl/…",
+    "linkHelp": "Di Google Maps: buka lokasi gedung → Bagikan → Salin link, lalu tempel di sini. Pin akan dipasang otomatis.",
+    "linkOk": "Lokasi terbaca dari tautan — pin sudah dipasang. Periksa posisinya di peta, lalu simpan.",
+    "linkOnSave": "Tautan pendek akan dibaca saat Anda menyimpan.",
+    "linkUnreadable": "Tautan Google Maps tidak bisa dibaca. Buka tautannya di browser, salin alamat lengkap dari bilah alamat, lalu tempel lagi — atau klik lokasi langsung di peta."
   },
   "badges": {
     "verified": "Terverifikasi Spot-In"
@@ -918,7 +924,8 @@
       "space": "Ruang pertama",
       "submitted": "Diajukan untuk tinjauan",
       "verified": "Terverifikasi"
-    }
+    },
+    "setPin": "Atur pin peta"
   },
   "verification": {
     "unsubmitted": "Belum diajukan",
