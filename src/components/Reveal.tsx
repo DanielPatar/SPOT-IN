@@ -3,7 +3,8 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Fades its children up when they scroll into view. Content is visible without JavaScript:
+ * Fades its children in when they scroll into view and out when they leave, in both scroll directions.
+ * Content is visible without JavaScript:
  * the hidden state is only applied after mount, and never with prefers-reduced-motion.
  */
 export function Reveal({
@@ -21,16 +22,18 @@ export function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (el.getBoundingClientRect().top < window.innerHeight * 0.92) return;
+    // Two-way: the element eases out again when it leaves, upwards or downwards, and back in on return.
     el.classList.add("reveal-wait");
     const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          el.classList.add("reveal-in");
-          io.disconnect();
+      ([e]) => {
+        if (!e) return;
+        if (e.isIntersecting) el.classList.add("reveal-in");
+        else {
+          el.dataset.side = e.boundingClientRect.top < 0 ? "above" : "below";
+          el.classList.remove("reveal-in");
         }
       },
-      { rootMargin: "0px 0px -8% 0px" },
+      { rootMargin: "-6% 0px -6% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();

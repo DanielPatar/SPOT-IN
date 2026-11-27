@@ -118,22 +118,27 @@ export function HeroStage({
 
   return (
     <>
-      <section className={cn("bleed relative isolate bg-ink", open ? "z-30" : "z-10")}>
+      <section
+        data-hero
+        className={cn("bleed relative isolate overflow-x-clip bg-ink", open ? "z-30" : "z-10")}
+      >
         <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-          {slides.map((src, i) => (
-            <img
-              key={src}
-              src={src}
-              alt=""
-              className={cn(
-                "hero-slide absolute inset-0 size-full object-cover",
-                i === slide ? "opacity-100" : "opacity-0",
-              )}
-            />
-          ))}
+          <div className="hero-bg absolute inset-0">
+            {slides.map((src, i) => (
+              <img
+                key={src}
+                src={src}
+                alt=""
+                className={cn(
+                  "hero-slide absolute inset-0 size-full object-cover",
+                  i === slide ? "opacity-100" : "opacity-0",
+                )}
+              />
+            ))}
+          </div>
           <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/25 to-black/45" />
         </div>
-        <div className="mx-auto max-w-7xl px-4 pt-16 pb-28 sm:px-6 sm:pt-24 sm:pb-40 lg:px-8">
+        <div className="hero-content mx-auto max-w-7xl px-4 pt-16 pb-28 sm:px-6 sm:pt-24 sm:pb-40 lg:px-8">
           {notice ? <p className="alert alert-ok mb-6 max-w-xl">{notice}</p> : null}
           {discovery ? (
             <div
@@ -311,9 +316,12 @@ export function HeroStage({
         <div className="absolute inset-0 -z-10 bg-ink" aria-hidden="true" />
         <div className="mx-auto flex max-w-7xl flex-wrap items-end justify-between gap-6 px-4 pb-12 sm:px-6 lg:px-8">
           <p className="m-0 -mt-12 text-[52px] leading-[0.95] font-extrabold tracking-[-0.045em] sm:-mt-20 sm:text-[112px]">
-            {t("bandLine1")}
-            <br />
-            {t("bandLine2")}
+            <span data-drift="-90" className="block">
+              {t("bandLine1")}
+            </span>
+            <span data-drift="90" className="block">
+              {t("bandLine2")}
+            </span>
           </p>
           <div className="text-right">
             <p key={slide} className="hero-caption m-0">

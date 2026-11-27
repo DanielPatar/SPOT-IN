@@ -11,6 +11,7 @@ import { EVENT_TYPES } from "@/server/enquiries";
 import { REGIONS, citiesOutsideRegions } from "@/lib/regions";
 import { HeroStage } from "@/components/HeroStage";
 import { Reveal } from "@/components/Reveal";
+import { ScrollFx } from "@/components/ScrollFx";
 import { Carousel } from "@/components/Carousel";
 import { listCatalog } from "@/server/catalog";
 import { CatalogCard, type CatalogItem } from "@/components/CatalogCard";
@@ -32,6 +33,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   const how = [1, 2, 3] as const;
   return (
     <div className="-mt-8">
+      <ScrollFx />
       {/* Hero (Peerspace-style): ask first, list spaces only after the search --- */}
       <HeroStage
         slides={imagery.heroSlides}
@@ -111,7 +113,9 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
       {discovery ? (
         <Reveal as="section" className="mt-20 grid overflow-hidden rounded-2xl bg-brand-soft lg:grid-cols-[1.1fr_1fr]">
-          <img src={imagery.events} alt="" loading="lazy" className="h-full max-h-96 min-h-64 w-full object-cover" />
+          <div className="parallax-frame relative max-h-96 min-h-64">
+            <img data-parallax="0.1" src={imagery.events} alt="" loading="lazy" className="absolute inset-0 size-full object-cover" />
+          </div>
           <div className="flex flex-col justify-center p-8 sm:p-12">
             <h2 className="mt-0 mb-3 text-[28px] leading-tight font-extrabold tracking-[-0.02em] sm:text-[36px]">{t("home.visitorTitle")}</h2>
             <p className="mb-6 max-w-md text-lg leading-relaxed text-ink/75">{t("home.visitorLead")}</p>
@@ -141,7 +145,9 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           </ol>
         </div>
         <div className="relative">
-          <img src={imagery.closing} alt={t("home.closingImageAlt")} loading="lazy" className="aspect-[4/5] w-full rounded-2xl object-cover lg:aspect-[5/6]" />
+          <div className="parallax-frame relative aspect-[4/5] rounded-2xl lg:aspect-[5/6]">
+            <img data-parallax="0.12" src={imagery.closing} alt={t("home.closingImageAlt")} loading="lazy" className="absolute inset-0 size-full object-cover" />
+          </div>
           <div className="absolute bottom-5 left-5 right-5 rounded-xl bg-white/95 p-5 shadow-float backdrop-blur sm:right-auto sm:max-w-sm">
             <p className="m-0 text-lg font-extrabold tracking-tight text-ink">{t("home.closingTitle")}</p>
             <p className="mt-1 mb-3 text-sm text-muted-foreground">{t("home.closingLead")}</p>
@@ -189,7 +195,9 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
             </Link>
           </div>
         </div>
-        <img src={imagery.host} alt={t("home.hostImageAlt")} loading="lazy" className="h-full min-h-72 w-full object-cover" />
+        <div className="parallax-frame relative min-h-72">
+          <img data-parallax="0.1" src={imagery.host} alt={t("home.hostImageAlt")} loading="lazy" className="absolute inset-0 size-full object-cover" />
+        </div>
       </Reveal>
 
       {!s ? (

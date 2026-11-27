@@ -27,7 +27,7 @@ export async function Header() {
   if (s?.isAdmin) nav.push({ href: "/admin", label: t("nav.admin") });
   const ctxName = ctx === "venue" ? m?.venue?.displayName : ctx === "organizer" ? m?.organizer?.displayName : null;
   return (
-    <header className="sticky top-0 z-[1000] border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+    <header id="site-header" className="sticky top-0 z-[1000] border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
       <div className="mx-auto flex min-h-[68px] max-w-7xl flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 sm:px-6 lg:px-8">
         <Link href="/" className="no-underline hover:no-underline" aria-label={t("brand.home")}>
           <Logo />
