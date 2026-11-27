@@ -6,6 +6,9 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig: NextConfig = {
   serverExternalPackages: ["@node-rs/argon2", "sharp", "postgres"],
   poweredByHeader: false,
+  // Uploads go through server actions (default cap 1 MB). 4 MB stays under Vercel's 4.5 MB request limit;
+  // photos are also shrunk in the browser first (ImageShrinker).
+  experimental: { serverActions: { bodySizeLimit: "4mb" } },
   async headers() {
     return [
       {

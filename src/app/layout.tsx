@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Suspense } from "react";
 import { BookingFlowBanner } from "@/components/BookingFlowBanner";
 import { NavProgress } from "@/components/NavProgress";
+import { ImageShrinker } from "@/components/ImageShrinker";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Suspense fallback={null}>
             <NavProgress />
           </Suspense>
+          <ImageShrinker />
           <BookingFlowBanner />
           <Header />
           <main id="main" className="app-main">

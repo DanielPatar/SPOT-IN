@@ -315,7 +315,7 @@
     "photoRequired": "Tambahkan setidaknya satu foto ruang.",
     "pinInvalid": "Titik peta tidak valid.",
     "pinOutsideIndonesia": "Titik peta harus berada di Indonesia.",
-    "pinRequired": "Tentukan titik lokasi properti di peta terlebih dahulu.",
+    "pinRequired": "Tentukan titik lokasi properti di peta terlebih dahulu: buka Ringkasan → Ubah properti, klik posisi gedung pada peta, lalu simpan.",
     "propertyFirst": "Lengkapi data properti terlebih dahulu.",
     "rateCardRequired": "Isi tarif ruang (termasuk harga mulai dari) sebelum diajukan.",
     "tooManyPhotos": "Maksimal {max} foto.",
