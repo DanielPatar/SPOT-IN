@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { logoutAction, switchContextAction } from "@/web/actions/auth";
 import { Logo, Notice } from "@/components/kit";
 import { NavLinks } from "@/components/NavLinks";
+import { RoleSlide } from "@/components/RoleSlide";
 import { eventDiscoveryOn, registrationOpen } from "@/lib/config";
 
 /** App header from the mock-ups (AppHeader): logo, active context, navigation, notifications, account. */
@@ -29,6 +30,7 @@ export async function Header() {
   return (
     <header id="site-header" className="sticky top-0 z-[1000] border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
       <div className="mx-auto flex min-h-[68px] max-w-7xl flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 sm:px-6 lg:px-8">
+        <RoleSlide role={ctx} />
         <Link href="/" className="no-underline hover:no-underline" aria-label={t("brand.home")}>
           <Logo />
         </Link>
@@ -41,7 +43,7 @@ export async function Header() {
         {nav.length ? <NavLinks items={nav} label={t("nav.label")} /> : null}
         <div className="ml-auto flex items-center gap-1.5">
           {s && m?.venue && m?.organizer ? (
-            <form action={switchContextAction}>
+            <form action={switchContextAction} data-role-switch>
               <input type="hidden" name="context" value={ctx === "venue" ? "organizer" : "venue"} />
               <button type="submit" className="inline-flex h-10 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-ink hover:bg-sunken">
                 <ArrowLeftRight className="size-4" aria-hidden="true" />

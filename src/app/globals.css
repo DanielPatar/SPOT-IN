@@ -307,3 +307,13 @@ body:has([data-home]) #site-header:not(.header-solid):not(:has([role="status"], 
 }
 body:has([data-home]) #site-header:not(.header-solid):not(:has([role="status"], [role="alert"])) .border-line-strong { border-color: rgba(255, 255, 255, 0.45); }
 body:has([data-home]) #site-header:not(.header-solid):not(:has([role="status"], [role="alert"])) a[aria-current="page"]::after { background: #fff; }
+
+/* Slide between the organizer and venue sides (RoleSlide). */
+@keyframes role-out-l { to { opacity: 0; transform: translate3d(-56px, 0, 0); } }
+@keyframes role-out-r { to { opacity: 0; transform: translate3d(56px, 0, 0); } }
+@keyframes role-in-r { from { opacity: 0; transform: translate3d(56px, 0, 0); } }
+@keyframes role-in-l { from { opacity: 0; transform: translate3d(-56px, 0, 0); } }
+main.role-out-left { animation: role-out-l 0.22s ease-in forwards; }
+main.role-out-right { animation: role-out-r 0.22s ease-in forwards; }
+main.role-in-right { animation: role-in-r 0.3s ease-out both; }
+main.role-in-left { animation: role-in-l 0.3s ease-out both; }
