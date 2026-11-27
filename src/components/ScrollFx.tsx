@@ -7,7 +7,8 @@ import { useEffect } from "react";
  * - [data-hero]            exposes --hero (0 → 1 while the hero scrolls out) for the zoom/fade
  * - [data-drift="±px"]     slides sideways while the element crosses the viewport
  * - [data-parallax="0.x"]  moves an image slower than the page inside its frame
- * - #site-header           hides while scrolling down, returns when scrolling up
+ * - #site-header           transparent over the hero at the top, solid after; hides while scrolling down,
+ *                          returns when scrolling up
  * Off for prefers-reduced-motion.
  */
 export function ScrollFx() {
@@ -38,6 +39,9 @@ export function ScrollFx() {
         el.style.transform = `translate3d(0,${offset.toFixed(1)}px,0) scale(1.18)`;
       }
       if (header) {
+        // Transparent over the hero at the very top, solid once the page moves (styles in globals.css).
+        header.classList.toggle("header-solid", y > 16);
+        document.documentElement.style.setProperty("--header-h", `${header.offsetHeight}px`);
         const down = y > last && y > 240;
         if (Math.abs(y - last) > 6) header.classList.toggle("header-away", down);
       }
@@ -53,7 +57,8 @@ export function ScrollFx() {
       window.cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
-      header?.classList.remove("header-away");
+      header?.classList.remove("header-away", "header-solid");
+      document.documentElement.style.removeProperty("--header-h");
     };
   }, []);
   return null;

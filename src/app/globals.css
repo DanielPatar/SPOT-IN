@@ -287,3 +287,23 @@
 .parallax-frame > [data-parallax] { will-change: transform; }
 #site-header { transition: transform 0.35s ease; }
 #site-header.header-away { transform: translateY(-100%); }
+
+/* Home: the header floats transparently over the hero until the page is scrolled (Peerspace-style).
+   Pure CSS at first paint (body:has), ScrollFx adds .header-solid on scroll. A header that carries a
+   notice (e.g. "verify your email") stays solid so the notice remains readable. */
+.home-under-header { margin-top: calc(-2rem - var(--header-h, 68px)); }
+.home-under-header .hero-content { padding-top: calc(var(--header-h, 68px) + 3rem); }
+#site-header { transition: transform 0.35s ease, background-color 0.25s ease, border-color 0.25s ease; }
+body:has([data-home]) #site-header:not(.header-solid):not(:has([role="status"], [role="alert"])) {
+  background: transparent;
+  border-color: transparent;
+  backdrop-filter: none;
+}
+body:has([data-home]) #site-header:not(.header-solid):not(:has([role="status"], [role="alert"])) :is(a, button, span):not(.btn-primary):not(.bg-ink):not(.bg-brand) {
+  color: #fff;
+}
+body:has([data-home]) #site-header:not(.header-solid):not(:has([role="status"], [role="alert"])) :is(.bg-sunken, a:hover, button:hover):not(.btn-primary):not(.bg-ink) {
+  background-color: rgba(255, 255, 255, 0.16);
+}
+body:has([data-home]) #site-header:not(.header-solid):not(:has([role="status"], [role="alert"])) .border-line-strong { border-color: rgba(255, 255, 255, 0.45); }
+body:has([data-home]) #site-header:not(.header-solid):not(:has([role="status"], [role="alert"])) a[aria-current="page"]::after { background: #fff; }

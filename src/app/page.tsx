@@ -32,7 +32,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   const catalog = (await listCatalog()).slice(0, 4);
   const how = [1, 2, 3] as const;
   return (
-    <div className="-mt-8">
+    <div data-home className="home-under-header">
       <ScrollFx />
       {/* Hero (Peerspace-style): ask first, list spaces only after the search --- */}
       <HeroStage
