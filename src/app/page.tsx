@@ -184,8 +184,8 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
           <h2 className="mt-0 mb-3 text-[28px] leading-tight font-extrabold tracking-[-0.02em] text-white sm:text-[36px]">{t("home.hostTitle")}</h2>
           <p className="mb-8 max-w-md text-lg leading-relaxed text-white/80">{t("home.hostLead")}</p>
           <div className="flex flex-wrap gap-3">
-            <Link href={open ? "/daftar" : "/masuk"} className="btn bg-white text-ink hover:bg-white/90">
-              {open ? t("home.hostCta") : t("nav.login")}
+            <Link href={s ? "/mulai" : open ? "/daftar" : "/masuk"} className="btn bg-white text-ink hover:bg-white/90">
+              {s || open ? t("home.hostCta") : t("nav.login")}
             </Link>
           </div>
         </div>

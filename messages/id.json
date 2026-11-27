@@ -722,7 +722,9 @@
     "signUp": "Daftar",
     "menu": "Menu",
     "catalog": "Katalog venue",
-    "discover": "Jelajah acara"
+    "discover": "Jelajah acara",
+    "addVenueRole": "Daftarkan ruang Anda",
+    "addOrganizerRole": "Cari ruang untuk acara"
   },
   "fields": {
     "email": "Email",
@@ -1417,7 +1419,9 @@
     "notes": "Catatan",
     "unavailable": "Tautan tidak tersedia",
     "sharedBy": "Dibagikan oleh {org}",
-    "indicative": "Harga bersifat indikatif dan dapat berubah pada penawaran pengelola."
+    "indicative": "Harga bersifat indikatif dan dapat berubah pada penawaran pengelola.",
+    "emptyCta": "Cari ruang",
+    "emptyHow": "Buka halaman sebuah ruang, lalu pilih daftar ini di bagian “Simpan ke daftar pilihan”. Setelah terisi, Anda bisa membandingkan, membagikan, dan mengirim permintaan ke beberapa ruang sekaligus."
   },
   "eventTypes": {
     "exhibition": "Pameran",

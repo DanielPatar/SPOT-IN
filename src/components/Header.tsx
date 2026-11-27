@@ -50,6 +50,11 @@ export async function Header() {
               </button>
             </form>
           ) : null}
+          {s && !s.isQuickAttendee && !!m?.organizer !== !!m?.venue ? (
+            <Link href="/mulai" className="hidden h-10 items-center rounded-full border border-line-strong px-4 text-sm font-semibold text-ink no-underline hover:border-ink hover:no-underline lg:inline-flex">
+              {m?.organizer ? t("nav.addVenueRole") : t("nav.addOrganizerRole")}
+            </Link>
+          ) : null}
           {s ? (
             <>
               <Link href="/notifikasi" className="relative grid size-10 place-items-center rounded-full text-ink no-underline hover:bg-sunken" aria-label={unread ? t("nav.notificationsCount", { n: unread }) : t("nav.notifications")}>

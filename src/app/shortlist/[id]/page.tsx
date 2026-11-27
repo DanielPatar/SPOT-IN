@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Bookmark } from "lucide-react";
+import { StateBlock } from "@/components/kit";
 import { notFound } from "next/navigation";
 import { t } from "@/lib/i18n";
 import { absoluteUrl } from "@/server/notify";
@@ -30,7 +32,11 @@ export default async function ShortlistPage({ params }: { params: Promise<{ id: 
       <div className="cols">
         <form className="card" action="/acara/kirim" method="get">
           <h2 style={{ marginTop: 0 }}>{t("shortlist.spaces")}</h2>
-          {d.items.length === 0 ? <p className="muted">{t("shortlist.emptyList")}</p> : null}
+          {d.items.length === 0 ? (
+            <StateBlock icon={Bookmark} title={t("shortlist.emptyList")} action={<Link className="btn btn-primary" href="/#cari">{t("shortlist.emptyCta")}</Link>}>
+              {t("shortlist.emptyHow")}
+            </StateBlock>
+          ) : null}
           {d.items.map((i) => {
             const img = (i.demo_photo_url ? String(i.demo_photo_url) : null) ?? coverUrl(i.media);
             return (
