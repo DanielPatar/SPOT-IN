@@ -49,9 +49,8 @@ class S3Storage implements StorageAdapter {
   private async request(method: string, key: string, body?: Buffer, contentType?: string) {
     const { createHash, createHmac } = await import("node:crypto");
     const env = process.env;
-    const endpoint = new URL(env.S3_ENDPOINT ?? "");
     const region = env.S3_REGION ?? "auto";
-    const url = new URL(`/${env.S3_BUCKET}/${key.split("/").map(encodeURIComponent).join("/")}`, endpoint);
+    const url = s3ObjectUrl(env.S3_ENDPOINT ?? "", env.S3_BUCKET ?? "", key);
     const amzDate = new Date().toISOString().replace(/[:-]|\.\d{3}/g, "");
     const date = amzDate.slice(0, 8);
     const payloadHash = createHash("sha256").update(body ?? Buffer.alloc(0)).digest("hex");
@@ -67,6 +66,17 @@ class S3Storage implements StorageAdapter {
     headers.authorization = `AWS4-HMAC-SHA256 Credential=${env.S3_ACCESS_KEY}/${scope}, SignedHeaders=${signed.join(";")}, Signature=${signature}`;
     return fetch(url, { method, headers, body: body ? new Uint8Array(body) : undefined });
   }
+}
+
+/**
+ * Path-style object URL. Keeps the endpoint's own path, which Supabase Storage needs
+ * (`https://<ref>.storage.supabase.co/storage/v1/s3`); a bare `/bucket/key` would drop it and 404.
+ */
+export function s3ObjectUrl(endpoint: string, bucket: string, key: string): URL {
+  const base = new URL(endpoint);
+  const prefix = base.pathname.replace(/\/+$/, "");
+  base.pathname = `${prefix}/${encodeURIComponent(bucket)}/${key.split("/").map(encodeURIComponent).join("/")}`;
+  return base;
 }
 
 let adapter: StorageAdapter | undefined;
