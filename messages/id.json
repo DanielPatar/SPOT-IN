@@ -686,7 +686,7 @@
     "saving": "Menyimpan…",
     "remove": "Hapus",
     "optional": "(opsional)",
-    "loading": "Memuat data…",
+    "loading": "Memuat…",
     "errorTitle": "Belum bisa disimpan",
     "close": "Tutup",
     "spaceAtProperty": "{space}, {property}",
@@ -1339,7 +1339,11 @@
     "catalogTitle": "Dari katalog open space",
     "catalogLead": "Tempat dari sumber publik di wilayah ini. Belum bisa dipesan lewat Spot-In — lihat denah dan hubungi pengelolanya langsung.",
     "catalogAll": "Buka katalog lengkap",
-    "illustration": "Foto ilustrasi"
+    "illustration": "Foto ilustrasi",
+    "when": "Kapan",
+    "price": "Harga",
+    "apply": "Terapkan",
+    "editSearch": "Ubah pencarian"
   },
   "spacePage": {
     "sendEnquiry": "Kirim permintaan",

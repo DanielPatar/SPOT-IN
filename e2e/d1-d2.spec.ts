@@ -164,14 +164,17 @@ test("D2 — search with dates and filters, map, shortlist shared logged out, on
   await page.getByRole("button", { name: "Cari", exact: true }).click();
   await page.waitForURL(/\/cari\?/);
   await expect(page.getByText(/ruang ditemukan/)).toBeVisible();
-  await page.getByLabel("Kota").selectOption("Jakarta Selatan");
+  // Results page (UI v2): filters live in pill popovers; every popover belongs to the same form.
+  await page.getByText("Kapan", { exact: true }).click();
   await page.getByLabel("Dari tanggal").fill("2026-12-12");
   await page.getByLabel("Sampai tanggal").fill("2026-12-14");
+  await page.locator("summary").filter({ hasText: "Pengunjung" }).click();
   await page.getByLabel("Pengunjung").fill("300");
-  await page.getByText("Filter lainnya").click();
+  await page.locator("summary").filter({ hasText: "Filter lainnya" }).click();
+  await page.getByLabel("Kota").selectOption("Jakarta Selatan");
   await page.getByLabel("Daya min. (kVA)").fill("30");
   await page.getByLabel("Sampling makanan/minuman").check();
-  await page.getByRole("button", { name: "Cari", exact: true }).click();
+  await page.locator("details[open]").getByRole("button", { name: "Terapkan" }).click();
   await expect(page.getByText(/ruang ditemukan/)).toBeVisible();
   const names = await page.getByTestId("result").locator("strong").allInnerTexts();
   expect(names).toEqual(expect.arrayContaining(["Aula Sentosa", "Atrium Sentosa", "Aula Kemang"]));

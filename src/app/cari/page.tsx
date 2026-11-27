@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { formatDate } from "@/lib/time";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { t } from "@/lib/i18n";
@@ -15,7 +16,8 @@ import { StateBlock } from "@/components/kit";
 import { REGIONS, regionOf } from "@/lib/regions";
 import { listCatalog } from "@/server/catalog";
 import { CatalogCard, type CatalogItem } from "@/components/CatalogCard";
-import { BadgeCheck, List, Map as MapIcon, SearchX, SlidersHorizontal, Users } from "lucide-react";
+import { BadgeCheck, ChevronDown, List, Map as MapIcon, Search as SearchIcon, SearchX, SlidersHorizontal, Users } from "lucide-react";
+import { FilterPopovers } from "@/components/FilterPopovers";
 
 export const metadata: Metadata = { title: t("search.title") };
 
@@ -78,64 +80,141 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const pins = res.rows
     .filter((r) => r.lat != null)
     .map((r) => ({ id: String(r.id), lat: Number(r.lat), lon: Number(r.lon), title: String(r.name), subtitle: `${String(r.property_name)} · ${t("spaces.fromPrice", { price: rp(r.from_price) })}`, href: `/ruang/${r.id}` }));
+  const pill = (on: boolean) =>
+    `inline-flex h-11 cursor-pointer list-none items-center gap-1.5 rounded-md px-3.5 text-[15px] font-semibold no-underline select-none [&::-webkit-details-marker]:hidden ${on ? "bg-brand-soft text-brand" : "text-ink hover:bg-sunken"}`;
+  const chip = (on: boolean) =>
+    `inline-flex h-10 items-center gap-1.5 rounded-full border px-4 text-sm font-semibold no-underline hover:no-underline ${on ? "border-ink bg-ink text-white" : "border-line-strong text-ink hover:border-ink"}`;
+  const panel = "absolute left-0 top-full z-40 mt-2 grid w-[min(92vw,320px)] gap-4 rounded-xl border border-line bg-white p-4 shadow-float";
+  /** Link that switches one filter value on or off, keeping the rest of the search. */
+  const toggle = (key: string, value: string) => {
+    const p = new URLSearchParams();
+    let had = false;
+    for (const [k, v] of Object.entries(sp)) {
+      for (const x of many(v)) {
+        if (k === "page") continue;
+        if (k === key && x === value) had = true;
+        else p.append(k, x);
+      }
+    }
+    if (!had) p.append(key, value);
+    if (![...p.keys()].length) p.set("q", "");
+    return `/cari?${p}`;
+  };
+  const whatLabel = eventType ? t(`eventTypes.${eventType}`) : typeFromQ ? t(`spaceTypes.${typeFromQ}`) : qText || t("home.whatAny");
+  const moreCount = [qText, one(sp.env), one(sp.power), one(sp.radius), one(sp.verified), one(sp.limited)].filter(Boolean).length + many(sp.act).length + many(sp.type).length;
   const segment = (on: boolean) =>
     `inline-flex h-9 items-center gap-1.5 rounded-full px-3.5 text-sm font-semibold no-underline hover:no-underline ${on ? "bg-ink text-white" : "text-ink hover:bg-sunken"}`;
   return (
     <div>
-      <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
-        <h1 className="mb-0">{t("search.title")}</h1>
-      </div>
-      <form className="form mb-8 rounded-2xl border border-line bg-surface p-4 shadow-float sm:p-5" method="get" role="search">
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-[2fr_1.2fr_1fr_1fr_0.8fr_1fr_auto] xl:items-end">
-          <label className="col-span-2 md:col-span-4 xl:col-span-1">
-            {t("search.keyword")}
-            <input name="q" defaultValue={qText} placeholder={t("search.keywordPlaceholder")} />
-          </label>
-          <label className="col-span-2 md:col-span-1">
-            {t("fields.city")}
-            <select name="city" defaultValue={one(sp.city)}>
-              <option value="">{t("search.anyCity")}</option>
-              <optgroup label={t("search.regionsGroup")}>
-                {REGIONS.map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </optgroup>
-              <optgroup label={t("search.citiesGroup")}>
-                {cityList.map((c) => String(c.city)).filter((c) => !REGIONS.includes(c as (typeof REGIONS)[number])).map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </optgroup>
-            </select>
-          </label>
-          <label>
-            {t("search.from")}
-            <input type="date" name="from" defaultValue={from} />
-          </label>
-          <label>
-            {t("search.to")}
-            <input type="date" name="to" defaultValue={one(sp.to)} />
-          </label>
-          <label>
-            {t("search.attendance")}
-            <input name="attendance" inputMode="numeric" defaultValue={one(sp.attendance)} />
-          </label>
-          <label>
-            {t("search.budgetMax")}
-            <input name="budgetMax" inputMode="numeric" defaultValue={one(sp.budgetMax)} />
-          </label>
-          <button className="btn btn-primary col-span-2 md:col-span-4 xl:col-span-1" type="submit">
-            {t("search.submit")}
-          </button>
-        </div>
-        <details className="group">
-          <summary className="inline-flex w-fit items-center gap-2 rounded-full border border-line-strong px-4 py-2 no-underline hover:border-ink [&::-webkit-details-marker]:hidden">
-            <SlidersHorizontal className="size-4" aria-hidden="true" />
-            {t("search.moreFilters")}
-          </summary>
+      <h1 className="sr-only">{t("search.title")}</h1>
+      <form method="get" role="search" aria-label={t("search.filters")} className="mb-6 border-b border-line pb-4">
+        <FilterPopovers className="flex flex-wrap items-center gap-2">
+          <Link href="/#cari" className="mr-1 inline-flex h-11 items-center gap-2 rounded-md bg-ink px-4 text-[15px] font-semibold text-white no-underline hover:bg-ink/85 hover:no-underline" aria-label={t("search.editSearch")}>
+            <SearchIcon className="size-4" aria-hidden="true" />
+            <span>{whatLabel}</span>
+            <span aria-hidden="true">•</span>
+            <span>{cityParam || t("search.anyCity")}</span>
+          </Link>
+
+          <details data-pop className="relative">
+            <summary className={pill(dates.length > 0)}>
+              {dates.length ? (to && to !== from ? `${formatDate(from)} – ${formatDate(to)}` : formatDate(from)) : t("search.when")}
+              <ChevronDown className="size-4" aria-hidden="true" />
+            </summary>
+            <div className={panel}>
+              <label>
+                {t("search.from")}
+                <input type="date" name="from" defaultValue={from} />
+              </label>
+              <label>
+                {t("search.to")}
+                <input type="date" name="to" defaultValue={one(sp.to)} />
+              </label>
+              <button className="btn btn-primary" type="submit">
+                {t("search.apply")}
+              </button>
+            </div>
+          </details>
+
+          <details data-pop className="relative">
+            <summary className={pill(!!one(sp.budgetMax) || !!one(sp.budgetMin))}>
+              {t("search.price")}
+              <ChevronDown className="size-4" aria-hidden="true" />
+            </summary>
+            <div className={panel}>
+              <label>
+                {t("search.budgetMin")}
+                <input name="budgetMin" inputMode="numeric" defaultValue={one(sp.budgetMin)} />
+              </label>
+              <label>
+                {t("search.budgetMax")}
+                <input name="budgetMax" inputMode="numeric" defaultValue={one(sp.budgetMax)} />
+              </label>
+              <button className="btn btn-primary" type="submit">
+                {t("search.apply")}
+              </button>
+            </div>
+          </details>
+
+          <details data-pop className="relative">
+            <summary className={pill(!!one(sp.attendance))}>
+              {one(sp.attendance) ? t("search.capacityShort", { n: one(sp.attendance) }) : t("search.attendance")}
+              <ChevronDown className="size-4" aria-hidden="true" />
+            </summary>
+            <div className={panel}>
+              <label>
+                {t("search.attendance")}
+                <input name="attendance" inputMode="numeric" defaultValue={one(sp.attendance)} />
+              </label>
+              <button className="btn btn-primary" type="submit">
+                {t("search.apply")}
+              </button>
+            </div>
+          </details>
+
+          <details data-pop className="relative">
+            <summary className={pill(moreCount > 0)}>
+              <SlidersHorizontal className="size-4" aria-hidden="true" />
+              {t("search.moreFilters")}
+              {moreCount ? <span className="grid size-5 place-items-center rounded-full bg-white text-xs font-bold text-ink">{moreCount}</span> : null}
+            </summary>
+            <div className={`${panel} max-h-[70vh] w-[min(92vw,640px)] overflow-y-auto sm:left-auto sm:right-0 lg:left-0 lg:right-auto`}>
+              <div className="grid grid-cols-2 gap-3">
+                <label className="col-span-2">
+                  {t("search.keyword")}
+                  <input name="q" defaultValue={qText} placeholder={t("search.keywordPlaceholder")} />
+                </label>
+                <label>
+                  {t("fields.city")}
+                  <select name="city" defaultValue={one(sp.city)}>
+                    <option value="">{t("search.anyCity")}</option>
+                    <optgroup label={t("search.regionsGroup")}>
+                      {REGIONS.map((r) => (
+                        <option key={r} value={r}>
+                          {r}
+                        </option>
+                      ))}
+                    </optgroup>
+                    <optgroup label={t("search.citiesGroup")}>
+                      {cityList.map((c) => String(c.city)).filter((c) => !REGIONS.includes(c as (typeof REGIONS)[number])).map((c) => (
+                        <option key={c} value={c}>
+                          {c}
+                        </option>
+                      ))}
+                    </optgroup>
+                  </select>
+                </label>
+                <label>
+                  {t("search.sort")}
+                  <select name="sort" defaultValue={res.sort}>
+                    {["relevance", "price", "distance", "newest"].map((x) => (
+                      <option key={x} value={x}>
+                        {t(`search.sorts.${x}`)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
           <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-5">
             <label>
               {t("search.eventType")}
@@ -200,25 +279,34 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
               <input type="checkbox" name="limited" value="1" defaultChecked={one(sp.limited) === "1"} /> {t("search.showLimited")}
             </label>
           </div>
-        </details>
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
+                <div className="flex flex-wrap items-center gap-3">
+                  <NearMe />
+                  <Link href="/cari?q=" className="text-sm font-semibold text-ink underline">
+                    {t("search.reset")}
+                  </Link>
+                </div>
+                <button className="btn btn-primary" type="submit">
+                  {t("search.apply")}
+                </button>
+              </div>
+            </div>
+          </details>
+
+          <span className="mx-1 hidden h-8 w-px bg-line md:block" aria-hidden="true" />
+          <Link href={toggle("verified", "1")} aria-current={one(sp.verified) === "1" ? "true" : undefined} className={chip(one(sp.verified) === "1")}>
+            <BadgeCheck className="size-4" aria-hidden="true" />
+            {t("badges.verified")}
+          </Link>
+          {(["atrium", "event_hall", "outdoor_area"] as const).map((x) => (
+            <Link key={x} href={toggle("type", x)} aria-current={spaceTypes.includes(x) ? "true" : undefined} className={chip(spaceTypes.includes(x))}>
+              {t(`spaceTypes.${x}`)}
+            </Link>
+          ))}
+        </FilterPopovers>
         <input type="hidden" name="lat" defaultValue={one(sp.lat)} />
         <input type="hidden" name="lon" defaultValue={one(sp.lon)} />
         <input type="hidden" name="view" defaultValue={one(sp.view)} />
-        <div className="flex flex-wrap items-end justify-between gap-3 border-t border-line pt-4">
-          <div className="flex flex-wrap items-end gap-3">
-            <label className="w-48">
-              {t("search.sort")}
-              <select name="sort" defaultValue={res.sort}>
-                {["relevance", "price", "distance", "newest"].map((x) => (
-                  <option key={x} value={x}>
-                    {t(`search.sorts.${x}`)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <NearMe />
-          </div>
-        </div>
       </form>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <p className="m-0 text-[15px] font-semibold text-ink">{t("search.count", { n: res.total })}</p>

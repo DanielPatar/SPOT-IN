@@ -2,7 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { t, messages } from "@/lib/i18n";
 import { Header } from "@/components/Header";
+import { Suspense } from "react";
 import { BookingFlowBanner } from "@/components/BookingFlowBanner";
+import { NavProgress } from "@/components/NavProgress";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
 
@@ -23,6 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-surface focus:px-3 focus:py-2">
             {t("nav.skip")}
           </a>
+          <Suspense fallback={null}>
+            <NavProgress />
+          </Suspense>
           <BookingFlowBanner />
           <Header />
           <main id="main" className="app-main">
