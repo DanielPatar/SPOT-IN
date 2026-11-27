@@ -67,6 +67,8 @@ export async function saveProperty(
   if (!input.name.trim()) throw new AppError("errors.nameRequired");
   if (!PROPERTY_TYPES.includes(input.type as never)) throw new AppError("errors.invalidValue");
   if (!input.addressText.trim() || !input.city.trim()) throw new AppError("listings.addressRequired");
+  // City and area drive the "Di mana?" search; a pasted link there hides the listing from every search.
+  if (/https?:\/\/|www\./i.test(`${input.city} ${input.area ?? ""}`)) throw new AppError("listings.cityNotLink");
   let lat = input.lat ?? null;
   let lon = input.lon ?? null;
   if ((lat === null) !== (lon === null)) throw new AppError("listings.pinInvalid");

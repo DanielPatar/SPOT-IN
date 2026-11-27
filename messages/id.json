@@ -322,7 +322,8 @@
     "tooManyQuestions": "Maksimal {max} pertanyaan permintaan.",
     "usePublish": "Ruang ini pernah disetujui. Gunakan tombol Publikasikan.",
     "videoUrlInvalid": "Tautan video harus diawali https://",
-    "wrongStatus": "Aksi ini tidak tersedia untuk status ruang saat ini."
+    "wrongStatus": "Aksi ini tidak tersedia untuk status ruang saat ini.",
+    "cityNotLink": "Kolom Kota dan Area diisi nama tempat, mis. “Jakarta Pusat” dan “Tanah Abang”. Tautan Google Maps ditempel di kolom Tautan Google Maps."
   },
   "messages": {
     "editWindowPassed": "Pesan hanya dapat diubah dalam 10 menit setelah dikirim.",
